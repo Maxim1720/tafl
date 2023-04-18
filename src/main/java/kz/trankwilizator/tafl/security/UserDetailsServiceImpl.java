@@ -1,6 +1,6 @@
 package kz.trankwilizator.tafl.security;
 
-import kz.trankwilizator.tafl.dao.UserRepository;
+import kz.trankwilizator.tafl.dao.user.UserRepository;
 import kz.trankwilizator.tafl.entity.role.Permission;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;

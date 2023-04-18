@@ -1,4 +1,4 @@
-package kz.trankwilizator.tafl.repository.role;
+package kz.trankwilizator.tafl.dao.user.role;
 
 import kz.trankwilizator.tafl.entity.role.Permission;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,4 +1,4 @@
-package kz.trankwilizator.tafl.repository;
+package kz.trankwilizator.tafl.dao.user;
 
 import kz.trankwilizator.tafl.entity.user.TemporaryUser;
 import org.springframework.data.jpa.repository.JpaRepository;
