@@ -33,12 +33,7 @@ public class SecurityConfig {
 
     @Bean
     public RegistrationService registrationService(){
-        return new RegistrationService() {
-            @Override
-            public PermanentUserDto createUser(PermanentUserDto user) {
-                return null;
-            }
-        };
+        return user -> null;
     }
 
     @Bean
@@ -52,16 +47,6 @@ public class SecurityConfig {
             @Override
             public TemporaryUserDto replenishBalance(Double amount) {
                 return null;
-            }
-        };
-    }
-
-    @Bean
-    public PaymentService paymentService(){
-        return new PaymentService() {
-            @Override
-            public void processPayment() {
-
             }
         };
     }
