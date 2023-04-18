@@ -50,7 +50,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthService authService(){
+    public AuthService<?> authService(){
         return absUserDto -> null;
     }
 
