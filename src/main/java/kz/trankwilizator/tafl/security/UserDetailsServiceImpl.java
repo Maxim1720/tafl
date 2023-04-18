@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        kz.trankwilizator.tafl.entity.user.User u = userRepository.findByLoginIgnoreCase(username).orElseThrow(
+        kz.trankwilizator.tafl.entity.user.User u = userRepository.findByUsernameIgnoreCase(username).orElseThrow(
                 ()-> new UsernameNotFoundException(username)
         );
         return new User(
@@ -38,7 +38,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public Collection<GrantedAuthority> authorities(String username){
         return userRepository
-                .findByLoginIgnoreCase(username)
+                .findByUsernameIgnoreCase(username)
                 .orElseThrow(
                         ()-> new UsernameNotFoundException(String.format("%s doesn't exists", username))
                 )
