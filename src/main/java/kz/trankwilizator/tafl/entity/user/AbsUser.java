@@ -25,6 +25,7 @@ public abstract class AbsUser {
     @Column(columnDefinition = "decimal(10,2)", nullable = false)
     private Double balance = 0.0;
 
+    @Column(nullable = false, columnDefinition = "boolean default 'true'")
     private Boolean enabled;
 
     @CreationTimestamp
