@@ -34,6 +34,8 @@ public class SecurityConfig {
                 .userDetailsService(userDetailsService)
                 .httpBasic()
                 .and()
+                .formLogin()
+                .and()
                 .build();
     }
 
