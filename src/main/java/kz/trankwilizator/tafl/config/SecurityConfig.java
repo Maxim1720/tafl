@@ -58,21 +58,6 @@ public class SecurityConfig {
     }
 
     @Bean
-    public TemporaryUserService temporaryUserService(){
-        return new TemporaryUserService() {
-            @Override
-            public TemporaryUserDto create() {
-                return null;
-            }
-
-            @Override
-            public TemporaryUserDto replenishBalance(Double amount) {
-                return null;
-            }
-        };
-    }
-
-    @Bean
     public AuthService<?> authService(){
         return absUserDto -> null;
     }
