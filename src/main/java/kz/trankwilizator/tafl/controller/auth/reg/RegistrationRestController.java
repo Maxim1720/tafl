@@ -1,7 +1,7 @@
 package kz.trankwilizator.tafl.controller.auth.reg;
 
-import kz.trankwilizator.tafl.auth.RegistrationService;
-import kz.trankwilizator.tafl.auth.TemporaryUserService;
+import kz.trankwilizator.tafl.auth.reg.RegistrationService;
+import kz.trankwilizator.tafl.auth.reg.RegistrationTemporaryUserService;
 import kz.trankwilizator.tafl.dto.TemporaryUserDto;
 import kz.trankwilizator.tafl.dto.PermanentUserDto;
 import org.springframework.http.HttpStatus;
@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth/reg")
 public class RegistrationRestController {
     private final RegistrationService registrationService;
-    private final TemporaryUserService temporaryUserService;
+    private final RegistrationTemporaryUserService registrationTemporaryUserService;
 
     public RegistrationRestController(RegistrationService registrationService,
-                                      TemporaryUserService temporaryUserService) {
+                                      RegistrationTemporaryUserService registrationTemporaryUserService) {
         this.registrationService = registrationService;
-        this.temporaryUserService = temporaryUserService;
+        this.registrationTemporaryUserService = registrationTemporaryUserService;
     }
 
     @PostMapping("/permanent")
@@ -29,7 +29,7 @@ public class RegistrationRestController {
     }
     @PostMapping("/temp")
     public ResponseEntity<TemporaryUserDto> createCheck(){
-        return ResponseEntity.status(HttpStatus.CREATED).body(temporaryUserService.create());
+        return ResponseEntity.status(HttpStatus.CREATED).body(registrationTemporaryUserService.create());
     }
 
 }
