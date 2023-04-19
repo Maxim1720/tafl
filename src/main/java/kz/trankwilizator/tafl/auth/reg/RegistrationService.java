@@ -1,4 +1,4 @@
-package kz.trankwilizator.tafl.auth;
+package kz.trankwilizator.tafl.auth.reg;
 
 import jakarta.validation.Valid;
 import kz.trankwilizator.tafl.dto.PermanentUserDto;
