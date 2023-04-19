@@ -41,10 +41,6 @@ public class User extends AbsUser implements Serializable {
     @Column(columnDefinition = "decimal(1,2)", nullable = false)
     private Double discount = 0.0;
 
-    @CreationTimestamp
-    @Column(nullable = false)
-    private Date createdAt;
-
     @UpdateTimestamp
     @Column(nullable = false)
     private Date updatedAt;

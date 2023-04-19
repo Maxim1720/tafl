@@ -3,6 +3,9 @@ package kz.trankwilizator.tafl.entity.user;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.util.Date;
 
 
 @Getter
@@ -23,4 +26,8 @@ public abstract class AbsUser {
     private Double balance = 0.0;
 
     private Boolean enabled;
+
+    @CreationTimestamp
+    @Column(nullable = false)
+    private Date createdAt;
 }
