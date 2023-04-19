@@ -33,6 +33,7 @@ public class RegTempService implements RegistrationTemporaryUserService{
         temporaryUserDto.setId(temporaryUser.getId());
         temporaryUserDto.setUsername(temporaryUser.getUsername());
         temporaryUserDto.setExpireDate(calendar.getTime());
+        temporaryUserDto.setCreatedAt(temporaryUser.getCreatedAt());
 
         return temporaryUserDto;
     }
