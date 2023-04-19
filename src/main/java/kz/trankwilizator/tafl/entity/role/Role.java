@@ -17,7 +17,10 @@ public class Role {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToMany
+    @Column(length = 75, nullable = false)
+    private String name;
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "role_permissions",
             joinColumns = @JoinColumn(name = "role_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "permissions_id", nullable = false))
