@@ -78,8 +78,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthService<?> authService(){
-        return absUserDto -> null;
+    public PermanentUserRegistrationService registrationService(){
+        return user -> null;
     }
 
 }
