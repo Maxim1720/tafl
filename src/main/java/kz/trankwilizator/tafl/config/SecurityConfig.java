@@ -13,11 +13,17 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
-    public static String[] WHITELIST_URLS={"/v3/api-docs/**","/swagger-ui/**", "/auth/**"};
-    private final UserDetailsService userDetailsService;
+    public static String[] WHITE_LIST_URLS ={"/v3/api-docs/**","/swagger-ui/**", "/auth/**"};
+    private final UserDetailsServiceImpl userDetailsService;
+    private final TempUserDetailsService tempUserDetailsService;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    public SecurityConfig(UserDetailsService userDetailsService) {
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService,
+                          TempUserDetailsService tempUserDetailsService,
+                          JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.userDetailsService = userDetailsService;
+        this.tempUserDetailsService = tempUserDetailsService;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -30,8 +36,8 @@ public class SecurityConfig {
                                 .anyRequest()
                                 .authenticated()
                 )
-                .authenticationProvider(authenticationProvider())
-                .userDetailsService(userDetailsService)
+                .authenticationProvider(permanentUserAuthenticationProvider())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic()
                 .and()
                 .formLogin()
@@ -42,20 +48,28 @@ public class SecurityConfig {
 
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
+    public DaoAuthenticationProvider permanentUserAuthenticationProvider(){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         return daoAuthenticationProvider;
     }
+
+    @Bean
+    public TempUserAuthenticationProvider temporaryUserAuthenticationProvider(){
+        return new TempUserAuthenticationProvider(tempUserDetailsService);
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder(12);
     }
 
     @Bean
-    public RegistrationService registrationService(){
-        return user -> null;
+    public BasicAuthenticationEntryPoint basicAuthenticationEntryPoint() {
+        BasicAuthenticationEntryPoint basicAuthenticationEntryPoint = new BasicAuthenticationEntryPoint();
+        basicAuthenticationEntryPoint.setRealmName("myRealm");
+        return basicAuthenticationEntryPoint;
     }
 
     @Bean
