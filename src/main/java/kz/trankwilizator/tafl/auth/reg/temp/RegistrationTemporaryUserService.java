@@ -1,4 +1,4 @@
-package kz.trankwilizator.tafl.auth.reg;
+package kz.trankwilizator.tafl.auth.reg.temp;
 
 import kz.trankwilizator.tafl.dto.TemporaryUserDto;
 
