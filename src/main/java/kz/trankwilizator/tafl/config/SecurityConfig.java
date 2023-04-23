@@ -1,12 +1,15 @@
 package kz.trankwilizator.tafl.config;
 
-import kz.trankwilizator.tafl.auth.AuthService;
-import kz.trankwilizator.tafl.auth.reg.RegistrationService;
+import kz.trankwilizator.tafl.auth.reg.PermanentUserRegistrationService;
+import kz.trankwilizator.tafl.security.permanent.UserDetailsServiceImpl;
+import kz.trankwilizator.tafl.security.temp.filter.JwtAuthenticationFilter;
+import kz.trankwilizator.tafl.security.temp.TempUserAuthenticationProvider;
+import kz.trankwilizator.tafl.security.temp.TempUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
