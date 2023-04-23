@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AuthTempRestController extends AuthorizationController<TempUserAuthDto>{
-    public AuthTempRestController(AuthService<TempUserAuthDto> authService) {
+@RequestMapping("/auth/temp")
+public class TempAuthRestController extends AuthorizationRestController<TempUserAuthDto> {
+    public TempAuthRestController(AuthService<TempUserAuthDto> authService) {
         super(authService);
     }
 
