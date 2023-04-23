@@ -1,7 +1,6 @@
 package kz.trankwilizator.tafl.controller.auth;
 
 import kz.trankwilizator.tafl.auth.AuthService;
-import kz.trankwilizator.tafl.dto.AbsUserDto;
 import kz.trankwilizator.tafl.dto.AuthToken;
 import kz.trankwilizator.tafl.dto.auth.UserAuthDto;
 import org.springframework.http.ResponseEntity;
