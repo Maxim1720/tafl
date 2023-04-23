@@ -1,6 +1,6 @@
-package kz.trankwilizator.tafl.dao.user;
+package kz.trankwilizator.tafl.dao.user.temp;
 
-import kz.trankwilizator.tafl.entity.user.TemporaryUser;
+import kz.trankwilizator.tafl.entity.user.temp.TemporaryUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
