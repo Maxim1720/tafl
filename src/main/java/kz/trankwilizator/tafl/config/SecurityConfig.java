@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 
 @Configuration
 public class SecurityConfig {
@@ -31,7 +33,7 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests(
-                        (r)-> r.requestMatchers(WHITELIST_URLS)
+                        (r)-> r.requestMatchers(WHITE_LIST_URLS)
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
