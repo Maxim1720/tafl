@@ -16,6 +16,9 @@ public abstract class AuthorizationController<UserDto extends UserAuthDto> {
     public AuthorizationController(AuthService<UserDto> authService) {
         this.authService = authService;
     }
+
+
+    @PostMapping("/login")
     public ResponseEntity<AuthToken> authorization(@RequestBody UserDto user){
         return ResponseEntity.accepted().body(authService.authenticate(user));
     }
