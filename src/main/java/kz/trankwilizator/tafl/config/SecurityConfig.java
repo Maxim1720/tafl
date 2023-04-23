@@ -36,6 +36,7 @@ public class SecurityConfig {
                 .and()
                 .formLogin()
                 .and()
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
