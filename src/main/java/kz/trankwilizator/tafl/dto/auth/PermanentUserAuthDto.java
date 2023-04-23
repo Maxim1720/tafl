@@ -1,12 +1,9 @@
 package kz.trankwilizator.tafl.dto.auth;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-@Getter
-@Setter
-@ToString
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class PermanentUserAuthDto extends UserAuthDto{
     private String password;
 }

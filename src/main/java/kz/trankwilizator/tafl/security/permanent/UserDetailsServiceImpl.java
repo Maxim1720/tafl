@@ -1,9 +1,9 @@
-package kz.trankwilizator.tafl.security;
+package kz.trankwilizator.tafl.security.permanent;
 
-import kz.trankwilizator.tafl.dao.user.TempUserRepository;
+import kz.trankwilizator.tafl.dao.user.temp.TempUserRepository;
 import kz.trankwilizator.tafl.dao.user.UserRepository;
 import kz.trankwilizator.tafl.entity.role.Permission;
-import kz.trankwilizator.tafl.entity.user.TemporaryUser;
+import kz.trankwilizator.tafl.entity.user.temp.TemporaryUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
