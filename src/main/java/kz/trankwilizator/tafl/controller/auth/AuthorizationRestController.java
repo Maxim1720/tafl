@@ -5,6 +5,7 @@ import kz.trankwilizator.tafl.dto.AbsUserDto;
 import kz.trankwilizator.tafl.dto.AuthToken;
 import kz.trankwilizator.tafl.dto.auth.UserAuthDto;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 public abstract class AuthorizationRestController<UserDto extends UserAuthDto> {
