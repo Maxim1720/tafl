@@ -1,8 +1,7 @@
 package kz.trankwilizator.tafl.config;
 
-import kz.trankwilizator.tafl.auth.reg.PermanentUserRegistrationService;
-import kz.trankwilizator.tafl.security.permanent.UserDetailsServiceImpl;
-import kz.trankwilizator.tafl.security.temp.filter.JwtAuthenticationFilter;
+import kz.trankwilizator.tafl.security.filter.JwtAuthenticationFilter;
+import kz.trankwilizator.tafl.security.details.PermanentUserDetailsService;
 import kz.trankwilizator.tafl.security.temp.TempUserAuthenticationProvider;
 import kz.trankwilizator.tafl.security.temp.TempUserDetailsService;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +18,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 @Configuration
 public class SecurityConfig {
     public static String[] WHITE_LIST_URLS ={"/v3/api-docs/**","/swagger-ui/**", "/auth/**"};
-    private final UserDetailsServiceImpl userDetailsService;
+    private final PermanentUserDetailsService permanentUserDetailsService;
     private final TempUserDetailsService tempUserDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
