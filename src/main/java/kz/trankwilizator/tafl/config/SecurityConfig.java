@@ -42,7 +42,8 @@ public class SecurityConfig {
                                 .authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .httpBasic();
+                .httpBasic()
+                .authenticationEntryPoint(basicAuthenticationEntryPoint());
         return httpSecurity.build();
     }
 
