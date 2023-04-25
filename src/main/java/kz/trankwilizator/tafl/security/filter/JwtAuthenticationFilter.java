@@ -43,12 +43,10 @@ public abstract class JwtAuthenticationFilter extends OncePerRequestFilter {
             String jwt = getJwtFromRequest(request);
 
             if (StringUtils.hasText(jwt) && jwtTokenProvider.validateToken(jwt)) {
-                if (tempUserDetailsService.authorize(jwt)) {
                     String username = jwtTokenProvider.getUsernameFromToken(jwt);
                     if(jwtTokenService.getByToken(jwt).getExpiryAt().after(new Date())){
                         setAuthentication(username, request);
                     }
-                }
             }
         } catch (Exception ex) {
             logger.error("Could not set user authentication in security context", ex);
