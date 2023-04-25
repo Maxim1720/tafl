@@ -20,14 +20,17 @@ public class SecurityConfig {
     public static String[] WHITE_LIST_URLS ={"/v3/api-docs/**","/swagger-ui/**", "/auth/**"};
     private final PermanentUserDetailsService permanentUserDetailsService;
     private final TempUserDetailsService tempUserDetailsService;
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtAuthenticationFilter[] jwtAuthenticationFilters;
+    private final AuthenticationProvider[] authenticationProviders;
 
     public SecurityConfig(PermanentUserDetailsService permanentUserDetailsService,
                           TempUserDetailsService tempUserDetailsService,
-                          JwtAuthenticationFilter jwtAuthenticationFilter) {
-        this.userDetailsService = userDetailsService;
+                          JwtAuthenticationFilter[] jwtAuthenticationFilters,
+                          AuthenticationProvider[] authenticationProviders) {
+        this.permanentUserDetailsService = permanentUserDetailsService;
         this.tempUserDetailsService = tempUserDetailsService;
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.jwtAuthenticationFilters = jwtAuthenticationFilters;
+        this.authenticationProviders = authenticationProviders;
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
