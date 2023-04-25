@@ -18,8 +18,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Date;
 
-@Component
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
+public abstract class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final TempUserDetailsService tempUserDetailsService;
