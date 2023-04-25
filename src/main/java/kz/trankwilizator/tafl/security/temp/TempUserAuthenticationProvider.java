@@ -1,5 +1,6 @@
 package kz.trankwilizator.tafl.security.temp;
 
+import kz.trankwilizator.tafl.security.details.TempUserDetailsService;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
