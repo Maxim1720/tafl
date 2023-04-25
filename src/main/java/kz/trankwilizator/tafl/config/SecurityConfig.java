@@ -42,12 +42,8 @@ public class SecurityConfig {
                                 .authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .httpBasic()
-                .and()
-                .formLogin()
-                .and()
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+                .httpBasic();
+        return httpSecurity.build();
     }
 
 
