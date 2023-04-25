@@ -71,5 +71,9 @@ public abstract class JwtAuthenticationFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        logger.info("check should not filter: " + request.getRequestURI());
+        return Arrays.stream(SecurityConfig.WHITE_LIST_URLS).anyMatch(p-> p.equals(request.getRequestURI()));
+    }
 }
-
