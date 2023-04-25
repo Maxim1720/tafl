@@ -44,6 +44,13 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic()
                 .authenticationEntryPoint(basicAuthenticationEntryPoint());
+
+        for (JwtAuthenticationFilter j: jwtAuthenticationFilters){
+            httpSecurity = httpSecurity.addFilterBefore(j, UsernamePasswordAuthenticationFilter.class);
+        }
+        for (AuthenticationProvider a : authenticationProviders){
+            httpSecurity.authenticationProvider(a);
+        }
         return httpSecurity.build();
     }
 
