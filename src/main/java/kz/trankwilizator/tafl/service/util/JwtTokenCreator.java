@@ -1,7 +1,8 @@
-package kz.trankwilizator.tafl.service;
+package kz.trankwilizator.tafl.service.util;
 
-import kz.trankwilizator.tafl.crud.TemporaryUserCrudService;
-import kz.trankwilizator.tafl.entity.user.temp.JwtToken;
+import kz.trankwilizator.tafl.entity.user.User;
+import kz.trankwilizator.tafl.service.crud.TemporaryUserCrudService;
+import kz.trankwilizator.tafl.entity.JwtToken;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,15 @@ public class JwtTokenCreator {
         JwtToken jwtToken = new JwtToken();
         jwtToken.setToken(token);
         jwtToken.setExpiryAt(Date.from(new Date().toInstant().plus(expiryTime, ChronoUnit.HOURS)));
-        jwtToken.setTemporaryUser(temporaryUserCrudService.getByUsername(username));
+        jwtToken.setUser(temporaryUserCrudService.getByUsername(username));
+        return jwtToken;
+    }
+
+    public JwtToken create(String token, User user){
+        JwtToken jwtToken = new JwtToken();
+        jwtToken.setToken(token);
+        jwtToken.setExpiryAt(Date.from(new Date().toInstant().plus(expiryTime, ChronoUnit.HOURS)));
+        jwtToken.setUser(user);
         return jwtToken;
     }
 
