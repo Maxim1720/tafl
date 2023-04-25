@@ -1,7 +1,7 @@
-package kz.trankwilizator.tafl.security.temp;
+package kz.trankwilizator.tafl.security;
 
 import io.jsonwebtoken.*;
-import kz.trankwilizator.tafl.auth.reg.temp.UniqueStringGenerator;
+import kz.trankwilizator.tafl.service.util.UniqueStringGenerator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
