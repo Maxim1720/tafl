@@ -3,7 +3,7 @@ package kz.trankwilizator.tafl.config;
 import kz.trankwilizator.tafl.security.filter.JwtAuthenticationFilter;
 import kz.trankwilizator.tafl.security.details.PermanentUserDetailsService;
 import kz.trankwilizator.tafl.security.temp.TempUserAuthenticationProvider;
-import kz.trankwilizator.tafl.security.temp.TempUserDetailsService;
+import kz.trankwilizator.tafl.security.details.TempUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
