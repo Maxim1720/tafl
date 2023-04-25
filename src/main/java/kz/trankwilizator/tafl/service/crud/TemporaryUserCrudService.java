@@ -1,8 +1,8 @@
-package kz.trankwilizator.tafl.crud;
+package kz.trankwilizator.tafl.service.crud;
 
 import jakarta.persistence.EntityExistsException;
-import kz.trankwilizator.tafl.dao.user.temp.TempUserRepository;
-import kz.trankwilizator.tafl.entity.user.temp.TemporaryUser;
+import kz.trankwilizator.tafl.dao.user.UserRepository;
+import kz.trankwilizator.tafl.entity.user.TemporaryUser;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -10,9 +10,11 @@ import java.util.Optional;
 @Service
 public class TemporaryUserCrudService implements Crud<TemporaryUser> {
 
-    private final TempUserRepository tempUserRepository;
+//    private final TempUserRepository tempUserRepository;
 
-    public TemporaryUserCrudService(TempUserRepository tempUserRepository) {
+    private final UserRepository<TemporaryUser> tempUserRepository;
+    public TemporaryUserCrudService(/*TempUserRepository tempUserRepository*/UserRepository<TemporaryUser> tempUserRepository) {
+//        this.tempUserRepository = tempUserRepository;
         this.tempUserRepository = tempUserRepository;
     }
 
@@ -28,7 +30,7 @@ public class TemporaryUserCrudService implements Crud<TemporaryUser> {
 
     public TemporaryUser getByUsername(String username){
         try {
-            return getByOptional(tempUserRepository.findByUsername(username));
+            return getByOptional(tempUserRepository.findByUsernameIgnoreCase(username));
         }
         catch (EntityExistsException e){
             e.addSuppressed(new EntityExistsException(String.format("with username: %s", username)));
