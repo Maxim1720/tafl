@@ -1,4 +1,4 @@
-package kz.trankwilizator.tafl.security.temp.filter;
+package kz.trankwilizator.tafl.security.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
