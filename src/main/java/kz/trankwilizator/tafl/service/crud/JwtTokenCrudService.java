@@ -1,8 +1,9 @@
-package kz.trankwilizator.tafl.crud;
+package kz.trankwilizator.tafl.service.crud;
 
 import jakarta.persistence.EntityExistsException;
-import kz.trankwilizator.tafl.dao.user.temp.JwtTokenRepository;
-import kz.trankwilizator.tafl.entity.user.temp.JwtToken;
+import kz.trankwilizator.tafl.dao.user.JwtTokenRepository;
+import kz.trankwilizator.tafl.entity.JwtToken;
+import kz.trankwilizator.tafl.service.crud.user.UserCrudService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,21 +14,28 @@ import java.util.Set;
 
 @Transactional
 @Service
-public class JwtTokenService {
+public class JwtTokenCrudService implements Crud<JwtToken>{
     private final JwtTokenRepository jwtTokenRepository;
-    private final TemporaryUserCrudService temporaryUserCrudService;
+    private final UserCrudService<?> temporaryUserCrudService;
 
-    public JwtTokenService(JwtTokenRepository jwtTokenRepository,
-                           TemporaryUserCrudService temporaryUserCrudService) {
+    public JwtTokenCrudService(JwtTokenRepository jwtTokenRepository,
+                               UserCrudService<?> temporaryUserCrudService) {
         this.jwtTokenRepository = jwtTokenRepository;
         this.temporaryUserCrudService = temporaryUserCrudService;
     }
 
     public Set<JwtToken> getByUsername(String username){
+
+        return jwtTokenRepository.findJwtTokensByUserUsername(username);
+
+        /*return jwtTokenRepository.findByUser(
+                jwtTokenRepository.findAll().stream().filter(t->t.getUser().getUsername().equals(username)).findFirst().get().getUser()
+        );*/
+        /*
         return jwtTokenRepository
-                .findByTemporaryUser(
+                .findByUser(
                         temporaryUserCrudService.getByUsername(username)
-                );
+                );*/
     }
 
     public JwtToken getByToken(String token){
@@ -36,6 +44,11 @@ public class JwtTokenService {
 
     private JwtToken getFromOptional(Optional<JwtToken> optionalJwtToken){
         return optionalJwtToken.orElseThrow(()->new EntityExistsException("token doesn't exists"));
+    }
+
+    @Override
+    public JwtToken getById(Long id) {
+        return getFromOptional(jwtTokenRepository.findById(id));
     }
 
     public JwtToken save(JwtToken jwtToken){
