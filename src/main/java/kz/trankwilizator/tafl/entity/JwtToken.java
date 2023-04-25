@@ -1,6 +1,8 @@
-package kz.trankwilizator.tafl.entity.user.temp;
+package kz.trankwilizator.tafl.entity;
 
 import jakarta.persistence.*;
+import kz.trankwilizator.tafl.entity.user.User;
+import kz.trankwilizator.tafl.entity.user.TemporaryUser;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,11 +22,11 @@ public class JwtToken {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne(targetEntity = TemporaryUser.class, cascade = {CascadeType.DETACH, CascadeType.MERGE})
-    @JoinColumn(name = "user_id")
-    private TemporaryUser temporaryUser;
+    @ManyToOne(targetEntity = User.class, cascade = {CascadeType.DETACH, CascadeType.MERGE})
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @Column(length = 250, unique = true)
+    @Column(length = 250, unique = true, nullable = false)
     private String token;
 
     @CreationTimestamp
