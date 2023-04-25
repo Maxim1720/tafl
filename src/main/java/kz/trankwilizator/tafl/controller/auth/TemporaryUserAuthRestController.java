@@ -1,7 +1,7 @@
 package kz.trankwilizator.tafl.controller.auth;
 
 
-import kz.trankwilizator.tafl.auth.AuthService;
+import kz.trankwilizator.tafl.service.auth.AuthService;
 import kz.trankwilizator.tafl.dto.AuthToken;
 import kz.trankwilizator.tafl.dto.auth.TempUserAuthDto;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth/temp")
-public class TempAuthRestController extends AuthorizationRestController<TempUserAuthDto> {
-    public TempAuthRestController(AuthService<TempUserAuthDto> authService) {
+public class TemporaryUserAuthRestController extends AuthorizationRestController<TempUserAuthDto> {
+    public TemporaryUserAuthRestController(AuthService<TempUserAuthDto> authService) {
         super(authService);
     }
     @Override

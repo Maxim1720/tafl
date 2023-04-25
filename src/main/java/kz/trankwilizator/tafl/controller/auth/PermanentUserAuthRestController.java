@@ -1,6 +1,6 @@
 package kz.trankwilizator.tafl.controller.auth;
 
-import kz.trankwilizator.tafl.auth.AuthService;
+import kz.trankwilizator.tafl.service.auth.AuthService;
 import kz.trankwilizator.tafl.dto.AuthToken;
 import kz.trankwilizator.tafl.dto.auth.PermanentUserAuthDto;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth/permanent")
-public class PermanentAuthRestController extends AuthorizationRestController<PermanentUserAuthDto> {
-    public PermanentAuthRestController(AuthService<PermanentUserAuthDto> authService) {
+public class PermanentUserAuthRestController extends AuthorizationRestController<PermanentUserAuthDto> {
+    public PermanentUserAuthRestController(AuthService<PermanentUserAuthDto> authService) {
         super(authService);
     }
 
