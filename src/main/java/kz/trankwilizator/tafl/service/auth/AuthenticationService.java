@@ -6,7 +6,7 @@ import kz.trankwilizator.tafl.dto.auth.UserAuthDto;
 import kz.trankwilizator.tafl.entity.JwtToken;
 import kz.trankwilizator.tafl.entity.user.User;
 import kz.trankwilizator.tafl.security.JwtTokenProvider;
-import kz.trankwilizator.tafl.service.JwtTokenCreator;
+import kz.trankwilizator.tafl.service.util.JwtTokenCreator;
 import kz.trankwilizator.tafl.service.crud.JwtTokenCrudService;
 import kz.trankwilizator.tafl.service.crud.user.UserCrudService;
 import lombok.extern.java.Log;
