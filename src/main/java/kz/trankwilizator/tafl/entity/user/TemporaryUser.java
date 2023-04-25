@@ -1,10 +1,9 @@
-package kz.trankwilizator.tafl.entity.user.temp;
+package kz.trankwilizator.tafl.entity.user;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
-import kz.trankwilizator.tafl.entity.user.AbsUser;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,7 +16,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class TemporaryUser extends AbsUser {
+public class TemporaryUser extends User {
 
     @Transient
     private Date expiryAt;
