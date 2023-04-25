@@ -82,9 +82,4 @@ public class SecurityConfig {
         return basicAuthenticationEntryPoint;
     }
 
-    @Bean
-    public PermanentUserRegistrationService registrationService(){
-        return user -> null;
-    }
-
 }
