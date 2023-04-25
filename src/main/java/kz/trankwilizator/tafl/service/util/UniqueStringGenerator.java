@@ -1,4 +1,4 @@
-package kz.trankwilizator.tafl.auth.reg.temp;
+package kz.trankwilizator.tafl.service.util;
 
 import java.security.SecureRandom;
 import java.util.Base64;

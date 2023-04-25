@@ -1,17 +1,18 @@
-package kz.trankwilizator.tafl.auth.reg.temp;
+package kz.trankwilizator.tafl.service.auth.reg.temp;
 
-import kz.trankwilizator.tafl.dao.user.temp.TempUserRepository;
+import kz.trankwilizator.tafl.dao.user.UserRepository;
 import kz.trankwilizator.tafl.dto.TemporaryUserDto;
-import kz.trankwilizator.tafl.entity.user.temp.TemporaryUser;
+import kz.trankwilizator.tafl.entity.user.TemporaryUser;
 import kz.trankwilizator.tafl.mapper.TemporaryUserMapper;
+import kz.trankwilizator.tafl.service.util.UniqueStringGenerator;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RegTempService implements RegistrationTemporaryUserService{
+public class RegTempRegistrationService implements TemporaryUserRegistrationService {
 
-    private final TempUserRepository tempUserRepository;
+    private final UserRepository<TemporaryUser> tempUserRepository;
     private final TemporaryUserMapper temporaryUserMapper;
-    public RegTempService(TempUserRepository tempUserRepository, TemporaryUserMapper temporaryUserMapper) {
+    public RegTempRegistrationService(UserRepository<TemporaryUser> tempUserRepository, TemporaryUserMapper temporaryUserMapper) {
         this.tempUserRepository = tempUserRepository;
         this.temporaryUserMapper = temporaryUserMapper;
     }
