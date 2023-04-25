@@ -44,7 +44,7 @@ public abstract class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if (StringUtils.hasText(jwt) && jwtTokenProvider.validateToken(jwt)) {
                     String username = jwtTokenProvider.getUsernameFromToken(jwt);
-                    if(jwtTokenService.getByToken(jwt).getExpiryAt().after(new Date())){
+                    if (jwtTokenCrudService.getByToken(jwt).getExpiryAt().after(new Date())) {
                         setAuthentication(username, request);
                     }
             }
