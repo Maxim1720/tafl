@@ -38,10 +38,7 @@ public class TempUserAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("Invalid username or password");
         }
 
-        // Создаем объект Authentication
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_TEMP_USER"));
-        return new TempUserAuthenticationToken(username, authorities);
+        return new TempUserAuthenticationToken(username, user.getAuthorities());
     }
 
     @Override
