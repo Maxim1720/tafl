@@ -3,8 +3,10 @@ package kz.trankwilizator.tafl.entity.user;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -13,14 +15,17 @@ import java.util.Date;
 @Table(name = "temporary_user")
 @Getter
 @Setter
-public class TemporaryUser extends AbsUser{
+@ToString
+public class TemporaryUser extends User {
 
+    @Transient
     private Date expiryAt;
 
     @Column(nullable = false)
-    public Date expiryAt(){
+    public Date getExpiryAt(){
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.HOUR_OF_DAY, 24);
-        return Date.from(calendar.toInstant());
+        expiryAt = Date.from(calendar.toInstant());
+        return expiryAt;
     }
 }

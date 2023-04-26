@@ -1,7 +1,7 @@
 package kz.trankwilizator.tafl.controller.auth.reg;
 
-import kz.trankwilizator.tafl.auth.reg.RegistrationService;
-import kz.trankwilizator.tafl.auth.reg.RegistrationTemporaryUserService;
+import kz.trankwilizator.tafl.service.auth.reg.PermanentUserRegistrationService;
+import kz.trankwilizator.tafl.service.auth.reg.temp.TemporaryUserRegistrationService;
 import kz.trankwilizator.tafl.dto.TemporaryUserDto;
 import kz.trankwilizator.tafl.dto.PermanentUserDto;
 import org.springframework.http.HttpStatus;
@@ -14,22 +14,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth/reg")
 public class RegistrationRestController {
-    private final RegistrationService registrationService;
-    private final RegistrationTemporaryUserService registrationTemporaryUserService;
+    private final PermanentUserRegistrationService permanentUserRegistrationService;
+    private final TemporaryUserRegistrationService temporaryUserRegistrationService;
 
-    public RegistrationRestController(RegistrationService registrationService,
-                                      RegistrationTemporaryUserService registrationTemporaryUserService) {
-        this.registrationService = registrationService;
-        this.registrationTemporaryUserService = registrationTemporaryUserService;
+    public RegistrationRestController(PermanentUserRegistrationService permanentUserRegistrationService,
+                                      TemporaryUserRegistrationService temporaryUserRegistrationService) {
+        this.permanentUserRegistrationService = permanentUserRegistrationService;
+        this.temporaryUserRegistrationService = temporaryUserRegistrationService;
     }
 
     @PostMapping("/permanent")
     public ResponseEntity<PermanentUserDto> createUser(@RequestBody PermanentUserDto user){
-        return ResponseEntity.status(HttpStatus.CREATED).body(registrationService.createUser(user));
+        return ResponseEntity.status(HttpStatus.CREATED).body(permanentUserRegistrationService.createUser(user));
     }
     @PostMapping("/temp")
     public ResponseEntity<TemporaryUserDto> createCheck(){
-        return ResponseEntity.status(HttpStatus.CREATED).body(registrationTemporaryUserService.create());
+        return ResponseEntity.status(HttpStatus.CREATED).body(temporaryUserRegistrationService.create());
     }
 
 }
