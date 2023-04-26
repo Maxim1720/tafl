@@ -2,7 +2,6 @@ package kz.trankwilizator.tafl.entity;
 
 import jakarta.persistence.*;
 import kz.trankwilizator.tafl.entity.user.User;
-import kz.trankwilizator.tafl.entity.user.TemporaryUser;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
