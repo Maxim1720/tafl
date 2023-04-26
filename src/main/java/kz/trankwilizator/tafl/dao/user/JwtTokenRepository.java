@@ -1,7 +1,6 @@
 package kz.trankwilizator.tafl.dao.user;
 
 import kz.trankwilizator.tafl.entity.JwtToken;
-import kz.trankwilizator.tafl.entity.user.TemporaryUser;
 import kz.trankwilizator.tafl.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.NonNull;
