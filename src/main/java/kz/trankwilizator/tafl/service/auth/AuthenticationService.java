@@ -38,17 +38,13 @@ public abstract class AuthenticationService<D extends UserAuthDto, U extends Use
         Optional<JwtToken> t = jwtTokenCrudService.getActual(userAuthDto.getUsername());
 
         JwtToken actualToken = t.orElseGet(() -> {
-                    JwtToken jwtToken = jwtTokenCreator.create(jwtTokenProvider.generateToken(userAuthDto.getUsername()),
-                            userUserCrudService.getByUsername(userAuthDto.getUsername()));
-                    try {
-                        jwtTokenCrudService.getByToken(jwtToken.getToken());
-                        log.warning(jwtToken.getToken());
-                    }
-                    catch (EntityExistsException ignored){
-                        log.info("token doesn't exists");
-                    }
-                    jwtTokenCrudService.save(jwtToken);
-                    return jwtToken;
+                    JwtToken jwtToken =
+                            jwtTokenCreator.create(
+                                    jwtTokenProvider.generateToken(userAuthDto.getUsername()),
+                                    userCrudService.getByUsername(userAuthDto.getUsername())
+                            );
+                    return jwtTokenCrudService.save(jwtToken);
+
                 }
         );
         return new AuthToken(actualToken.getToken());
