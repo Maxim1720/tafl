@@ -4,6 +4,6 @@ import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class TempUserAuthDto extends UserAuthDto{
+public class TemporaryUserAuthDto extends UserAuthDto{
 
 }
