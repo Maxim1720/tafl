@@ -22,7 +22,9 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 @EnableWebSecurity
 @PropertySource("classpath:auth.properties")
 public class SecurityConfig {
-    public static String[] WHITE_LIST_URLS ={"/v3/api-docs/**","/swagger-ui/**", "/auth/**"};
+
+    @Value(value = "${auth.permit-all.paths}")
+    private String[] WHITE_LIST_URLS;
     private final PermanentUserDetailsService permanentUserDetailsService;
     private final TempUserDetailsService tempUserDetailsService;
     private final JwtAuthenticationFilter[] jwtAuthenticationFilters;
