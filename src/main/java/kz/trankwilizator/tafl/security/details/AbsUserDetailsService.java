@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 
-public abstract class AbsUserDetailsService/*<U extends User>*/ implements UserDetailsService {
+public abstract class AbsUserDetailsService<U extends User> implements UserDetailsService {
 
     public AbsUserDetailsService() {
     }
