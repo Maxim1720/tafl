@@ -1,6 +1,7 @@
 package kz.trankwilizator.tafl.security.details;
 
 import kz.trankwilizator.tafl.entity.user.User;
+import kz.trankwilizator.tafl.service.crud.user.UserCrudService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
