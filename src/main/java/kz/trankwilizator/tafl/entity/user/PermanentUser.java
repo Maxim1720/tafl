@@ -17,6 +17,7 @@ import java.util.Date;
 @ToString
 @Entity(name = "user_profile")
 @Table(name = "user_profile")
+@DiscriminatorValue("permanent")
 public class PermanentUser extends User implements Serializable {
 
     @Column(length = 75, nullable = false)
