@@ -1,8 +1,10 @@
 package kz.trankwilizator.tafl.controller.auth;
 
-import kz.trankwilizator.tafl.service.auth.AuthService;
-import kz.trankwilizator.tafl.dto.AuthToken;
+import jakarta.servlet.http.HttpServletRequest;
 import kz.trankwilizator.tafl.dto.auth.UserAuthDto;
+import kz.trankwilizator.tafl.dto.response.ResponseDto;
+import kz.trankwilizator.tafl.service.auth.AuthService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +17,12 @@ public abstract class AuthorizationRestController<UserDto extends UserAuthDto> {
 
 
     @PostMapping("/login")
-    public ResponseEntity<AuthToken> authorization(@RequestBody UserDto user){
-        return ResponseEntity.accepted().body(authService.authenticate(user));
+    public ResponseEntity<ResponseDto> authorization(@RequestBody UserDto user, HttpServletRequest request){
+        ResponseDto responseDto = new ResponseDto();
+        responseDto.setBody(authService.authenticate(user));
+        responseDto.setPath(request.getRequestURI());
+        responseDto.setMessage("User authenticated");
+        responseDto.setStatus(HttpStatus.OK.value());
+        return ResponseEntity.accepted().body(responseDto);
     }
 }
