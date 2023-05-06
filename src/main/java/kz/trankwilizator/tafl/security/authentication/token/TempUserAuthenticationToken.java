@@ -1,4 +1,4 @@
-package kz.trankwilizator.tafl.security.temp;
+package kz.trankwilizator.tafl.security.authentication.token;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
