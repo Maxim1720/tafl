@@ -6,6 +6,7 @@ import kz.trankwilizator.tafl.security.temp.TempUserAuthenticationProvider;
 import kz.trankwilizator.tafl.security.details.TempUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,6 +20,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 
 @Configuration
 @EnableWebSecurity
+@PropertySource("classpath:auth.properties")
 public class SecurityConfig {
     public static String[] WHITE_LIST_URLS ={"/v3/api-docs/**","/swagger-ui/**", "/auth/**"};
     private final PermanentUserDetailsService permanentUserDetailsService;
