@@ -20,6 +20,7 @@ public abstract class AbsUserDetailsService<U extends User> implements UserDetai
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        U user = userCrudService.getByUsername(username);
         return org.springframework.security.core.userdetails.User
                 .withUsername(username)
                 .password(password(username))
