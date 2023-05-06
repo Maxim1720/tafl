@@ -47,7 +47,12 @@ public class JwtTokenCrudService implements Crud<JwtToken>{
 
     @Override
     public JwtToken getById(Long id) {
-        return getFromOptional(jwtTokenRepository.findById(id));
+        try {
+            return getFromOptional(jwtTokenRepository.findById(id));
+        }catch (EntityExistsException e){
+            e.addSuppressed(new EntityNotFoundException("with id: "+ id));
+            throw e;
+        }
     }
 
     public JwtToken save(JwtToken jwtToken){
