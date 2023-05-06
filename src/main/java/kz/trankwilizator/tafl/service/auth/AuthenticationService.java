@@ -1,6 +1,5 @@
 package kz.trankwilizator.tafl.service.auth;
 
-import jakarta.persistence.EntityExistsException;
 import kz.trankwilizator.tafl.dto.AuthToken;
 import kz.trankwilizator.tafl.dto.auth.UserAuthDto;
 import kz.trankwilizator.tafl.entity.JwtToken;
