@@ -11,10 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PermanentUserDetailsService extends AbsUserDetailsService/*<PermanentUser>*/ {
+public class PermanentUserDetailsService extends AbsUserDetailsService<PermanentUser> {
 
     private final UserCrudService<PermanentUser> permanentUserUserCrudService;
     public PermanentUserDetailsService(UserCrudService<PermanentUser> permanentUserUserCrudService) {
+        super(permanentUserUserCrudService);
         this.permanentUserUserCrudService = permanentUserUserCrudService;
     }
 
