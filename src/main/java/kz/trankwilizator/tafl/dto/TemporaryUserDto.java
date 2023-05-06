@@ -11,6 +11,6 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TemporaryUserDto extends AbsUserDto {
+public class TemporaryUserDto extends UserDto {
     private Date expiryAt;
 }
