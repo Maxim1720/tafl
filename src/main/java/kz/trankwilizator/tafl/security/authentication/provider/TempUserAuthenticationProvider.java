@@ -1,6 +1,7 @@
-package kz.trankwilizator.tafl.security.temp;
+package kz.trankwilizator.tafl.security.authentication.provider;
 
-import kz.trankwilizator.tafl.security.details.TempUserDetailsService;
+import kz.trankwilizator.tafl.security.authentication.token.TempUserAuthenticationToken;
+import kz.trankwilizator.tafl.security.details.TemporaryUserDetailsService;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -11,9 +12,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class TempUserAuthenticationProvider implements AuthenticationProvider {
 
-    private final TempUserDetailsService userDetailsService;
+    private final TemporaryUserDetailsService userDetailsService;
 
-    public TempUserAuthenticationProvider(TempUserDetailsService userDetailsService) {
+    public TempUserAuthenticationProvider(TemporaryUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
