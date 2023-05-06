@@ -16,12 +16,10 @@ import java.util.Set;
 @Service
 public class JwtTokenCrudService implements Crud<JwtToken>{
     private final JwtTokenRepository jwtTokenRepository;
-    private final UserCrudService<?> temporaryUserCrudService;
 
     public JwtTokenCrudService(JwtTokenRepository jwtTokenRepository,
                                UserCrudService<?> temporaryUserCrudService) {
         this.jwtTokenRepository = jwtTokenRepository;
-        this.temporaryUserCrudService = temporaryUserCrudService;
     }
 
     public Set<JwtToken> getByUsername(String username){
