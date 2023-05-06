@@ -3,7 +3,9 @@ package kz.trankwilizator.tafl.service.crud;
 import jakarta.persistence.EntityExistsException;
 import kz.trankwilizator.tafl.dao.user.JwtTokenRepository;
 import kz.trankwilizator.tafl.entity.JwtToken;
-import kz.trankwilizator.tafl.service.crud.user.UserCrudService;
+import lombok.extern.java.Log;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +39,10 @@ public class JwtTokenCrudService implements Crud<JwtToken>{
     }
 
     private JwtToken getFromOptional(Optional<JwtToken> optionalJwtToken){
-        return optionalJwtToken.orElseThrow(()->new EntityExistsException("token doesn't exists"));
+        return optionalJwtToken.orElseThrow(()->{
+            log.warning("token doesn't exists");
+            return new EntityNotFoundException("token doesn't exists");
+        });
     }
 
     @Override
