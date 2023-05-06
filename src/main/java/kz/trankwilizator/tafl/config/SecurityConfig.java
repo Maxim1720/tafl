@@ -29,6 +29,8 @@ public class SecurityConfig {
     private final TemporaryUserDetailsService temporaryUserDetailsService;
     private final OncePerRequestFilter[] jwtAuthenticationFilters;
     private final AuthenticationProvider[] authenticationProviders;
+    private final AuthenticationEntryPoint[] authEntryPoints;
+    private final LogoutHandler logoutHandler;
 
     public SecurityConfig(PermanentUserDetailsService permanentUserDetailsService,
                           TemporaryUserDetailsService temporaryUserDetailsService,
@@ -40,6 +42,8 @@ public class SecurityConfig {
         this.tempUserDetailsService = tempUserDetailsService;
         this.jwtAuthenticationFilters = jwtAuthenticationFilters;
         this.authenticationProviders = authenticationProviders;
+        this.authEntryPoints = authEntryPoints;
+        this.logoutHandler = logoutHandler;
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
