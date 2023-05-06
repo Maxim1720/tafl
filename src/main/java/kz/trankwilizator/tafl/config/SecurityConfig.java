@@ -66,7 +66,10 @@ public class SecurityConfig {
             httpSecurity = httpSecurity.addFilterBefore(j, UsernamePasswordAuthenticationFilter.class);
         }
         for (AuthenticationProvider a : authenticationProviders){
-            httpSecurity.authenticationProvider(a);
+            httpSecurity = httpSecurity.authenticationProvider(a);
+        }
+        for (AuthenticationEntryPoint authenticationEntryPoint : authEntryPoints){
+            httpSecurity = httpSecurity.httpBasic().authenticationEntryPoint(authenticationEntryPoint).and();
         }
         return httpSecurity.build();
     }
