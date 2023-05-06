@@ -4,7 +4,8 @@ import jakarta.persistence.EntityExistsException;
 import kz.trankwilizator.tafl.dao.user.UserRepository;
 import kz.trankwilizator.tafl.entity.user.User;
 import kz.trankwilizator.tafl.service.crud.Crud;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 
 import java.util.Optional;
 
@@ -26,7 +27,13 @@ public abstract class UserCrudService<U extends User> implements Crud<U> {
     }
 
     public U getByUsername(String username){
-        return getFromOptional(repository.findByUsernameIgnoreCase(username));
+        try {
+            return getFromOptional(repository.findByUsernameIgnoreCase(username));
+        }
+        catch (EntityNotFoundException e){
+            e.addSuppressed(new EntityNotFoundException("with username: " + username));
+            throw e;
+        }
     }
 
     private U getFromOptional(Optional<U> u){
