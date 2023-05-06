@@ -58,7 +58,9 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic()
-                .authenticationEntryPoint(basicAuthenticationEntryPoint());
+                .and()
+                .logout(logoutConfigurer -> logoutConfigurer.addLogoutHandler(logoutHandler).logoutUrl("/auth/logout"))
+                ;
 
         for (OncePerRequestFilter j: jwtAuthenticationFilters){
             httpSecurity = httpSecurity.addFilterBefore(j, UsernamePasswordAuthenticationFilter.class);
