@@ -1,7 +1,8 @@
 package kz.trankwilizator.tafl.service.crud;
 
 import jakarta.persistence.EntityExistsException;
-import kz.trankwilizator.tafl.dao.user.JwtTokenRepository;
+import jakarta.persistence.EntityNotFoundException;
+import kz.trankwilizator.tafl.dao.JwtTokenRepository;
 import kz.trankwilizator.tafl.entity.JwtToken;
 import lombok.extern.java.Log;
 import org.springframework.data.domain.Example;
