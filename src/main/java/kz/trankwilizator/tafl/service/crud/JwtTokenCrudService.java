@@ -62,7 +62,7 @@ public class JwtTokenCrudService implements Crud<JwtToken>{
 
     @Override
     public boolean exists(JwtToken jwtToken) {
-        return jwtTokenRepository.exists(new Example<JwtToken>() {
+        return jwtTokenRepository.exists(new Example<>() {
             @Override
             public JwtToken getProbe() {
                 return jwtToken;
