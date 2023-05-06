@@ -1,9 +1,10 @@
 package kz.trankwilizator.tafl.config;
 
-import kz.trankwilizator.tafl.security.filter.JwtAuthenticationFilter;
+import kz.trankwilizator.tafl.security.authentication.provider.TempUserAuthenticationProvider;
 import kz.trankwilizator.tafl.security.details.PermanentUserDetailsService;
-import kz.trankwilizator.tafl.security.temp.TempUserAuthenticationProvider;
-import kz.trankwilizator.tafl.security.details.TempUserDetailsService;
+import kz.trankwilizator.tafl.security.details.TemporaryUserDetailsService;
+import kz.trankwilizator.tafl.security.logout.LogoutHandler;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -14,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.OncePerRequestFilter;
