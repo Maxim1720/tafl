@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 
-public abstract class JwtAuthenticationFilter extends OncePerRequestFilter {
+public abstract class JwtAuthenticationFilter<U extends User> extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final JwtTokenCrudService jwtTokenCrudService;
