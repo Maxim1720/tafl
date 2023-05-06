@@ -26,14 +26,16 @@ public class SecurityConfig {
     @Value(value = "${auth.permit-all.paths}")
     private String[] WHITE_LIST_URLS;
     private final PermanentUserDetailsService permanentUserDetailsService;
-    private final TempUserDetailsService tempUserDetailsService;
-    private final JwtAuthenticationFilter[] jwtAuthenticationFilters;
+    private final TemporaryUserDetailsService temporaryUserDetailsService;
+    private final OncePerRequestFilter[] jwtAuthenticationFilters;
     private final AuthenticationProvider[] authenticationProviders;
 
     public SecurityConfig(PermanentUserDetailsService permanentUserDetailsService,
-                          TempUserDetailsService tempUserDetailsService,
-                          JwtAuthenticationFilter[] jwtAuthenticationFilters,
-                          AuthenticationProvider[] authenticationProviders) {
+                          TemporaryUserDetailsService temporaryUserDetailsService,
+                          OncePerRequestFilter[] jwtAuthenticationFilters,
+                          AuthenticationProvider[] authenticationProviders,
+                          AuthenticationEntryPoint[] authEntryPoints,
+                          LogoutHandler logoutHandler) {
         this.permanentUserDetailsService = permanentUserDetailsService;
         this.tempUserDetailsService = tempUserDetailsService;
         this.jwtAuthenticationFilters = jwtAuthenticationFilters;
@@ -54,7 +56,7 @@ public class SecurityConfig {
                 .httpBasic()
                 .authenticationEntryPoint(basicAuthenticationEntryPoint());
 
-        for (JwtAuthenticationFilter j: jwtAuthenticationFilters){
+        for (OncePerRequestFilter j: jwtAuthenticationFilters){
             httpSecurity = httpSecurity.addFilterBefore(j, UsernamePasswordAuthenticationFilter.class);
         }
         for (AuthenticationProvider a : authenticationProviders){
@@ -74,7 +76,7 @@ public class SecurityConfig {
 
     @Bean
     public TempUserAuthenticationProvider temporaryUserAuthenticationProvider(){
-        return new TempUserAuthenticationProvider(tempUserDetailsService);
+        return new TempUserAuthenticationProvider(temporaryUserDetailsService);
     }
 
     @Bean
