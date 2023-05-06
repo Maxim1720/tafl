@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
-public class UserCrudService<U extends User> implements Crud<U> {
+public abstract class UserCrudService<U extends User> implements Crud<U> {
     private final UserRepository<U> repository;
 
     protected UserCrudService(UserRepository<U> repository) {
