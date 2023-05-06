@@ -10,7 +10,10 @@ import java.util.List;
 
 public abstract class AbsUserDetailsService<U extends User> implements UserDetailsService {
 
-    public AbsUserDetailsService() {
+    private final UserCrudService<U> userCrudService;
+
+    public AbsUserDetailsService(UserCrudService<U> userCrudService) {
+        this.userCrudService = userCrudService;
     }
 
 
