@@ -59,6 +59,26 @@ public class JwtTokenCrudService implements Crud<JwtToken>{
         return jwtTokenRepository.save(jwtToken);
     }
 
+    @Override
+    public boolean exists(JwtToken jwtToken) {
+        return jwtTokenRepository.exists(new Example<JwtToken>() {
+            @Override
+            public JwtToken getProbe() {
+                return jwtToken;
+            }
+
+            @Override
+            public ExampleMatcher getMatcher() {
+                return ExampleMatcher.matchingAll();
+            }
+        });
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return !jwtTokenRepository.findJwtTokensByUserUsername(username).isEmpty();
+    }
+
     public Collection<JwtToken> saveAll(Collection<JwtToken> jwtTokens){
         return jwtTokenRepository.saveAll(jwtTokens);
     }
