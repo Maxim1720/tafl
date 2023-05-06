@@ -10,6 +10,7 @@ import kz.trankwilizator.tafl.service.util.JwtTokenCreator;
 import kz.trankwilizator.tafl.service.crud.JwtTokenCrudService;
 import kz.trankwilizator.tafl.service.crud.user.UserCrudService;
 import lombok.extern.java.Log;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Date;
