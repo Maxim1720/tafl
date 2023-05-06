@@ -17,8 +17,7 @@ import java.util.Set;
 public class JwtTokenCrudService implements Crud<JwtToken>{
     private final JwtTokenRepository jwtTokenRepository;
 
-    public JwtTokenCrudService(JwtTokenRepository jwtTokenRepository,
-                               UserCrudService<?> temporaryUserCrudService) {
+    public JwtTokenCrudService(JwtTokenRepository jwtTokenRepository) {
         this.jwtTokenRepository = jwtTokenRepository;
     }
 
