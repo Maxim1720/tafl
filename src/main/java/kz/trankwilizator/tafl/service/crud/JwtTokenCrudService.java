@@ -14,6 +14,7 @@ import java.util.Set;
 
 @Transactional
 @Service
+@Log
 public class JwtTokenCrudService implements Crud<JwtToken>{
     private final JwtTokenRepository jwtTokenRepository;
 
