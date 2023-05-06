@@ -27,15 +27,6 @@ public class JwtTokenCrudService implements Crud<JwtToken>{
     public Set<JwtToken> getByUsername(String username){
 
         return jwtTokenRepository.findJwtTokensByUserUsername(username);
-
-        /*return jwtTokenRepository.findByUser(
-                jwtTokenRepository.findAll().stream().filter(t->t.getUser().getUsername().equals(username)).findFirst().get().getUser()
-        );*/
-        /*
-        return jwtTokenRepository
-                .findByUser(
-                        temporaryUserCrudService.getByUsername(username)
-                );*/
     }
 
     public JwtToken getByToken(String token){
