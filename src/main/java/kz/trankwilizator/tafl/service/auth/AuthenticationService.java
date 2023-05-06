@@ -22,15 +22,15 @@ public abstract class AuthenticationService<D extends UserAuthDto, U extends Use
     private final JwtTokenCrudService jwtTokenCrudService;
     private final JwtTokenCreator jwtTokenCreator;
     private final JwtTokenProvider jwtTokenProvider;
-    private final UserCrudService<U> userUserCrudService;
+    private final UserCrudService<U> userCrudService;
     public AuthenticationService(JwtTokenCrudService jwtTokenCrudService,
                                  JwtTokenCreator jwtTokenCreator,
                                  JwtTokenProvider jwtTokenProvider,
-                                 UserCrudService<U> userUserCrudService) {
+                                 UserCrudService<U> userCrudService) {
         this.jwtTokenCrudService = jwtTokenCrudService;
         this.jwtTokenCreator = jwtTokenCreator;
         this.jwtTokenProvider = jwtTokenProvider;
-        this.userUserCrudService = userUserCrudService;
+        this.userCrudService = userCrudService;
     }
 
     @Override
