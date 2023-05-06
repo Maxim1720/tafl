@@ -27,7 +27,13 @@ public class JwtTokenCrudService implements Crud<JwtToken>{
     }
 
     public JwtToken getByToken(String token){
-        return getFromOptional(jwtTokenRepository.findByToken(token));
+        try {
+            return getFromOptional(jwtTokenRepository.findByToken(token));
+        }
+        catch (EntityNotFoundException e){
+            e.addSuppressed(new EntityNotFoundException("with value = " + token));
+            throw e;
+        }
     }
 
     private JwtToken getFromOptional(Optional<JwtToken> optionalJwtToken){
