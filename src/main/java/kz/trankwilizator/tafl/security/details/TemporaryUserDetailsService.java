@@ -27,32 +27,4 @@ public class TempUserDetailsService extends AbsUserDetailsService {
     protected String password(String username) {
         return "temp";
     }
-/*
-    private final UserRepository<TemporaryUser> temporaryUserRepository;
-
-    public TempUserDetailsService(UserRepository<TemporaryUser> temporaryUserRepository) {
-        this.temporaryUserRepository = temporaryUserRepository;
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        TemporaryUser tu = temporaryUserRepository.findByUsernameIgnoreCase(username)
-                .orElseThrow(
-                        ()-> new UsernameNotFoundException(String.format("%s doesn't exists", username))
-                );
-        return User.withUsername(tu.getUsername()).roles("USER").password("temp").build();
-    }
-
-    /*public String authenticate(String username) {
-        temporaryUserCrudService.getByUsername(username);
-        return jwtTokenProvider.generateToken(username);
-    }
-    public boolean authorize(String token) {
-        if (jwtTokenProvider.validateToken(token)) {
-            String username = jwtTokenProvider.getUsernameFromToken(token);
-            return true;
-        }
-        return false;
-    }*/
-
 }
