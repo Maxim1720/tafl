@@ -58,6 +58,11 @@ public abstract class AuthenticationService<D extends UserAuthDto, U extends Use
     public void logout() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Set<JwtToken> jwtTokenSet = jwtTokenCrudService.getByUsername(username);
+
+        if(jwtTokenSet.isEmpty()){
+            throw new AuthenticationServiceException("user not logged in");
+        }
+
         jwtTokenSet.forEach(t -> {
             Date curDate = new Date();
             if(t.getExpiryAt().after(curDate)){
