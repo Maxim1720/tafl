@@ -23,14 +23,15 @@ import java.util.Date;
 public abstract class JwtAuthenticationFilter<U extends User> extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
-    private final JwtTokenCrudService jwtTokenCrudService;
-    private final UserDetailsService userDetailsService;
+    private final JwtTokenService jwtTokenService;
+    private final AbsUserDetailsService<U> userDetailsService;
+
 
     protected JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider,
                                    JwtTokenCrudService jwtTokenCrudService,
                                    UserDetailsService userDetailsService) {
         this.jwtTokenProvider = jwtTokenProvider;
-        this.jwtTokenCrudService = jwtTokenCrudService;
+        this.jwtTokenService = jwtTokenService;
         this.userDetailsService = userDetailsService;
     }
 
