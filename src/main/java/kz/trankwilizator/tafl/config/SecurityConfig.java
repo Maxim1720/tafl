@@ -39,7 +39,7 @@ public class SecurityConfig {
                           AuthenticationEntryPoint[] authEntryPoints,
                           LogoutHandler logoutHandler) {
         this.permanentUserDetailsService = permanentUserDetailsService;
-        this.tempUserDetailsService = tempUserDetailsService;
+        this.temporaryUserDetailsService = temporaryUserDetailsService;
         this.jwtAuthenticationFilters = jwtAuthenticationFilters;
         this.authenticationProviders = authenticationProviders;
         this.authEntryPoints = authEntryPoints;
