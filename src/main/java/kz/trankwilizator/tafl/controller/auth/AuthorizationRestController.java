@@ -18,11 +18,12 @@ public abstract class AuthorizationRestController<UserDto extends UserAuthDto> {
 
     @PostMapping("/login")
     public ResponseEntity<ResponseDto> authorization(@RequestBody UserDto user, HttpServletRequest request){
+        HttpStatus status = HttpStatus.ACCEPTED;
         ResponseDto responseDto = new ResponseDto();
         responseDto.setBody(authService.authenticate(user));
         responseDto.setPath(request.getRequestURI());
         responseDto.setMessage("User authenticated");
-        responseDto.setStatus(HttpStatus.OK.value());
-        return ResponseEntity.accepted().body(responseDto);
+        responseDto.setStatus(status.value());
+        return ResponseEntity.status(status).body(responseDto);
     }
 }
