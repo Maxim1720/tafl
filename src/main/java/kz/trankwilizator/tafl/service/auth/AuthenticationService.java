@@ -47,7 +47,7 @@ public abstract class AuthenticationService<D extends UserAuthDto, U extends Use
 
                 }
         );
-        return new AuthToken(actualToken.getToken());
+        return new AuthToken(actualToken.getToken(), actualToken.getExpiryAt());
     }
 
     @Override
