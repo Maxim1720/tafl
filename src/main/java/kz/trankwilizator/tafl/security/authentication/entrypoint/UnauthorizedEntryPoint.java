@@ -34,8 +34,7 @@ public class UnauthorizedEntryPoint implements AuthenticationEntryPoint {
 
         String jwt = requestUtil.getJwtTokenFromRequest(request);
         if(!jwt.equals("")){
-            AuthToken authToken = new AuthToken(jwt);
-            errorDto.setBody(authToken);
+            errorDto.setBody(jwt);
         }
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
