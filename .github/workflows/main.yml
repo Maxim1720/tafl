@@ -17,7 +17,8 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: 21
+          java-version: 20
+          distribution: 'oracle' 
 
       - name: Build and Test
         run: |
