@@ -13,11 +13,11 @@ services:
     depends_on:
       - db
 
-  db:
-    image: postgres:15-alpine
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: trankwilizator
-      POSTGRES_PASSWORD: 517881m
-      POSTGRES_DB: tafl_db
+#  db:
+#    image: postgres:15-alpine
+#    ports:
+#      - "5432:5432"
+#    environment:
+#      POSTGRES_USER: trankwilizator
+#      POSTGRES_PASSWORD: 517881m
+#      POSTGRES_DB: tafl_db
