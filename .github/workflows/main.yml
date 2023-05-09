@@ -4,40 +4,38 @@ on:
   push:
     branches:
       - '*'
-  workflow_dispatch:
-    jobs:
-      build:
-      name: Build and Deploy
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@v3
+jobs:
+  build:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'oracle'
 
-        - name: Set up JDK
-          uses: actions/setup-java@v3
-          with:
-            java-version: 17
-            distribution: 'oracle'
-
-        - name: Start PostgreSQL container
-          run: |
-            docker run -d -p 5432:5432 \
+      - name: Start PostgreSQL container
+        run: |
+          docker run -d -p 5432:5432 \
             -e POSTGRES_USER=trankwilizator \
             -e POSTGRES_PASSWORD=517881m \
             -e POSTGRES_DB=tafl_db \
             postgres:15-alpine
 
-        - name: Build the application
-          run: mvn clean package
+      - name: Build the application
+        run: mvn clean package
 
-        - name: Start the application container
-          run: docker-compose up --build
+      - name: Start the application container
+        run: docker-compose up --build
 
-        - name: Check deployment status
-          run: |
-            if [ $? -eq 0 ]; then
-              echo "Deployment successful"
-            else
-              echo "Deployment failed"
-              exit 1
-            fi
+      - name: Check deployment status
+        run: |
+          if [ $? -eq 0 ]; then
+            echo "Deployment successful"
+          else
+            echo "Deployment failed"
+            exit 1
+          fi
