@@ -1,15 +1,15 @@
 package kz.trankwilizator.tafl.service.crud.user;
 
-import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import kz.trankwilizator.tafl.dao.user.UserRepository;
 import kz.trankwilizator.tafl.entity.user.User;
 import kz.trankwilizator.tafl.service.crud.Crud;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 
 import java.util.Optional;
 
-@Service
-public class UserCrudService<U extends User> implements Crud<U> {
+public abstract class UserCrudService<U extends User> implements Crud<U> {
     private final UserRepository<U> repository;
 
     protected UserCrudService(UserRepository<U> repository) {
@@ -27,10 +27,37 @@ public class UserCrudService<U extends User> implements Crud<U> {
     }
 
     public U getByUsername(String username){
-        return getFromOptional(repository.findByUsernameIgnoreCase(username));
+        try {
+            return getFromOptional(repository.findByUsernameIgnoreCase(username));
+        }
+        catch (EntityNotFoundException e){
+            e.addSuppressed(new EntityNotFoundException("with username: " + username));
+            throw e;
+        }
     }
 
     private U getFromOptional(Optional<U> u){
-        return u.orElseThrow(()->new EntityExistsException("doesn't exists"));
+        return u.orElseThrow(()->new EntityNotFoundException("doesn't exists"));
+    }
+
+
+    @Override
+    public boolean exists(U u) {
+        return repository.exists(new Example<>() {
+            @Override
+            public U getProbe() {
+                return u;
+            }
+
+            @Override
+            public ExampleMatcher getMatcher() {
+                return ExampleMatcher.matchingAll();
+            }
+        });
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return repository.findByUsernameIgnoreCase(username).isPresent();
     }
 }

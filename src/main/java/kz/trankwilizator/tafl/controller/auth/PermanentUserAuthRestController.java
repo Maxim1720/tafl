@@ -1,8 +1,9 @@
 package kz.trankwilizator.tafl.controller.auth;
 
-import kz.trankwilizator.tafl.service.auth.AuthService;
-import kz.trankwilizator.tafl.dto.AuthToken;
+import jakarta.servlet.http.HttpServletRequest;
 import kz.trankwilizator.tafl.dto.auth.PermanentUserAuthDto;
+import kz.trankwilizator.tafl.dto.response.ResponseDto;
+import kz.trankwilizator.tafl.service.auth.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,7 @@ public class PermanentUserAuthRestController extends AuthorizationRestController
     }
 
     @Override
-    public ResponseEntity<AuthToken> authorization(@RequestBody PermanentUserAuthDto user) {
-        return super.authorization(user);
+    public ResponseEntity<ResponseDto> authorization(@RequestBody PermanentUserAuthDto user, HttpServletRequest request) {
+        return super.authorization(user, request);
     }
 }

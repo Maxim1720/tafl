@@ -8,11 +8,11 @@ import kz.trankwilizator.tafl.service.util.UniqueStringGenerator;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RegTempRegistrationService implements TemporaryUserRegistrationService {
+public class TempUserRegistrationService implements TemporaryUserRegistrationService {
 
     private final UserRepository<TemporaryUser> tempUserRepository;
     private final TemporaryUserMapper temporaryUserMapper;
-    public RegTempRegistrationService(UserRepository<TemporaryUser> tempUserRepository, TemporaryUserMapper temporaryUserMapper) {
+    public TempUserRegistrationService(UserRepository<TemporaryUser> tempUserRepository, TemporaryUserMapper temporaryUserMapper) {
         this.tempUserRepository = tempUserRepository;
         this.temporaryUserMapper = temporaryUserMapper;
     }

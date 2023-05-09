@@ -1,6 +1,5 @@
 package kz.trankwilizator.tafl.service.auth;
 
-import jakarta.persistence.EntityExistsException;
 import kz.trankwilizator.tafl.dto.AuthToken;
 import kz.trankwilizator.tafl.dto.auth.UserAuthDto;
 import kz.trankwilizator.tafl.entity.JwtToken;
@@ -10,6 +9,7 @@ import kz.trankwilizator.tafl.service.util.JwtTokenCreator;
 import kz.trankwilizator.tafl.service.crud.JwtTokenCrudService;
 import kz.trankwilizator.tafl.service.crud.user.UserCrudService;
 import lombok.extern.java.Log;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Date;
@@ -22,15 +22,15 @@ public abstract class AuthenticationService<D extends UserAuthDto, U extends Use
     private final JwtTokenCrudService jwtTokenCrudService;
     private final JwtTokenCreator jwtTokenCreator;
     private final JwtTokenProvider jwtTokenProvider;
-    private final UserCrudService<U> userUserCrudService;
+    private final UserCrudService<U> userCrudService;
     public AuthenticationService(JwtTokenCrudService jwtTokenCrudService,
                                  JwtTokenCreator jwtTokenCreator,
                                  JwtTokenProvider jwtTokenProvider,
-                                 UserCrudService<U> userUserCrudService) {
+                                 UserCrudService<U> userCrudService) {
         this.jwtTokenCrudService = jwtTokenCrudService;
         this.jwtTokenCreator = jwtTokenCreator;
         this.jwtTokenProvider = jwtTokenProvider;
-        this.userUserCrudService = userUserCrudService;
+        this.userCrudService = userCrudService;
     }
 
     @Override
@@ -38,26 +38,27 @@ public abstract class AuthenticationService<D extends UserAuthDto, U extends Use
         Optional<JwtToken> t = jwtTokenCrudService.getActual(userAuthDto.getUsername());
 
         JwtToken actualToken = t.orElseGet(() -> {
-                    JwtToken jwtToken = jwtTokenCreator.create(jwtTokenProvider.generateToken(userAuthDto.getUsername()),
-                            userUserCrudService.getByUsername(userAuthDto.getUsername()));
-                    try {
-                        jwtTokenCrudService.getByToken(jwtToken.getToken());
-                        log.warning(jwtToken.getToken());
-                    }
-                    catch (EntityExistsException ignored){
-                        log.info("token doesn't exists");
-                    }
-                    jwtTokenCrudService.save(jwtToken);
-                    return jwtToken;
+                    JwtToken jwtToken =
+                            jwtTokenCreator.create(
+                                    jwtTokenProvider.generateToken(userAuthDto.getUsername()),
+                                    userCrudService.getByUsername(userAuthDto.getUsername())
+                            );
+                    return jwtTokenCrudService.save(jwtToken);
+
                 }
         );
-        return new AuthToken(actualToken.getToken());
+        return new AuthToken(actualToken.getToken(), actualToken.getExpiryAt());
     }
 
     @Override
     public void logout() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Set<JwtToken> jwtTokenSet = jwtTokenCrudService.getByUsername(username);
+
+        if(jwtTokenSet.isEmpty()){
+            throw new AuthenticationServiceException("user not logged in");
+        }
+
         jwtTokenSet.forEach(t -> {
             Date curDate = new Date();
             if(t.getExpiryAt().after(curDate)){

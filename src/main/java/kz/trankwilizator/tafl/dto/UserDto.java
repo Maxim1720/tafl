@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class AbsUserDto {
+public abstract class UserDto {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;

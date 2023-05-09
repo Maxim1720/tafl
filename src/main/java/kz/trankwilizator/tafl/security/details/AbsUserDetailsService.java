@@ -1,6 +1,7 @@
 package kz.trankwilizator.tafl.security.details;
 
 import kz.trankwilizator.tafl.entity.user.User;
+import kz.trankwilizator.tafl.service.crud.user.UserCrudService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -8,14 +9,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 
-public abstract class AbsUserDetailsService/*<U extends User>*/ implements UserDetailsService {
+public abstract class AbsUserDetailsService<U extends User> implements UserDetailsService {
 
-    public AbsUserDetailsService() {
+    private final UserCrudService<U> userCrudService;
+
+    public AbsUserDetailsService(UserCrudService<U> userCrudService) {
+        this.userCrudService = userCrudService;
     }
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        U user = userCrudService.getByUsername(username);
         return org.springframework.security.core.userdetails.User
                 .withUsername(username)
                 .password(password(username))

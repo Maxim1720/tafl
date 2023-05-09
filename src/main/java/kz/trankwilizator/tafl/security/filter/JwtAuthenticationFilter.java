@@ -4,34 +4,52 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kz.trankwilizator.tafl.config.SecurityConfig;
+import kz.trankwilizator.tafl.entity.user.User;
 import kz.trankwilizator.tafl.security.JwtTokenProvider;
-import kz.trankwilizator.tafl.service.crud.JwtTokenCrudService;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import kz.trankwilizator.tafl.security.details.AbsUserDetailsService;
+import kz.trankwilizator.tafl.security.util.AuthenticationCreator;
+import kz.trankwilizator.tafl.security.util.RequestUtil;
+import kz.trankwilizator.tafl.service.crud.user.UserCrudService;
+import kz.trankwilizator.tafl.service.jwt.JwtTokenService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Date;
 
 
-public abstract class JwtAuthenticationFilter extends OncePerRequestFilter {
+public abstract class JwtAuthenticationFilter<U extends User> extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
-    private final JwtTokenCrudService jwtTokenCrudService;
-    private final UserDetailsService userDetailsService;
+    private final JwtTokenService jwtTokenService;
+    private final AbsUserDetailsService<U> userDetailsService;
+    private final RequestUtil requestUtil;
+    private final AuthenticationCreator authenticationCreator;
+
+    private final UserCrudService<U> userCrudService;
+
+    @Value(value = "${auth.permit-all.paths}")
+    private String[] whiteListPaths;
+
+    @Value(value = "${auth.logout.path}")
+    private String[] shouldFilterPaths;
 
     protected JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider,
-                                   JwtTokenCrudService jwtTokenCrudService,
-                                   UserDetailsService userDetailsService) {
+                                      JwtTokenService jwtTokenService,
+                                      AbsUserDetailsService<U> userDetailsService,
+                                      RequestUtil requestUtil,
+                                      AuthenticationCreator authenticationCreator,
+                                      UserCrudService<U> userCrudService) {
         this.jwtTokenProvider = jwtTokenProvider;
-        this.jwtTokenCrudService = jwtTokenCrudService;
+        this.jwtTokenService = jwtTokenService;
         this.userDetailsService = userDetailsService;
+        this.requestUtil = requestUtil;
+        this.authenticationCreator = authenticationCreator;
+        this.userCrudService = userCrudService;
     }
 
 
@@ -40,42 +58,39 @@ public abstract class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        try {
-            logger.info("jwt filtering request " + request.getRequestURI());
-            String jwt = getJwtFromRequest(request);
+        logger.info("request uri will be filtering: " + request.getRequestURI());
 
-            if (StringUtils.hasText(jwt) && jwtTokenProvider.validateToken(jwt)) {
-                    String username = jwtTokenProvider.getUsernameFromToken(jwt);
-                    if (jwtTokenCrudService.getByToken(jwt).getExpiryAt().after(new Date())) {
-                        setAuthentication(username, request);
-                    }
-            }
-        } catch (Exception ex) {
-            logger.error("Could not set user authentication in security context", ex);
+        String jwt = requestUtil.getJwtTokenFromRequest(request);
+        if (!validateToken(jwt) || !userCrudService.existsByUsername(jwtTokenProvider.getUsernameFromToken(jwt))) {
+            filterChain.doFilter(request, response);
+            return;
         }
-
+        authenticate(jwt, request);
         filterChain.doFilter(request, response);
     }
 
-    private String getJwtFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
+    private boolean validateToken(String jwt){
+        return StringUtils.hasText(jwt) && jwtTokenProvider.validateToken(jwt);
+    }
+
+    private void authenticate(String jwt, HttpServletRequest request) {
+        String username = jwtTokenProvider.getUsernameFromToken(jwt);
+        if (!jwtTokenService.isExpired(jwt)) {
+            setAuthentication(username, request);
         }
-        return "";
     }
 
     private void setAuthentication(String username, HttpServletRequest request) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        Authentication auth = authenticationCreator.getUsernamePasswordAuthentication(userDetails, request);
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        logger.info("Authenticated as: " + auth);
     }
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        logger.info("check should not filter: " + request.getRequestURI());
-        return Arrays.stream(SecurityConfig.WHITE_LIST_URLS).anyMatch(p-> p.equals(request.getRequestURI()));
+        return Arrays.stream(whiteListPaths).anyMatch(
+                (p)-> request.getRequestURI().startsWith(p.substring(0,p.lastIndexOf("/")))
+        );
     }
 }
