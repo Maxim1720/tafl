@@ -3,7 +3,6 @@ package kz.trankwilizator.tafl.security.authentication.entrypoint;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kz.trankwilizator.tafl.dto.AuthToken;
 import kz.trankwilizator.tafl.dto.error.ErrorDto;
 import kz.trankwilizator.tafl.security.util.RequestUtil;
 import org.springframework.http.HttpStatus;
