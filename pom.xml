@@ -14,7 +14,7 @@
     <name>tafl</name>
     <description>tafl</description>
     <properties>
-        <java.version>20</java.version>
+        <java.version>17</java.version>
         <mapstruct.version>1.5.3.Final</mapstruct.version>
         <lombok.version>1.18.26</lombok.version>
         <start-class>kz.trankwilizator.tafl.TaflApplication</start-class>
