@@ -1,12 +1,13 @@
 package kz.trankwilizator.tafl.dto.auth;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
-@Getter
-@Setter
-@ToString
+import java.util.Date;
+
+@Data
 public abstract class UserAuthDto {
-    String username;
+    private String username;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Date createdAt;
 }

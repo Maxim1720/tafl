@@ -1,57 +1,43 @@
 package kz.trankwilizator.tafl.entity.user;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
-import kz.trankwilizator.tafl.entity.role.Role;
+import kz.trankwilizator.tafl.entity.JwtToken;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.Remove;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Getter
 @Setter
-@ToString
-@Entity(name = "user_profile")
-@Table(name = "user_profile")
-public class User extends AbsUser implements Serializable {
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
-    @Column(length = 75, nullable = false)
-    private String firstname;
+    @Column(length = 50, nullable = false, unique = true)
+    private String username;
 
-    @Column(length = 75, nullable = false)
-    private String lastname;
 
-    @Column(length = 75)
-    private String secondName;
+    @DecimalMin("0")
+    @Column(columnDefinition = "decimal(10,2)", nullable = false)
+    private Double balance = 0.0;
 
-    @Column(length = 256, nullable = false)
-    private String email;
-
-    @Column(length = 200, nullable = false)
-    private String password;
-
-    @DecimalMin(value = "0")
-    @DecimalMax(value = "1")
-    @Column(columnDefinition = "decimal(1,2)", nullable = false)
-    private Double discount = 0.0;
+    @Column(nullable = false)
+    private Boolean enabled = true;
 
     @CreationTimestamp
     @Column(nullable = false)
     private Date createdAt;
 
-    @UpdateTimestamp
-    @Column(nullable = false)
-    private Date updatedAt;
 
-    @ToString.Exclude
-    @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
-    private Role role;
-
+    @OneToMany(targetEntity = JwtToken.class, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true/*, fetch = FetchType.EAGER*/)
+    private Set<JwtToken> jwtTokens = new HashSet<>();
 }
