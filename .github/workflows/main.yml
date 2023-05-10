@@ -32,7 +32,7 @@ jobs:
         run: docker stop pg
 
       - name: Start the application container
-        run: docker-compose up --build
+        run: docker-compose up --build -d
 
       - name: Check deployment status
         run: |
