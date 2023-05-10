@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "877c191b-de26-4d7a-8509-038783fc9737",
+		"_postman_id": "c9772428-3a66-4ba0-939c-a3d2764085bd",
 		"name": "test not authenticated logout",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_uid": "19077502-877c191b-de26-4d7a-8509-038783fc9737"
+		"_uid": "19077502-c9772428-3a66-4ba0-939c-a3d2764085bd"
 	},
 	"item": [
 		{
@@ -12,7 +12,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c43e8bab-7a52-4e84-b9f6-26bfb40ff15b",
+						"id": "7fd872c4-62fa-4859-a819-a183a1700305",
 						"exec": [
 							"pm.test(\"status code is 401\", function () {",
 							"    pm.response.to.have.status(401);",
@@ -22,7 +22,7 @@
 					}
 				}
 			],
-			"id": "d5b8c58a-dcd1-497c-a344-693580fad136",
+			"id": "faecabd0-7dec-4b58-ae3b-87db49d93682",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -44,7 +44,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4265cd39-b598-40f4-91c7-abe6b9505772",
+						"id": "20d060e6-1df4-4fc8-b706-0281ec62d2a1",
 						"exec": [
 							"pm.test(\"status code is 401\", function () {",
 							"    pm.response.to.have.status(401);",
@@ -54,7 +54,7 @@
 					}
 				}
 			],
-			"id": "b572acda-cd57-405d-8008-0f882037e932",
+			"id": "ba3ec513-613f-4112-9df0-e504b76ac696",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -86,7 +86,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "d608e920-d1d8-450a-bf5f-8cd910a1d619",
+						"id": "8db058df-b01d-46d3-9166-abfb92c8d3b1",
 						"exec": [
 							"pm.test(\"User doesn't exists\", function () {",
 							"    pm.response.to.have.status(401);",
@@ -98,7 +98,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "e6a2912b-a19e-4359-9ce2-ecc21acb7722",
+						"id": "288653b4-1b97-4c8d-a902-3e2e05c75125",
 						"exec": [
 							""
 						],
@@ -106,7 +106,7 @@
 					}
 				}
 			],
-			"id": "64b92537-bf4e-4d59-8115-bf1e23e6f7f7",
+			"id": "2476337a-d132-405c-ac91-d62802b38939",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
