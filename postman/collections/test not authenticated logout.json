@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "877c191b-de26-4d7a-8509-038783fc9737",
+		"name": "test not authenticated logout",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "19077502-877c191b-de26-4d7a-8509-038783fc9737"
+	},
+	"item": [
+		{
+			"name": "logout without token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c43e8bab-7a52-4e84-b9f6-26bfb40ff15b",
+						"exec": [
+							"pm.test(\"status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "d5b8c58a-dcd1-497c-a344-693580fad136",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{logout-url}}",
+					"host": [
+						"{{logout-url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout with wrong token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4265cd39-b598-40f4-91c7-abe6b9505772",
+						"exec": [
+							"pm.test(\"status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "b572acda-cd57-405d-8008-0f882037e932",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{per-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{logout-url}}",
+					"host": [
+						"{{logout-url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout by removed user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d608e920-d1d8-450a-bf5f-8cd910a1d619",
+						"exec": [
+							"pm.test(\"User doesn't exists\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e6a2912b-a19e-4359-9ce2-ecc21acb7722",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "64b92537-bf4e-4d59-8115-bf1e23e6f7f7",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{logout-url}}",
+					"host": [
+						"{{logout-url}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

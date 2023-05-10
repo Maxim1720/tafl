@@ -1,0 +1,297 @@
+{
+	"info": {
+		"_postman_id": "a32c9ac5-e71e-43f5-beb2-5c74ae8623bf",
+		"name": "testing permanent security",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "19077502-a32c9ac5-e71e-43f5-beb2-5c74ae8623bf"
+	},
+	"item": [
+		{
+			"name": "registration",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "595f8254-a930-40e9-848d-f70b3cffee95",
+						"exec": [
+							"const user = {",
+							"    username: \"almat17\",",
+							"    password: \"1234\",",
+							"    email:\"musiev_maksim@mail.ru\",",
+							"    firstname:\"Maxim\",",
+							"    lastname:\"Musiev\",",
+							"    secondName:\"Alibekovich\",",
+							"}",
+							"",
+							"pm.environment.set(\"per_user\", user);",
+							"pm.request.body.raw = user;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "7ba63afa-2519-4908-9a4a-b291eb68904f",
+						"exec": [
+							"pm.test(\"Permanent user was registered\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "11da91a7-db44-4be8-bccb-5f3b6aa1dfc4",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"almat17\",\n    \"password\":\"1234\",\n    \"email\":\"musiev_maksim@mail.ru\",\n    \"firstname\":\"Maxim\",\n    \"lastname\":\"Musiev\",\n    \"secondName\":\"Alibekovich\",\n    \"balance\":0.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{permanent-reg-url}}",
+					"host": [
+						"{{permanent-reg-url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3d59d8be-0551-4ea2-97bd-6c4e964a7d8a",
+						"exec": [
+							"const per_user = pm.environment.get(\"per_user\");",
+							"",
+							"const user = {",
+							"    username: per_user.username,",
+							"    password: per_user.password",
+							"}",
+							"",
+							"pm.request.body.raw = user;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb8695bb-215e-4abb-a16c-ce2108bf4aba",
+						"exec": [
+							"pm.test(\"Permanent user was loggined\", function () {",
+							"    pm.response.to.have.status(202);",
+							"});",
+							"",
+							"pm.environment.set(\"per-token\", pm.response.json().body.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "9535e6f3-68c8-4e11-a380-4276faf2acae",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{permanent-auth-url}}/login",
+					"host": [
+						"{{permanent-auth-url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get users",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f9ee4306-3269-4a1b-b27c-0435831773d4",
+						"exec": [
+							"/*const per_user = pm.environment.get(\"per_user\");",
+							"",
+							"const username = per_user.username;",
+							"const password = per_user.password;",
+							"",
+							"const auth = btoa(username +\":\"+ password);",
+							"pm.request.headers.add({",
+							"  key: \"Authorization\",",
+							"  value: \"Basic \" + auth",
+							"});",
+							"*/"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "f8c8c3b5-d9e1-4297-a134-058969f3cbdc",
+						"exec": [
+							"pm.test(\"Users getted\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "fc6ed7d2-0d00-425c-b0d9-387a3710bad7",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{per-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{permanent-users-url}}",
+					"host": [
+						"{{permanent-users-url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b700df10-a4c8-4ccf-aed0-e34a4f0e43e6",
+						"exec": [
+							"pm.test(\"Permanent user was logouted\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "dd8ef925-ccca-4311-98c7-862f74d1be3b",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{per-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_path}}/auth/logout",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"auth",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get users again",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d82680dd-9f05-424d-ab3d-eef46ae7d476",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "afb04f5b-b877-4c7e-b67c-21f9f65614e3",
+						"exec": [
+							"pm.test(\"Users can't be getted\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "6d44fed5-907d-4ed8-a812-945193f3bec4",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{per-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{permanent-users-url}}",
+					"host": [
+						"{{permanent-users-url}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
