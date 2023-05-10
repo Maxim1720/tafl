@@ -28,10 +28,11 @@ jobs:
       - name: Build the application
         run: mvn clean package
 
+      - name: Stop pg container
+        run: docker stop pg
+
       - name: Start the application container
-        run: | 
-          docker stop pg && \
-          docker-compose up --build
+        run: docker-compose up --build
 
       - name: Check deployment status
         run: |
