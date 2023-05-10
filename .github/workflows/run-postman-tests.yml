@@ -13,10 +13,10 @@ jobs:
         uses: actions/checkout@v2
 
       # Вызов workflow с именем "Other Workflow"
-      - name: Run Other Workflow
+      - name: Run previous workflow
         uses: actions/workflow_run@v2
         with:
-          workflow: Other Workflow
+          workflow: check application runnable
           token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Install Postman CLI
