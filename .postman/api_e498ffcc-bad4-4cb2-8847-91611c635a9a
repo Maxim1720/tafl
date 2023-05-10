@@ -9,7 +9,6 @@ id = e498ffcc-bad4-4cb2-8847-91611c635a9a
 
 [config.relations.collections]
 rootDirectory = postman/collections
-files[] = {"id":"19077502-c9772428-3a66-4ba0-939c-a3d2764085bd","path":"test not authenticated logout.json","metaData":{}}
 files[] = {"id":"19077502-06668fbc-6eb8-4862-b136-df3ca4e285c8","path":"test not authenticated request.json","metaData":{}}
 files[] = {"id":"19077502-996dfc7a-6bee-4a80-801d-6134b621783e","path":"test not existing user's login.json","metaData":{}}
 files[] = {"id":"19077502-acf4e29b-8b88-468e-9a14-43dbac038d4d","path":"test registration already exists permanent user.json","metaData":{}}
