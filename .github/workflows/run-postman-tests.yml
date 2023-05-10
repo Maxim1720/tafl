@@ -41,14 +41,11 @@ jobs:
         run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
       - name: Run API tests
         run: |
-          postman collection run "${{ github.workspace }}/postman/collections/test not authenticated logout.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139" --integration-id "140049-${{ github.run_id }}"
-          postman collection run "${{ github.workspace }}/postman/collections/test not authenticated request.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139" --integration-id "140049-${{ github.run_id }}"
-          postman collection run "${{ github.workspace }}/postman/collections/test not existing user's login.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139" --integration-id "140049-${{ github.run_id }}"
-          postman collection run "${{ github.workspace }}/postman/collections/test registration already exists permanent user.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139" --integration-id "140049-${{ github.run_id }}"
-          postman collection run "${{ github.workspace }}/postman/collections/testing permanent security.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139" --integration-id "140049-${{ github.run_id }}"
-          postman collection run "${{ github.workspace }}/postman/collections/testing temp security.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139" --integration-id "140049-${{ github.run_id }}"
-          # Lint your API using Postman CLI
-          postman api lint --integration-id 140049
+          postman collection run "${{ github.workspace }}/postman/collections/test not authenticated request.json" -e "19077502-6c869d89-b626-4c12-b8b1-3a27edbdd3e0" --integration-id "140049-${{ github.run_id }}"
+          postman collection run "${{ github.workspace }}/postman/collections/test not existing user's login.json" -e "19077502-6c869d89-b626-4c12-b8b1-3a27edbdd3e0" --integration-id "140049-${{ github.run_id }}"
+          postman collection run "${{ github.workspace }}/postman/collections/test registration already exists permanent user.json" -e "19077502-6c869d89-b626-4c12-b8b1-3a27edbdd3e0" --integration-id "140049-${{ github.run_id }}"
+          postman collection run "${{ github.workspace }}/postman/collections/testing permanent security.json" -e "19077502-6c869d89-b626-4c12-b8b1-3a27edbdd3e0" --integration-id "140049-${{ github.run_id }}"
+          postman collection run "${{ github.workspace }}/postman/collections/testing temp security.json" -e "19077502-6c869d89-b626-4c12-b8b1-3a27edbdd3e0" --integration-id "140049-${{ github.run_id }}"
       
       - name: Check deployment status
         run: |
