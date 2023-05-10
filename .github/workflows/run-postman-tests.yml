@@ -1,4 +1,4 @@
-name: Main Workflow
+name: Postman tests
 on:
   push:
     branches:
@@ -10,26 +10,55 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
-
-      # Вызов workflow с именем "Other Workflow"
-      - name: Run Other Workflow
-        uses: actions/workflow_run@v2
+        uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
         with:
-          workflow: Other Workflow
-          token: ${{ secrets.GITHUB_TOKEN }}
-      
+          java-version: 17
+          distribution: 'oracle'
+
+      - name: Start PostgreSQL container
+        run: |
+          docker run --name pg -d -p 5432:5432 \
+            -e POSTGRES_USER=trankwilizator \
+            -e POSTGRES_PASSWORD=517881m \
+            -e POSTGRES_DB=tafl_db \
+            postgres:15-alpine
+
+      - name: Build the application
+        run: mvn clean package
+
+      - name: Stop pg container
+        run: docker stop pg
+
+      - name: Start the application container
+        run: docker-compose up --build -d
+
+      - name: Wait for application to start
+        run: sleep 30
+
       - name: Install Postman CLI
         run: |
-            curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+
       - name: Login to Postman CLI
         run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
-      
+
       - name: Run API tests
         run: |
-          postman collection run "${{ github.workspace }}/postman/collections/test not authenticated logout.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139"
-          postman collection run "${{ github.workspace }}/postman/collections/test not authenticated request.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139"
-          postman collection run "${{ github.workspace }}/postman/collections/test not existing user's login.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139"
-          postman collection run "${{ github.workspace }}/postman/collections/test registration already exists permanent user.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139"
-          postman collection run "${{ github.workspace }}/postman/collections/testing permanent security.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139"
-          postman collection run "${{ github.workspace }}/postman/collections/testing temp security.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139"
+          postman collection run "${{ github.workspace }}/postman/collections/test not authenticated logout.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139" --integration-id "140049-${{ github.run_id }}"
+          postman collection run "${{ github.workspace }}/postman/collections/test not authenticated request.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139" --integration-id "140049-${{ github.run_id }}"
+          postman collection run "${{ github.workspace }}/postman/collections/test not existing user's login.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139" --integration-id "140049-${{ github.run_id }}"
+          postman collection run "${{ github.workspace }}/postman/collections/test registration already exists permanent user.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139" --integration-id "140049-${{ github.run_id }}"
+          postman collection run "${{ github.workspace }}/postman/collections/testing permanent security.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139" --integration-id "140049-${{ github.run_id }}"
+          postman collection run "${{ github.workspace }}/postman/collections/testing temp security.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139" --integration-id "140049-${{ github.run_id }}"
+        
+        
+      - name: Check deployment status
+        run: |
+          if [ $? -eq 0 ]; then
+            echo "Deployment successful"
+          else
+            echo "Deployment failed"
+            exit 1
+          fi

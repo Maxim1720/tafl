@@ -19,7 +19,7 @@ jobs:
 
       - name: Start PostgreSQL container
         run: |
-          docker run -d -p 5432:5432 \
+          docker run --name pg -d -p 5432:5432 \
             -e POSTGRES_USER=trankwilizator \
             -e POSTGRES_PASSWORD=517881m \
             -e POSTGRES_DB=tafl_db \
@@ -27,6 +27,9 @@ jobs:
 
       - name: Build the application
         run: mvn clean package
+
+      - name: Stop pg container
+        run: docker stop pg
 
       - name: Start the application container
         run: docker-compose up --build -d
