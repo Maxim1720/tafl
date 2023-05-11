@@ -9,5 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Computer extends RunnableEntity {
-
+  @JoinColumn(nullable=false)
+  private Zone zone;
 }
