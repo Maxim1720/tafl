@@ -1,4 +1,4 @@
-import jakarta.persist.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="zone")
