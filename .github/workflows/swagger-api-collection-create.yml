@@ -1,0 +1,64 @@
+name: swagger api create collection
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Docker Compose
+      run: |
+        sudo apt-get install -y docker-compose
+        sudo systemctl start docker
+        
+        
+    - name: Start PostgreSQL container
+      run: |
+          docker run --name pg -d -p 5432:5432 \
+            -e POSTGRES_USER=trankwilizator \
+            -e POSTGRES_PASSWORD=517881m \
+            -e POSTGRES_DB=tafl_db \
+            postgres:15-alpine
+
+    - name: Create jar
+      run: mvn clean package
+
+    - name: Pg down
+      run: docker stop pg
+
+    - name: Build and run Docker Compose
+      run: |
+        docker-compose build
+        docker-compose up -d
+
+    - name: Wait for services to start
+      run: sleep 10
+
+    - name: Generate Postman collection
+      run: |
+        npm install -g newman postman-collection
+        newman run http://localhost:8080/v3/api-docs --export-collection postman_collection.json
+
+    - name: Upload Postman collection artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: postman_collection
+        path: postman_collection.json
+
+    - name: Upload collection to Postman
+      run: |
+        curl --request PUT \
+          --url "https://multifuncchat.postman.co/workspace/tafl~043b003c-d781-4d63-8644-d0f270165ac6/api/e498ffcc-bad4-4cb2-8847-91611c635a9a/collection/19077502-bfe62a7c-182e-47b5-b57b-b770b0e8433b?action=share&creator=19077502&branch=master&collection=19077502-bfe62a7c-182e-47b5-b57b-b770b0e8433b" \
+          --header "X-Api-Key: ${{ secrets.POSTMAN_API_KEY }}" \
+          --header "Content-Type: application/json" \
+          --data "@postman_collection.json"
+  deploy:
+    needs: build  # Указываем, что job deploy зависит от успешного выполнения job build
+    runs-on: ubuntu-latest
