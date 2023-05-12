@@ -13,7 +13,7 @@ public class Zone {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
     
     // Остальные поля и методы класса
