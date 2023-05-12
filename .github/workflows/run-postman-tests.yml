@@ -1,5 +1,9 @@
 name: Postman tests
 on:
+  workflow_run:
+    workflows: ["check application runnable"]
+    types:
+      - completed
   push:
     branches:
       - '*'
