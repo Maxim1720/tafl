@@ -20,9 +20,6 @@ public class Tariff {
 
     @Column(name = "price")
     private BigDecimal price;
-    
-    @ManyToMany(mappedBy = "tariffs")
-    private Set<Zone> zones = new HashSet<>();
 
     // Остальные поля и методы класса
 }
