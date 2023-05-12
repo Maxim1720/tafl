@@ -63,6 +63,3 @@ jobs:
           --header "X-Api-Key: ${{ secrets.POSTMAN_API_KEY }}" \
           --header "Content-Type: application/json" \
           --data "@postman_collection.json"
-  deploy:
-    needs: build  # Указываем, что job deploy зависит от успешного выполнения job build
-    runs-on: ubuntu-latest
