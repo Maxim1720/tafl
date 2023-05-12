@@ -1,3 +1,5 @@
+package kz.trankwilizator.tafl.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
 
