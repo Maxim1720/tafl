@@ -16,5 +16,11 @@ public class Zone {
     @Column(name = "name")
     private String name;
 
+    
+    @ManyToMany
+    @JoinTable(name = "zone_tariff",
+            joinColumns = @JoinColumn(name = "zone_id"),
+            inverseJoinColumns = @JoinColumn(name = "tariff_id"))
+    private Set<Tariff> tariffs = new HashSet<>();
     // Остальные поля и методы класса
 }
