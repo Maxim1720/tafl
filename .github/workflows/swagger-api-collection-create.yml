@@ -1,6 +1,10 @@
 name: swagger api create collection
 
 on:
+  workflow_run:
+    workflows: ["check application runnable"]
+    types:
+      - completed
   push:
     branches:
       - '*'
