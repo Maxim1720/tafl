@@ -1,4 +1,4 @@
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -11,10 +11,10 @@ public class Zone {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable=false)
-    private int id;
+    private Long id;
 
-    @Column(nullable=false)
+    @Column(name = "name")
     private String name;
-    private String description;
+
+    // Остальные поля и методы класса
 }
