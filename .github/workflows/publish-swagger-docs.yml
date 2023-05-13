@@ -45,4 +45,4 @@ jobs:
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer ${{ secrets.SWAGGER_API_KEY }}" \
             -d "$(curl -s http://localhost:8080/v3/api-docs)" \
-            "https://api.swaggerhub.com/apis/musiev_maksim/tafl/${{ github.run_number }}"
+            "https://api.swaggerhub.com/apis/musiev_maksim/tafl:${{ github.run_number }}"
