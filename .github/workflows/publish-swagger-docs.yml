@@ -39,23 +39,16 @@ jobs:
       - name: Wait for application to start
         run: sleep 30
 
-      - name: Install Swagger CLI
-        uses: mpetrunic/swagger-cli-action@v1.0.0
-
-      - name: Determine API version
-        id: version
-        run: |
-          echo "::set-output name=version::1.0.0"
+      - name: Install cURL
+        run: sudo apt-get install -y curl
 
       - name: Extract Swagger specification
         run: |
           curl -o swagger.json http://localhost:8080/v3/api-docs
-          mv swagger.json ${{ github.workspace }}/swagger.json
+          ls -lah
 
       - name: Publish Swagger documentation
         run: |
-          swagger-cli push ${{ github.workspace }}/swagger.json \
-            --api-key ${{ secrets.SWAGGER_API_KEY }} \
-            --owner musiev_maksim \
-            --api tafl \
-            --version ${{ steps.version.outputs.version }}
+          curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${{ secrets.SWAGGER_API_KEY }}" -d @swagger.json https://api.swaggerhub.com/apis/musiev_maksim/tafl/1.0.0
+        env:
+          SWAGGER_API_KEY: ${{ secrets.SWAGGER_API_KEY }}
