@@ -35,6 +35,9 @@ jobs:
 
       - name: Start the application container
         run: docker-compose up --build -d
+        
+      - name: Wait for application to start
+        run: sleep 10
 
       - name: Download Swagger JSON
         run: |
