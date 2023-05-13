@@ -65,7 +65,7 @@ jobs:
     - name: Upload collection to Postman
       run: |
         curl --request PUT \
-          --url "https://multifuncchat.postman.co/workspace/tafl~043b003c-d781-4d63-8644-d0f270165ac6/api/e498ffcc-bad4-4cb2-8847-91611c635a9a/collection/19077502-bfe62a7c-182e-47b5-b57b-b770b0e8433b?action=share&creator=19077502&branch=master&collection=19077502-bfe62a7c-182e-47b5-b57b-b770b0e8433b" \
+          --url ${{ secrets.POSTMAN_COLLECTION_URL }} \
           --header "X-Api-Key: ${{ secrets.POSTMAN_API_KEY }}" \
           --header "Content-Type: application/json" \
           --data "@postman_collection.json"
