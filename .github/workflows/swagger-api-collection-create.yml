@@ -1,71 +1,63 @@
-name: swagger api create collection
+name: Build and Deploy
 
 on:
-  workflow_run:
-    workflows: ["check application runnable"]
-    types:
-      - completed
   push:
     branches:
       - '*'
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up JDK
-      uses: actions/setup-java@v3
-      with:
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
           java-version: 17
           distribution: 'oracle'
 
-    - name: Set up Docker Compose
-      run: |
-        sudo apt-get install -y docker-compose
-        sudo systemctl start docker
-        
-        
-    - name: Start PostgreSQL container
-      run: |
+      - name: Start PostgreSQL container
+        run: |
           docker run --name pg -d -p 5432:5432 \
             -e POSTGRES_USER=trankwilizator \
             -e POSTGRES_PASSWORD=517881m \
             -e POSTGRES_DB=tafl_db \
             postgres:15-alpine
 
-    - name: Create jar
-      run: mvn clean package
+      - name: Build the application
+        run: mvn clean package
 
-    - name: Pg down
-      run: docker stop pg
+      - name: Stop pg container
+        run: docker stop pg
 
-    - name: Build and run Docker Compose
-      run: |
-        docker-compose build
-        docker-compose up -d
+      - name: Start the application container
+        run: docker-compose up --build -d
 
-    - name: Wait for services to start
-      run: sleep 10
+      - name: Download Swagger JSON
+        run: |
+          curl -o swagger.json <swagger_json_url>
+        env:
+          SWAGGER_JSON_URL: <swagger_json_url>
 
-    - name: Generate Postman collection
-      run: |
-        npm install -g newman postman-collection
-        newman run http://localhost:8080/v3/api-docs --export-collection postman_collection.json
+      - name: Install jq
+        run: sudo apt-get install -y jq
 
-    - name: Upload Postman collection artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: postman_collection
-        path: postman_collection.json
+      - name: Create Postman collection
+        run: |
+          collection_name="My API Collection"
+          collection_uid=$(curl -X POST \
+            -H "Content-Type: application/json" \
+            -H "X-Api-Key: ${{ secrets.POSTMAN_API_KEY }}" \
+            -d "{\"name\":\"$collection_name\"}" \
+            "https://api.getpostman.com/collections" | jq -r '.collection.uid')
 
-    - name: Upload collection to Postman
-      run: |
-        curl --request PUT \
-          --url ${{ secrets.POSTMAN_COLLECTION_URL }} \
-          --header "X-Api-Key: ${{ secrets.POSTMAN_API_KEY }}" \
-          --header "Content-Type: application/json" \
-          --data "@postman_collection.json"
+          curl -X POST \
+            -H "Content-Type: application/json" \
+            -H "X-Api-Key: ${{ secrets.POSTMAN_API_KEY }}" \
+            -d "{\"collection\":{\"info\":{\"name\":\"$collection_name\"},\"item\":[{\"name\":\"API\",\"item\":$(jq '.paths | to_entries | map({name:.key, item:.value})' swagger.json)}}]}}" \
+            "https://api.getpostman.com/collections/$collection_uid"
+        env:
+          POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
