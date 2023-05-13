@@ -39,18 +39,10 @@ jobs:
       - name: Wait for application to start
         run: sleep 30
 
-      - name: Clean Swagger file
-        run: rm -f ${{ github.workspace }}/swagger.json
-
-      - name: Import Swagger specification
-        run: |
-          curl -o ${{ github.workspace }}/swagger.json http://localhost:8080/v3/api-docs
-
       - name: Publish Swagger documentation
         run: |
           curl -X POST \
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer ${{ secrets.SWAGGER_API_KEY }}" \
-            -d @${{ github.workspace }}/swagger.json \
-            https://api.swaggerhub.com/apis/musiev_maksim/tafl
-        working-directory: ${{ github.workspace }}
+            -d "$(curl -s http://localhost:8080/v3/api-docs)" \
+            "https://api.swaggerhub.com/apis/musiev_maksim/tafl/${{ github.run_number }}"
