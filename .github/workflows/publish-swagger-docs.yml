@@ -1,0 +1,66 @@
+name: Publish Swagger documentation
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  publish-swagger:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'oracle'
+
+      - name: Start PostgreSQL container
+        run: |
+          docker run --name pg -d -p 5432:5432 \
+            -e POSTGRES_USER=trankwilizator \
+            -e POSTGRES_PASSWORD=517881m \
+            -e POSTGRES_DB=tafl_db \
+            postgres:15-alpine
+
+      - name: Build the application
+        run: mvn clean package
+
+      - name: Stop pg container
+        run: docker stop pg
+
+      - name: Start the application container
+        run: docker-compose up --build -d
+        
+      - name: Wait for application to start
+        run: sleep 30
+
+      - name: Install SwaggerHub CLI
+        run: |
+          curl https://s3.amazonaws.com/com.swaggerhub.cli/3.1.13/swaggerhub-linux.tar.gz -o swaggerhub-cli.tar.gz
+          tar zxvf swaggerhub-cli.tar.gz
+          chmod +x swaggerhub
+
+      - name: Determine API version
+        id: version
+        run: |
+          echo "::set-output name=version::1.0.0"
+
+      - name: Extract Swagger specification
+        run: |
+          curl -o swagger.yaml http://localhost:8080/v3/api-docs
+          mv swagger.yaml ${{ github.workspace }}/swagger.yaml
+
+      - name: Publish Swagger documentation
+        run: |
+          ./swaggerhub api:createOrUpdate \
+            --token ${{ secrets.SWAGGER_API_KEY }} \
+            --owner musiev_maksim \
+            --api tafl \
+            --version ${{ steps.version.outputs.version }} \
+            --file ${{ github.workspace }}/swagger.yaml
+        working-directory: ${{ github.workspace }}
