@@ -1,10 +1,6 @@
 name: check application runnable
 
 on:
-  workflow_run:
-    workflows: ["Build"]
-    types:
-      - completed
   push:
     branches:
       - '*'
