@@ -38,9 +38,9 @@ jobs:
 
       - name: Download Swagger JSON
         run: |
-          curl -o swagger.json <swagger_json_url>
+          curl -o swagger.json http://localhost:8080/v3/api-docs
         env:
-          SWAGGER_JSON_URL: <swagger_json_url>
+          SWAGGER_JSON_URL: http://localhost:8080/v3/api-docs
 
       - name: Install jq
         run: sudo apt-get install -y jq
