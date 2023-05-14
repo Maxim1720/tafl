@@ -45,6 +45,9 @@ jobs:
       - name: Import Swagger specification
         run: curl -o ${{ github.workspace }}/swagger.json http://localhost:8080/v3/api-docs
 
+      - name: Fetch tags
+        run: git fetch --tags
+
       - name: Get current version
         id: get_version
         run: |
