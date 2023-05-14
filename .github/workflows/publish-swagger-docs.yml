@@ -73,10 +73,16 @@ jobs:
       - name: Show Swagger content
         run: cat ${{ github.workspace }}/swagger.json
 
+      - name: Set up Git
+        env:
+          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
+        run: |
+          git config --global user.name "${GIT_USERNAME}"
+          git config --global user.email "${GIT_EMAIL}"
+
       - name: Update tag
         run: |
-          git config --global user.email "musiev_maksim@mail.ru"
-          git config --global user.name "Maxim1720"
           git tag -a "${{ steps.calculate_version.outputs.new_version }}" -m "Version ${{ steps.calculate_version.outputs.new_version }}"
         
       - name: Publish Swagger documentation
