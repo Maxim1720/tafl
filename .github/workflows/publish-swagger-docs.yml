@@ -60,8 +60,9 @@ jobs:
       - name: Calculate new version
         id: calculate_version
         run: |
-          echo "::set-output name=patch::${{ steps.split_version.outputs.patch + 1 }}"
-          echo "::set-output name=new_version::${{ steps.split_version.outputs.major }}.${{ steps.split_version.outputs.minor }}.${{ steps.calculate_version.outputs.patch }}"
+          patch=$(( ${{ steps.split_version.outputs.patch }} + 1 ))
+          echo "::set-output name=patch::$patch"
+          echo "::set-output name=new_version::${{ steps.split_version.outputs.major }}.${{ steps.split_version.outputs.minor }}.$patch"
 
       - name: Update Swagger version
         run: |
