@@ -47,26 +47,31 @@ jobs:
 
     - name: Get current version
       id: get_version
-      run: echo "VERSION=$(git describe --abbrev=0 --tags)" >> $GITHUB_ENV
+      run: |
+        version=$(git describe --abbrev=0 --tags)
+        echo "::set-output name=version::$version"
 
     - name: Split version
       id: split_version
       run: |
-        echo "MAJOR=$(echo ${{ env.VERSION }} | awk -F '.' '{print $1}')" >> $GITHUB_ENV
-        echo "MINOR=$(echo ${{ env.VERSION }} | awk -F '.' '{print $2}')" >> $GITHUB_ENV
-        echo "PATCH=$(echo ${{ env.VERSION }} | awk -F '.' '{print $3}')" >> $GITHUB_ENV
+        major=$(echo "${{ steps.get_version.outputs.version }}" | awk -F '.' '{print $1}')
+        minor=$(echo "${{ steps.get_version.outputs.version }}" | awk -F '.' '{print $2}')
+        patch=$(echo "${{ steps.get_version.outputs.version }}" | awk -F '.' '{print $3}')
+        echo "::set-output name=major::$major"
+        echo "::set-output name=minor::$minor"
+        echo "::set-output name=patch::$patch"
 
     - name: Calculate new version
       id: calculate_version
       run: |
-        patch=$(( ${{ env.PATCH }} + 1 ))
-        echo "PATCH=$patch" >> $GITHUB_ENV
-        echo "NEW_VERSION=${{ env.MAJOR }}.${{ env.MINOR }}.$patch" >> $GITHUB_ENV
+        patch=$(( ${{ steps.split_version.outputs.patch }} + 1 ))
+        new_version="${{ steps.split_version.outputs.major }}.${{ steps.split_version.outputs.minor }}.$patch"
+        echo "::set-output name=new_version::$new_version"
 
     - name: Update Swagger version
       run: |
-         version="v${{ env.NEW_VERSION }}"
-         jq --arg newVersion "$version" '.info.version = $newVersion' "${{ github.workspace }}/swagger.json" > "${{ github.workspace }}/swagger_temp.json" && mv "${{ github.workspace }}/swagger_temp.json" "${{ github.workspace }}/swagger.json"
+        version="v${{ steps.calculate_version.outputs.new_version }}"
+        jq --arg newVersion "$version" '.info.version = $newVersion' "${{ github.workspace }}/swagger.json" > "${{ github.workspace }}/swagger_temp.json" && mv "${{ github.workspace }}/swagger_temp.json" "${{ github.workspace }}/swagger.json"
 
     - name: Show Swagger content
       run: cat "${{ github.workspace }}/swagger.json"
@@ -78,4 +83,3 @@ jobs:
         -H "Authorization: ${{ secrets.SWAGGER_API_KEY }}" \
         -d @"${{ github.workspace }}/swagger.json" \
         https://api.swaggerhub.com/apis/musiev_maksim/tafl
-
