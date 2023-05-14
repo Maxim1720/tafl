@@ -48,10 +48,10 @@ jobs:
       - name: Get current version
         id: get_version
         run: |
-           latest_tag=$(git rev-list --tags --max-count=1)
-           current_version=$(git describe --tags "$latest_tag")
-           echo "Current version: $current_version"
-           echo "version=$current_version" >> $GITHUB_STATE
+          git fetch --tags --depth=1
+          current_version=$(git describe --tags --abbrev=0)
+          echo "Current version: $current_version"
+          echo "::set-output name=version::$current_version"
 
 
 
