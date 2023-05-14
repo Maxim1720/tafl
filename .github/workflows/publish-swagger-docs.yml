@@ -49,31 +49,31 @@ jobs:
         id: get_version
         run: |
           current_version=$(git describe --abbrev=0 --tags)
-          echo "Current version: $current_version"
-          echo "version=$current_version" >> $GITHUB_STATE
+          echo "Текущая версия: $current_version"
+          echo "::set-output name=version::$current_version"
 
       - name: Split version
         id: split_version
         run: |
-          major=$(echo $version | cut -d. -f1)
-          minor=$(echo $version | cut -d. -f2)
-          patch=$(echo $version | cut -d. -f3)
-          echo "major=$major" >> $GITHUB_STATE
-          echo "minor=$minor" >> $GITHUB_STATE
-          echo "patch=$patch" >> $GITHUB_STATE
+          major=$(echo ${{ steps.get_version.outputs.version }} | cut -d. -f1)
+          minor=$(echo ${{ steps.get_version.outputs.version }} | cut -d. -f2)
+          patch=$(echo ${{ steps.get_version.outputs.version }} | cut -d. -f3)
+          echo "::set-output name=major::$major"
+          echo "::set-output name=minor::$minor"
+          echo "::set-output name=patch::$patch"
 
       - name: Calculate new version
         id: calculate_version
         run: |
-          patch=$(( $patch + 1 ))
-          new_version="${major}.${minor}.$patch"
-          echo "New version: $new_version"
-          echo "new_version=$new_version" >> $GITHUB_STATE
-          echo "patch=$patch" >> $GITHUB_STATE
+          patch=$(( ${{ steps.split_version.outputs.patch }} + 1 ))
+          new_version="${{ steps.split_version.outputs.major }}.${{ steps.split_version.outputs.minor }}.$patch"
+          echo "Новая версия: $new_version"
+          echo "::set-output name=patch::$patch"
+          echo "::set-output name=new_version::$new_version"
 
       - name: Update Swagger version
         run: |
-          version="v$new_version"
+          version="v${{ steps.calculate_version.outputs.new_version }}"
           jq --arg newVersion "$version" '.info.version = $newVersion' ${{ github.workspace }}/swagger.json > ${{ github.workspace }}/swagger_temp.json && mv ${{ github.workspace }}/swagger_temp.json ${{ github.workspace }}/swagger.json
 
       - name: Show Swagger content
@@ -83,7 +83,6 @@ jobs:
         run: |
           echo "${{ github.workspace }}/swagger.json" >> $GITHUB_OUTPUT
           curl -X POST \
-          -H "Content-Type: application/json" \
-          -H "Authorization: ${{ secrets.SWAGGER_API_KEY }}" \
-          -d @"${{ github.workspace }}/swagger.json" \
-          https://api.swaggerhub.com
+            -H "Content-Type: application/json" \
+            -H "Authorization: ${{ secrets.SWAGGER_API_KEY }}" \
+            -d @"${{ github.workspace }}/
