@@ -77,9 +77,13 @@ jobs:
         env:
           GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
           GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
+          GIT_API_KEY: ${{ secrets.GIT_AUTH_TOKEN }}
         run: |
           git config --global user.name "${GIT_USERNAME}"
           git config --global user.email "${GIT_EMAIL}"
+          git config --global credential.helper store
+          git config --global credential.https://github.com.username ${GIT_USERNAME}
+          git config --global credential.https://github.com.token your_token
 
       - name: Update tag
         run: |
