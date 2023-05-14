@@ -10,71 +10,79 @@ jobs:
     runs-on: ubuntu-latest
   
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up JDK
-      uses: actions/setup-java@v3
-      with:
-        java-version: 17
-        distribution: 'oracle'
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'oracle'
 
-    - name: Start PostgreSQL container
-      run: |
-        docker run --name pg -d -p 5432:5432 \
-          -e POSTGRES_USER=trankwilizator \
-          -e POSTGRES_PASSWORD=517881m \
-          -e POSTGRES_DB=tafl_db \
-          postgres:15-alpine
+      - name: Start PostgreSQL container
+        run: |
+          docker run --name pg -d -p 5432:5432 \
+            -e POSTGRES_USER=trankwilizator \
+            -e POSTGRES_PASSWORD=517881m \
+            -e POSTGRES_DB=tafl_db \
+            postgres:15-alpine
 
-    - name: Build the application
-      run: mvn clean package
+      - name: Build the application
+        run: mvn clean package
 
-    - name: Stop pg container
-      run: docker stop pg
+      - name: Stop pg container
+        run: docker stop pg
 
-    - name: Start the application container
-      run: docker-compose up --build -d
+      - name: Start the application container
+        run: docker-compose up --build -d
         
-    - name: Wait for application to start
-      run: sleep 20
+      - name: Wait for application to start
+        run: sleep 20
 
-    - name: Clean Swagger file
-      run: rm -f ${{ github.workspace }}/swagger.json
+      - name: Clean Swagger file
+        run: rm -f ${{ github.workspace }}/swagger.json
 
-    - name: Import Swagger specification
-      run: curl -o ${{ github.workspace }}/swagger.json http://localhost:8080/v3/api-docs
+      - name: Import Swagger specification
+        run: curl -o ${{ github.workspace }}/swagger.json http://localhost:8080/v3/api-docs
 
-    - name: Get current version
-      id: get_version
-      run: echo "::set-output name=version::$(git describe --abbrev=0 --tags)"
+      - name: Get current version
+        id: get_version
+        run: |
+          current_version=$(git describe --abbrev=0 --tags)
+          echo "Current version: $current_version"
+          echo "CURRENT_VERSION=$current_version" >> $GITHUB_ENV
 
-    - name: Split version
-      id: split_version
-      run: |
-        echo "major=$(echo ${{ steps.get_version.outputs.version }} | cut -d. -f1)" >> $GITHUB_ENV
-        echo "minor=$(echo ${{ steps.get_version.outputs.version }} | cut -d. -f2)" >> $GITHUB_ENV
-        echo "patch=$(echo ${{ steps.get_version.outputs.version }} | cut -d. -f3)" >> $GITHUB_ENV
+      - name: Split version
+        id: split_version
+        run: |
+          major=$(echo $CURRENT_VERSION | cut -d. -f1)
+          minor=$(echo $CURRENT_VERSION | cut -d. -f2)
+          patch=$(echo $CURRENT_VERSION | cut -d. -f3)
+          echo "major=$major" >> $GITHUB_ENV
+          echo "minor=$minor" >> $GITHUB_ENV
+          echo "patch=$patch" >> $GITHUB_ENV
 
-    - name: Calculate new version
-      id: calculate_version
-      run: |
-        patch=$(( ${{ steps.split_version.outputs.patch }} + 1 ))
-        echo "::set-output name=patch::$patch"
-        echo "::set-output name=new_version::${{ steps.split_version.outputs.major }}.${{ steps.split_version.outputs.minor }}.$patch"
+      - name: Calculate new version
+        id: calculate_version
+        run: |
+          patch=$(( $patch + 1 ))
+          new_version="${major}.${minor}.$patch"
+          echo "New version: $new_version"
+          echo "NEW_VERSION=$new_version" >> $GITHUB_ENV
+          echo "PATCH=$patch" >> $GITHUB_ENV
 
-    - name: Update Swagger version
-      run: |
-        version="v${{ steps.calculate_version.outputs.new_version }}"
-        jq --arg newVersion "$version" '.info.version = $newVersion' ${{ github.workspace }}/swagger.json > ${{ github.workspace }}/swagger_temp.json && mv ${{ github.workspace }}/swagger_temp.json ${{ github.workspace }}/swagger.json
+      - name: Update Swagger version
+        run: |
+          version="v$NEW_VERSION"
+          jq --arg newVersion "$version" '.info.version = $newVersion' ${{ github.workspace }}/swagger.json > ${{ github.workspace }}/swagger_temp.json && mv ${{ github.workspace }}/swagger_temp.json ${{ github.workspace }}/swagger.json
 
-    - name: Show Swagger content
-      run: cat ${{ github.workspace }}/swagger.json
+      - name: Show Swagger content
+        run: cat ${{ github.workspace }}/swagger.json
 
-    - name: Publish Swagger documentation
-      run: |
-        curl -X POST \
-        -H "Content-Type: application/json" \
-        -H "Authorization: ${{ secrets.SWAGGER_API_KEY }}" \
-        -d @${{ github.workspace }}/swagger.json \
-        https://api.swaggerhub.com/apis/musiev_maksim/tafl
+      - name: Publish Swagger documentation
+        run: |
+          curl -X POST \
+          -H "Content-Type: application/json" \
+          -H "Authorization: ${{ secrets.SWAGGER_API_KEY }}" \
+          -d @${{ github.workspace }}/swagger.json \
+          https://api.swaggerhub.com
