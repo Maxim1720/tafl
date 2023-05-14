@@ -75,8 +75,8 @@ jobs:
 
       - name: Set up Git
         run: |
-         git config --global user.name echo "${{ secrets.GIT_USERNAME }}"
-         git config --global user.email echo "${{ secrets.GIT_EMAIL }}"
+         git config --global user.name ${{ secrets.GIT_USERNAME }}
+         git config --global user.email ${{ secrets.GIT_EMAIL }}
          git config --global credential.helper store
          echo "${{ secrets.GIT_AUTH_TOKEN }}" > ~/.git-credentials
          chmod 0600 ~/.git-credentials
