@@ -83,7 +83,7 @@ jobs:
           git config --global user.email "${GIT_EMAIL}"
           git config --global credential.helper store
           git config --global credential.https://github.com.username ${GIT_USERNAME}
-          git config --global credential.https://github.com.token your_token
+          git config --global credential.https://github.com.token ${GIT_API_KEY}
 
       - name: Update tag
         run: |
