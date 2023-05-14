@@ -47,21 +47,21 @@ jobs:
 
     - name: Get current version
       id: get_version
-      run: echo "::set-env name=VERSION::$(git describe --abbrev=0 --tags)"
+      run: echo "VERSION=$(git describe --abbrev=0 --tags)" >> $GITHUB_ENV
 
     - name: Split version
       id: split_version
       run: |
-        echo "::set-env name=MAJOR::$(echo ${{ steps.get_version.outputs.version }} | awk -F '.' '{print $1}')"
-        echo "::set-env name=MINOR::$(echo ${{ steps.get_version.outputs.version }} | awk -F '.' '{print $2}')"
-        echo "::set-env name=PATCH::$(echo ${{ steps.get_version.outputs.version }} | awk -F '.' '{print $3}')"
+        echo "MAJOR=$(echo ${{ env.VERSION }} | awk -F '.' '{print $1}')" >> $GITHUB_ENV
+        echo "MINOR=$(echo ${{ env.VERSION }} | awk -F '.' '{print $2}')" >> $GITHUB_ENV
+        echo "PATCH=$(echo ${{ env.VERSION }} | awk -F '.' '{print $3}')" >> $GITHUB_ENV
 
     - name: Calculate new version
       id: calculate_version
       run: |
         patch=$(( ${{ env.PATCH }} + 1 ))
-        echo "::set-env name=PATCH::$patch"
-        echo "::set-env name=NEW_VERSION::${{ env.MAJOR }}.${{ env.MINOR }}.$patch"
+        echo "PATCH=$patch" >> $GITHUB_ENV
+        echo "NEW_VERSION=${{ env.MAJOR }}.${{ env.MINOR }}.$patch" >> $GITHUB_ENV
 
     - name: Update Swagger version
       run: |
