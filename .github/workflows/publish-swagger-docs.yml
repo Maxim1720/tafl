@@ -73,7 +73,6 @@ jobs:
 
     - name: Publish Swagger documentation
       run: |
-        echo "${{ github.workspace }}/swagger.json" >> $GITHUB_ENV
         curl -X POST \
         -H "Content-Type: application/json" \
         -H "Authorization: ${{ secrets.SWAGGER_API_KEY }}" \
