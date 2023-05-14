@@ -49,7 +49,7 @@ jobs:
 
       - name: Update Swagger version
         run: |
-          jq --arg version ${{ steps.generate_version.outputs.version }} '.info.version = $version' ${{ github.workspace }}/swagger.json > ${{ github.workspace }}/swagger_temp.json && mv ${{ github.workspace }}/swagger_temp.json ${{ github.workspace }}/swagger.json
+          jq --arg version "${{ steps.generate_version.outputs.version }}" '.info.version = $version' ${{ github.workspace }}/swagger.json > ${{ github.workspace }}/swagger_temp.json && mv ${{ github.workspace }}/swagger_temp.json ${{ github.workspace }}/swagger.json
 
       - name: Publish Swagger documentation
         run: |
