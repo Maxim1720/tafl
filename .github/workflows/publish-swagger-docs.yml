@@ -74,16 +74,13 @@ jobs:
         run: cat ${{ github.workspace }}/swagger.json
 
       - name: Set up Git
-        env:
-          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
-          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
-          GIT_API_KEY: ${{ secrets.GIT_AUTH_TOKEN }}
         run: |
-          git config --global user.name "${GIT_USERNAME}"
-          git config --global user.email "${GIT_EMAIL}"
-          git config --global credential.helper store
-          git config --global credential.https://github.com.username ${GIT_USERNAME}
-          git config --global credential.https://github.com.token ${GIT_API_KEY}
+         git config --global user.name echo "${{ secrets.GIT_USERNAME }}"
+         git config --global user.email echo "${{ secrets.GIT_EMAIL }}"
+         git config --global credential.helper store
+         echo "${{ secrets.GIT_AUTH_TOKEN }}" > ~/.git-credentials
+         chmod 0600 ~/.git-credentials
+
 
       - name: Update tag
         run: |
