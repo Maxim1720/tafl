@@ -73,26 +73,26 @@ jobs:
       - name: Show Swagger content
         run: cat ${{ github.workspace }}/swagger.json
 
-      - name: Install GitHub CLI
-        run: |
-          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
-          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-          sudo apt update
-          sudo apt install gh
+      #- name: Install GitHub CLI
+      #  run: |
+      #    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
+      #    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+      #    sudo apt update
+      #    sudo apt install gh
 
-      - name: Configure GitHub CLI
-        run: |
-          echo ${{ secrets.GIT_AUTH_TOKEN }} | gh auth login --with-token
-          gh config set prompt disabled
+     # - name: Configure GitHub CLI
+      #  run: |
+     #     echo ${{ secrets.GIT_AUTH_TOKEN }} | gh auth login --with-token
+     #     gh config set prompt disabled
 
-      - name: Update tag
-        run: |
-            echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-            gh config set prompt disabled
-            gh tag create "${{ steps.calculate_version.outputs.new_version }}" --message "Version ${{ steps.calculate_version.outputs.new_version }}"
-            gh repo view --json tags.${{ steps.calculate_version.outputs.new_version }}.commit.sha --jq ".tags.\"${{ steps.calculate_version.outputs.new_version }}\".commit.sha" > tag_sha.txt
-            gh api "repos/${{ github.repository }}/git/refs/tags/${{ steps.calculate_version.outputs.new_version }}" --input tag_sha.txt --method PATCH
-            rm tag_sha.txt
+     # - name: Update tag
+     #   run: |
+     #       echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+    #        gh config set prompt disabled
+     #       gh tag create "${{ steps.calculate_version.outputs.new_version }}" --message "Version ${{ steps.calculate_version.outputs.new_version }}"
+     #       gh repo view --json tags.${{ steps.calculate_version.outputs.new_version }}.commit.sha --jq ".tags.\"${{ steps.calculate_version.outputs.new_version }}\".commit.sha" > tag_sha.txt
+     #       gh api "repos/${{ github.repository }}/git/refs/tags/${{ steps.calculate_version.outputs.new_version }}" --input tag_sha.txt --method PATCH
+     #       rm tag_sha.txt
 
         
       - name: Publish Swagger documentation
