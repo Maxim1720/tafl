@@ -35,15 +35,40 @@ jobs:
 
       - name: Start the application container
         run: docker-compose up --build -d
-
+        
       - name: Wait for application to start
         run: sleep 30
 
-      - name: Generate Swagger JSON
+      - name: Clean Swagger file
+        run: rm -f ${{ github.workspace }}/swagger.json
+
+      - name: Import Swagger specification
         run: curl -o ${{ github.workspace }}/swagger.json http://localhost:8080/v3/api-docs
 
+      - name: Get current version
+        id: get_version
+        run: echo "::set-output name=version::$(git describe --abbrev=0 --tags)"
+
+      - name: Split version
+        id: split_version
+        run: |
+          echo "::set-output name=major::$(echo ${{ steps.get_version.outputs.version }} | awk -F '.' '{print $1}')"
+          echo "::set-output name=minor::$(echo ${{ steps.get_version.outputs.version }} | awk -F '.' '{print $2}')"
+          echo "::set-output name=patch::$(echo ${{ steps.get_version.outputs.version }} | awk -F '.' '{print $3}')"
+
+      - name: Calculate new version
+        id: calculate_version
+        run: |
+          patch=$(( ${{ steps.split_version.outputs.patch }} + 1 ))
+          echo "::set-output name=patch::$patch"
+          echo "::set-output name=new_version::${{ steps.split_version.outputs.major }}.${{ steps.split_version.outputs.minor }}.$patch"
+
+      - name: Update Swagger version
+        run: |
+          jq --arg newVersion ${{ steps.calculate_version.outputs.new_version }} '.info.version = $newVersion' ${{ github.workspace }}/swagger.json > ${{ github.workspace }}/swagger_temp.json && mv ${{ github.workspace }}/swagger_temp.json ${{ github.workspace }}/swagger.json
+
       - name: Display Swagger JSON
-        run: cat ${{ github.workspace }}/swagger.json | jq .
+        run: cat ${{ github.workspace }}/swagger.json
 
       - name: Publish Swagger documentation
         run: |
