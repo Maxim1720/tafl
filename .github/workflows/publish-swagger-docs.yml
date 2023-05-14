@@ -35,21 +35,15 @@ jobs:
 
       - name: Start the application container
         run: docker-compose up --build -d
-        
+
       - name: Wait for application to start
         run: sleep 30
 
-      - name: Import Swagger specification
-        run: |
-          curl -o ${{ github.workspace }}/swagger.json http://localhost:8080/v3/api-docs
+      - name: Generate Swagger JSON
+        run: curl -o ${{ github.workspace }}/swagger.json http://localhost:8080/v3/api-docs
 
-      - name: Generate new version
-        id: generate_version
-        run: echo "::set-output name=version::$(git describe --abbrev=0 --tags)"
-
-      - name: Update Swagger version
-        run: |
-          jq --arg version "${{ steps.generate_version.outputs.version }}" '.info.version = $version' ${{ github.workspace }}/swagger.json > ${{ github.workspace }}/swagger_temp.json && mv ${{ github.workspace }}/swagger_temp.json ${{ github.workspace }}/swagger.json
+      - name: Display Swagger JSON
+        run: cat ${{ github.workspace }}/swagger.json | jq .
 
       - name: Publish Swagger documentation
         run: |
