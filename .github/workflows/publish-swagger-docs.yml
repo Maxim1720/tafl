@@ -65,7 +65,8 @@ jobs:
 
       - name: Update Swagger version
         run: |
-          jq --arg newVersion ${{ steps.calculate_version.outputs.new_version }} '.info.version = $newVersion' ${{ github.workspace }}/swagger.json > ${{ github.workspace }}/swagger_temp.json && mv ${{ github.workspace }}/swagger_temp.json ${{ github.workspace }}/swagger.json
+         version="v${{ steps.calculate_version.outputs.new_version }}"
+         jq --arg newVersion "$version" '.info.version = $newVersion' ${{ github.workspace }}/swagger.json > ${{ github.workspace }}/swagger_temp.json && mv ${{ github.workspace }}/swagger_temp.json ${{ github.workspace }}/swagger.json
 
       - name: Display Swagger JSON
         run: cat ${{ github.workspace }}/swagger.json
