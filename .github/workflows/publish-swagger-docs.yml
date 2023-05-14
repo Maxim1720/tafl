@@ -47,36 +47,25 @@ jobs:
 
     - name: Get current version
       id: get_version
-      run: echo "::set-output name=version::$(git describe --abbrev=0 --tags)"
+      run: echo "::set-env name=VERSION::$(git describe --abbrev=0 --tags)"
 
     - name: Split version
       id: split_version
       run: |
-          echo "::set-output name=major::$(echo ${{ steps.get_version.outputs.version }} | awk -F '.' '{print $1}')"
-          echo "::set-output name=minor::$(echo ${{ steps.get_version.outputs.version }} | awk -F '.' '{print $2}')"
-          echo "::set-output name=patch::$(echo ${{ steps.get_version.outputs.version }} | awk -F '.' '{print $3}')"
+        echo "::set-env name=MAJOR::$(echo ${{ steps.get_version.outputs.version }} | awk -F '.' '{print $1}')"
+        echo "::set-env name=MINOR::$(echo ${{ steps.get_version.outputs.version }} | awk -F '.' '{print $2}')"
+        echo "::set-env name=PATCH::$(echo ${{ steps.get_version.outputs.version }} | awk -F '.' '{print $3}')"
 
     - name: Calculate new version
       id: calculate_version
       run: |
-          patch=$(( ${{ steps.split_version.outputs.patch }} + 1 ))
-          echo "::set-output name=patch::$patch"
-          echo "::set-output name=new_version::${{ steps.split_version.outputs.major }}.${{ steps.split_version.outputs.minor }}.$patch"
+        patch=$(( ${{ env.PATCH }} + 1 ))
+        echo "::set-env name=PATCH::$patch"
+        echo "::set-env name=NEW_VERSION::${{ env.MAJOR }}.${{ env.MINOR }}.$patch"
 
     - name: Update Swagger version
       run: |
-          major="${{ steps.split_version.outputs.major }}"
-          minor="${{ steps.split_version.outputs.minor }}"
-          patch="${{ steps.calculate_version.outputs.patch }}"
-          version="v${major}.${minor}.${patch}"
-          jq --arg newVersion "$version" '.info.version = $newVersion' ${{ github.workspace }}/swagger.json > ${{ github.workspace }}/swagger_temp.json && mv ${{ github.workspace }}/swagger_temp.json ${{ github.workspace }}/swagger.json
-
-    - name: Update Swagger version
-      run: |
-        major="${{ steps.split_version.outputs.major }}"
-        minor="${{ steps.split_version.outputs.minor }}"
-        patch="${{ steps.calculate_version.outputs.patch }}"
-        version="v${major}.${minor}.${patch}"
+        version="v${{ env.NEW_VERSION }}"
         jq --arg newVersion "$version" '.info.version = $newVersion' ${{ github.workspace }}/swagger.json > ${{ github.workspace }}/swagger_temp.json && mv ${{ github.workspace }}/swagger_temp.json ${{ github.workspace }}/swagger.json
 
     - name: Display Swagger JSON
