@@ -6,39 +6,44 @@ on:
       - '*'
 
 jobs:
-  publish-swagger:
+  package-deploy:
     runs-on: ubuntu-latest
-
+  
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
           java-version: 17
           distribution: 'oracle'
 
-      - name: Start PostgreSQL container
-        run: |
+    - name: Start PostgreSQL container
+      run: |
           docker run --name pg -d -p 5432:5432 \
             -e POSTGRES_USER=trankwilizator \
             -e POSTGRES_PASSWORD=517881m \
             -e POSTGRES_DB=tafl_db \
             postgres:15-alpine
 
-      - name: Build the application
-        run: mvn clean package
+    - name: Build the application
+      run: mvn clean package
+    - name: Stop pg container
+      run: docker stop pg
 
-      - name: Stop pg container
-        run: docker stop pg
-
-      - name: Start the application container
-        run: docker-compose up --build -d
+    - name: Start the application container
+      run: docker-compose up --build -d
         
-      - name: Wait for application to start
-        run: sleep 30
+    - name: Wait for application to start
+      run: sleep 30
+  
+  publish-swagger:
+    needs: package-deploy
+    runs-on: ubuntu-latest
 
+    steps:
+      
       - name: Clean Swagger file
         run: rm -f ${{ github.workspace }}/swagger.json
 
