@@ -63,19 +63,18 @@ jobs:
         run: |
           major=$(echo ${{ steps.get_version.outputs.version }} | cut -d. -f1)
           minor=$(echo ${{ steps.get_version.outputs.version }} | cut -d. -f2)
-          patch=$(echo ${{ steps.get_version.outputs.version }} | cut -d. -f3)
           echo "::set-output name=major::$major"
           echo "::set-output name=minor::$minor"
-          echo "::set-output name=patch::$patch"
+
 
       - name: Calculate new version
         id: calculate_version
         run: |
-          patch=$(( ${{ steps.split_version.outputs.patch }} + 1 ))
+          patch=$(( ${{ steps.split_version.outputs.minor }} + 1 ))
           new_version="${{ steps.split_version.outputs.major }}.${{ steps.split_version.outputs.minor }}.$patch"
-          echo "New version: $new_version"
           echo "::set-output name=patch::$patch"
           echo "::set-output name=new_version::$new_version"
+
 
       - name: Update Swagger version
         run: |
