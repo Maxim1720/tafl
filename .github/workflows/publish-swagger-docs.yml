@@ -39,9 +39,6 @@ jobs:
       - name: Wait for application to start
         run: sleep 30
 
-      - name: Clean Swagger file
-        run: rm -f ${{ github.workspace }}/swagger.json
-
       - name: Import Swagger specification
         run: |
           curl -o ${{ github.workspace }}/swagger.json http://localhost:8080/v3/api-docs
@@ -66,7 +63,7 @@ jobs:
 
       - name: Update Swagger version
         run: |
-          sed -i 's/"version": "[0-9]\+\.[0-9]\+\.[0-9]\+"/"version": "${{ steps.calculate_version.outputs.new_version }}"/' ${{ github.workspace }}/swagger.json
+          jq --arg newVersion ${{ steps.calculate_version.outputs.new_version }} '.info.version = $newVersion' ${{ github.workspace }}/swagger.json > ${{ github.workspace }}/swagger_temp.json && mv ${{ github.workspace }}/swagger_temp.json ${{ github.workspace }}/swagger.json
 
       - name: Publish Swagger documentation
         run: |
