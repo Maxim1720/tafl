@@ -52,9 +52,9 @@ jobs:
     - name: Split version
       id: split_version
       run: |
-        echo "::set-output name=major::$(echo ${{ steps.get_version.outputs.version }} | awk -F '.' '{print $1}')"
-        echo "::set-output name=minor::$(echo ${{ steps.get_version.outputs.version }} | awk -F '.' '{print $2}')"
-        echo "::set-output name=patch::$(echo ${{ steps.get_version.outputs.version }} | awk -F '.' '{print $3}')"
+        echo "major=$(echo ${{ steps.get_version.outputs.version }} | cut -d. -f1)" >> $GITHUB_ENV
+        echo "minor=$(echo ${{ steps.get_version.outputs.version }} | cut -d. -f2)" >> $GITHUB_ENV
+        echo "patch=$(echo ${{ steps.get_version.outputs.version }} | cut -d. -f3)" >> $GITHUB_ENV
 
     - name: Calculate new version
       id: calculate_version
@@ -73,6 +73,7 @@ jobs:
 
     - name: Publish Swagger documentation
       run: |
+        echo "${{ github.workspace }}/swagger.json" >> $GITHUB_ENV
         curl -X POST \
         -H "Content-Type: application/json" \
         -H "Authorization: ${{ secrets.SWAGGER_API_KEY }}" \
