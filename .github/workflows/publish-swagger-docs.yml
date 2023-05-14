@@ -48,9 +48,11 @@ jobs:
       - name: Get current version
         id: get_version
         run: |
+          cd ${{ github.workspace }}
           current_version=$(git describe --abbrev=0 --tags)
-          echo "Текущая версия: $current_version"
-          echo "::set-output name=version::$current_version"
+          echo "Current version: $current_version"
+          echo "version=$current_version" >> $GITHUB_STATE
+
 
       - name: Split version
         id: split_version
