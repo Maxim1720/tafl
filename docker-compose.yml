@@ -1,21 +1,19 @@
 version: '3'
 services:
   app:
-    image: trankwilizator/tafl:latest
-    hostname: localhost
-    ports: 
-      - "8080:8080"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/tafl_db
-      SPRING_DATASOURCE_USERNAME: trankwilizator
-      SPRING_DATASOURCE_PASSWORD: 517881m
+    image: openjdk:21-slim
+    volumes:
+      - ./target/tafl-1.0.0.jar:/app/tafl.jar
+    ports:
+      - 8080:8080
     depends_on:
       - db
+    command: ["java", "-jar", "/app/tafl.jar"]
   db:
-    image: postgres:15-alpine
-    ports:
-      - "5432:5432"
+    image: postgres
     environment:
-      POSTGRES_USER: trankwilizator
-      POSTGRES_PASSWORD: 517881m
-      POSTGRES_DB: tafl_db
+      - POSTGRES_USER=your_username
+      - POSTGRES_PASSWORD=your_password
+      - POSTGRES_DB=your_database_name
+    volumes:
+      - ./data:/var/lib/postgresql/data
