@@ -1,9 +1,10 @@
 name: Publish Swagger documentation
 
 on:
-  push:
-    branches:
-      - '*'
+  workflow_run:
+    workflows: ["Docker Build and Push"]
+    types:
+      - completed
 
 jobs:
   publish-swagger:
@@ -34,7 +35,7 @@ jobs:
         run: docker stop pg
 
       - name: Start the application container
-        run: docker-compose up --build -d
+        run: docker-compose up --build
         
       - name: Wait for application to start
         run: sleep 20
