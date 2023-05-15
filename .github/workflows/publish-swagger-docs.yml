@@ -35,10 +35,10 @@ jobs:
         run: docker stop pg
 
       - name: Start the application container
-        run: docker-compose up --build
+        run: docker-compose up --build -d
         
       - name: Wait for application to start
-        run: sleep 20
+        run: sleep 15
 
       - name: Clean Swagger file
         run: rm -f ${{ github.workspace }}/swagger.json
