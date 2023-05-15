@@ -39,6 +39,9 @@ jobs:
          docker-compose up --build -d
          docker-compose logs -f > app_logs.txt &
 
+      - name: Wait for logs
+        run: sleep 15
+
       - name: Display application logs
         run: cat app_logs.txt
 
@@ -54,11 +57,6 @@ jobs:
           echo "Waiting for application to start..."
           sleep 1
           done
-
-        
-    
-      - name: Wait for application to start
-        run: sleep 15
 
       - name: Clean Swagger file
         run: rm -f ${{ github.workspace }}/swagger.json
