@@ -35,8 +35,13 @@ jobs:
         run: docker stop pg
 
       - name: Start the application container
-        run: docker-compose up --build -d
-        
+        run: |
+         docker-compose up --build -d
+         docker-compose logs -f > app_logs.txt &
+
+      - name: Display application logs
+        run: cat app_logs.txt
+
       - name: Check application availability
         run: |
           retries=0
