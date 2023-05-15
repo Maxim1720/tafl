@@ -5,15 +5,18 @@ services:
     volumes:
       - ./target/tafl-1.0.0.jar:/app/tafl.jar
     ports:
-      - 8080:8080
+      - "8080:8080"
     depends_on:
       - db
     command: ["java", "-jar", "/app/tafl.jar"]
+    
   db:
-    image: postgres
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
     environment:
-      - POSTGRES_USER=your_username
-      - POSTGRES_PASSWORD=your_password
-      - POSTGRES_DB=your_database_name
+      - POSTGRES_USER=trankwilizator
+      - POSTGRES_PASSWORD=517881m
+      - POSTGRES_DB=tafl_db
     volumes:
       - ./data:/var/lib/postgresql/data
