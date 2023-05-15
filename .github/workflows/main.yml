@@ -1,4 +1,4 @@
-name: check application runnable
+name: Check Application Runnable
 
 on:
   workflow_run:
