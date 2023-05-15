@@ -53,7 +53,6 @@ jobs:
           postman collection run "${{ github.workspace }}/postman/collections/testing permanent security.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139" --integration-id "140049-${{ github.run_id }}"
           postman collection run "${{ github.workspace }}/postman/collections/testing temp security.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139" --integration-id "140049-${{ github.run_id }}"
         
-        
       - name: Check deployment status
         run: |
           if [ $? -eq 0 ]; then
