@@ -3,6 +3,7 @@ package kz.trankwilizator.tafl.entity.product;
 import lombok.*;
 
 import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 
 @Entity
