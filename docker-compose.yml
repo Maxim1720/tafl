@@ -8,12 +8,16 @@ services:
       - 8080:8080
     depends_on:
       - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/tafl_db
+      - SPRING_DATASOURCE_USERNAME=trankwilizator
+      - SPRING_DATASOURCE_PASSWORD=517881m
     command: ["java", "-jar", "/app/tafl.jar"]
   db:
     image: postgres
     environment:
-      - POSTGRES_USER=your_username
-      - POSTGRES_PASSWORD=your_password
-      - POSTGRES_DB=your_database_name
+      - POSTGRES_USER=trankwilizator
+      - POSTGRES_PASSWORD=517881m
+      - POSTGRES_DB=tafl_db
     volumes:
       - ./data:/var/lib/postgresql/data
