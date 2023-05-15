@@ -47,7 +47,7 @@ jobs:
       
       - name: Run API tests
         run: |
-          postman collection run "${{ github.workspace }}/postman/collections/test not authenticated logout.json" --integration-id "140049-${{ github.run_id }}"
+          postman collection run "${{ github.workspace }}/postman/collections/test not authenticated logout.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139" --integration-id "140049-${{ github.run_id }}"
       
       - name: Check deployment status
         run: |
