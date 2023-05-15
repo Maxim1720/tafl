@@ -20,8 +20,5 @@ files[] = {"id":"19077502-998928bc-c1bf-4403-a72b-2e05f4e61081","path":"testing 
 
 [config.relations.apiDefinition]
 rootDirectory = postman/schemas
-files[] = {"path":"musiev_maksim-tafl-v..1-resolved.json","metaData":{}}
 
 [config.relations.apiDefinition.metaData]
-type = openapi:3
-rootFiles[] = musiev_maksim-tafl-v..1-resolved.json
