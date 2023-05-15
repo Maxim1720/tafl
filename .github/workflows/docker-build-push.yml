@@ -1,16 +1,14 @@
 name: Docker Build and Push
 
 on:
-  workflow_run:
-    workflows: ["Check Application Runnable"]
-    types:
-      - completed
+  push:
+    branches:
+      - "master"
 
 jobs:
   build:
     name: Build and Push
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
 
     steps:
       - name: Checkout repository
