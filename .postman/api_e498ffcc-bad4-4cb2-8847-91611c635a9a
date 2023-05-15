@@ -9,6 +9,7 @@ id = e498ffcc-bad4-4cb2-8847-91611c635a9a
 
 [config.relations.collections]
 rootDirectory = postman/collections
+files[] = {"id":"19077502-5dd52120-46c2-449d-84e8-b650261c8655","path":"OpenAPI definition.json","metaData":{"generateCollectionPreferences":"{\"updateCollectionSync\":true}"}}
 files[] = {"id":"19077502-3fa80538-4174-4183-a7be-59bda3393445","path":"test not authenticated logout.json","metaData":{}}
 files[] = {"id":"19077502-06668fbc-6eb8-4862-b136-df3ca4e285c8","path":"test not authenticated request.json","metaData":{}}
 files[] = {"id":"19077502-996dfc7a-6bee-4a80-801d-6134b621783e","path":"test not existing user's login.json","metaData":{}}
@@ -20,5 +21,8 @@ files[] = {"id":"19077502-998928bc-c1bf-4403-a72b-2e05f4e61081","path":"testing 
 
 [config.relations.apiDefinition]
 rootDirectory = postman/schemas
+files[] = {"path":"musiev_maksim-tafl-v..1-resolved.json","metaData":{}}
 
 [config.relations.apiDefinition.metaData]
+type = openapi:3
+rootFiles[] = musiev_maksim-tafl-v..1-resolved.json
