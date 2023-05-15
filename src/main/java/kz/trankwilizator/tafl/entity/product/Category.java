@@ -1,6 +1,6 @@
 package kz.trankwilizator.tafl.entity.product;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "categories")
