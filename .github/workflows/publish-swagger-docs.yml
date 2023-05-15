@@ -45,18 +45,19 @@ jobs:
       - name: Display application logs
         run: cat app_logs.txt
 
-      - name: Check application availability
+      - name: Check Swagger API availability
         run: |
-          retries=0
-          while ! curl --fail --silent --output /dev/null http://localhost:8080; do
-          retries=$((retries+1))
-          if [ $retries -gt 30 ]; then
-            echo "Application did not start within the allotted time."
-            exit 1
-            fi
-          echo "Waiting for application to start..."
+         retries=0
+         while ! curl --fail --silent --output /dev/null http://localhost:8080/v3/api-docs; do
+         retries=$((retries+1))
+         if [ $retries -gt 30 ]; then
+          echo "Swagger API is not available within the allotted time."
+          exit 1
+          fi
+          echo "Waiting for Swagger API to become available..."
           sleep 1
-          done
+         done
+
 
       - name: Clean Swagger file
         run: rm -f ${{ github.workspace }}/swagger.json
