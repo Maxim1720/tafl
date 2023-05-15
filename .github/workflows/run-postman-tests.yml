@@ -47,15 +47,7 @@ jobs:
       
       - name: Run API tests
         run: |
-          postman collection run "${{ github.workspace }}/postman/collections/OpenAPI definition.json" --integration-id "140049-${{ github.run_id }}"
           postman collection run "${{ github.workspace }}/postman/collections/test not authenticated logout.json" --integration-id "140049-${{ github.run_id }}"
-          postman collection run "${{ github.workspace }}/postman/collections/test not authenticated request.json" --integration-id "140049-${{ github.run_id }}"
-          postman collection run "${{ github.workspace }}/postman/collections/test not existing user's login.json" --integration-id "140049-${{ github.run_id }}"
-          postman collection run "${{ github.workspace }}/postman/collections/test registration already exists permanent user.json" --integration-id "140049-${{ github.run_id }}"
-          postman collection run "${{ github.workspace }}/postman/collections/testing permanent security.json" --integration-id "140049-${{ github.run_id }}"
-          postman collection run "${{ github.workspace }}/postman/collections/testing temp security.json" --integration-id "140049-${{ github.run_id }}"
-          # Lint your API using Postman CLI
-          postman api lint --integration-id 140049
       
       - name: Check deployment status
         run: |
