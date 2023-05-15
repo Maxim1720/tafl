@@ -1,4 +1,4 @@
-package kz.trankwilizator.tafl.dao.tariff;
+package kz.trankwilizator.tafl.dao;
 
 import kz.trankwilizator.tafl.entity.Tariff;
 import org.springframework.data.jpa.repository.JpaRepository;

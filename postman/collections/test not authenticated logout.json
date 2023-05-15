@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "3fa80538-4174-4183-a7be-59bda3393445",
+		"_postman_id": "fd45f9de-b373-4ffd-a643-041d91584df5",
 		"name": "test not authenticated logout",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_uid": "19077502-3fa80538-4174-4183-a7be-59bda3393445"
+		"_uid": "19077502-fd45f9de-b373-4ffd-a643-041d91584df5"
 	},
 	"item": [
 		{
@@ -12,7 +12,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "3540c839-d2fd-4b70-8f7c-07992e89a53c",
+						"id": "82b1617e-ca66-4562-b50d-5c82b3b4b677",
 						"exec": [
 							"pm.test(\"status code is 401\", function () {",
 							"    pm.response.to.have.status(401);",
@@ -22,7 +22,7 @@
 					}
 				}
 			],
-			"id": "d2cb941c-1840-4c90-8f2f-418b446fc676",
+			"id": "902d221d-95c5-4389-8b38-4ba76a321ded",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -44,7 +44,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "b40d561e-132b-4383-95ae-ca61e43229bf",
+						"id": "1d9dd11f-092d-4287-8630-0f68c49e0b65",
 						"exec": [
 							"pm.test(\"status code is 401\", function () {",
 							"    pm.response.to.have.status(401);",
@@ -54,7 +54,7 @@
 					}
 				}
 			],
-			"id": "90c495ab-2426-4e5e-a8f2-ff98ae3d0fc8",
+			"id": "bf40e67b-ed42-43a5-8d58-a3da92359527",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -86,7 +86,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "16fee81b-30ce-4cad-bf69-db193baee31c",
+						"id": "a7854e4e-5f25-45b9-aae0-2eb3d2ae175b",
 						"exec": [
 							"pm.test(\"User doesn't exists\", function () {",
 							"    pm.response.to.have.status(401);",
@@ -98,7 +98,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "2fced45d-7c79-4e6a-99bc-f5b4f69749be",
+						"id": "22f85a1b-038f-4c1f-9f2c-9f5988f55f81",
 						"exec": [
 							""
 						],
@@ -106,7 +106,7 @@
 					}
 				}
 			],
-			"id": "14a6943f-b048-4896-8251-ce46bfce7636",
+			"id": "5819b595-c77d-4a68-9856-2c39ebdb76cb",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
