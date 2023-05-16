@@ -1,10 +1,13 @@
 name: Check Application Runnable
 
 on:
-  workflow_run:
-    workflows: ["Build"]
-    types:
-      - completed
+  push:
+    branches:
+      - '*'
+  #workflow_run:
+  #  workflows: ["Build"]
+  #  types:
+  #    - completed
 jobs:
   build:
     name: Build and Deploy
