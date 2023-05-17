@@ -1,4 +1,4 @@
-package kz.trankwilizator.tafl.entity;
+package kz.trankwilizator.tafl.entity.zone;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,6 +17,4 @@ public class Zone {
 
     @Column(name = "name", nullable = false)
     private String name;
-    
-    // Остальные поля и методы класса
 }
