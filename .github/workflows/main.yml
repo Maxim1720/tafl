@@ -1,4 +1,4 @@
-name: check application runnable
+name: Check Application Runnable
 
 on:
   push:
@@ -33,7 +33,20 @@ jobs:
 
       - name: Start the application container
         run: docker-compose up --build -d
-
+        
+      - name: Check Swagger API availability
+        run: |
+          retries=0
+          while ! curl --fail --silent --output /dev/null http://localhost:8080/v3/api-docs; do
+          retries=$((retries+1))
+          if [ $retries -gt 20 ]; then
+           echo "Swagger API is not available within the allotted time."
+           exit 1
+          fi
+          echo "Waiting for Swagger API to become available..."
+          sleep 1
+          done
+        
       - name: Check deployment status
         run: |
           if [ $? -eq 0 ]; then

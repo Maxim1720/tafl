@@ -1,20 +1,21 @@
 version: '3'
 services:
   app:
-    image: openjdk:21-slim
-    volumes:
-      - ./target/tafl-1.0.0.jar:/app/tafl.jar
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - 8080:8080
+      - "8080:8080"
     depends_on:
       - db
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/tafl_db
       - SPRING_DATASOURCE_USERNAME=trankwilizator
       - SPRING_DATASOURCE_PASSWORD=517881m
-    command: ["java", "-jar", "/app/tafl.jar"]
   db:
-    image: postgres
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
     environment:
       - POSTGRES_USER=trankwilizator
       - POSTGRES_PASSWORD=517881m
