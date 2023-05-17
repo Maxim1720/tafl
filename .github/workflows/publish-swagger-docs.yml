@@ -1,0 +1,106 @@
+name: Publish Swagger documentation
+
+on:
+  workflow_run:
+    workflows: ["Docker Build and Push"]
+    types:
+      - completed
+
+jobs:
+  publish-swagger:
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'oracle'
+
+      - name: Start PostgreSQL container
+        run: |
+          docker run --name pg -d -p 5432:5432 \
+            -e POSTGRES_USER=trankwilizator \
+            -e POSTGRES_PASSWORD=517881m \
+            -e POSTGRES_DB=tafl_db \
+            postgres:15-alpine
+
+      - name: Build the application
+        run: mvn clean package
+
+      - name: Stop pg container
+        run: docker stop pg
+
+      - name: Start the application container
+        run: |
+         docker-compose up --build -d
+         docker-compose logs -f > app_logs.txt &
+
+      - name: Wait for logs
+        run: sleep 15
+
+      - name: Display application logs
+        run: cat app_logs.txt
+
+      - name: Check Swagger API availability
+        run: |
+         retries=0
+         while ! curl --fail --silent --output /dev/null http://localhost:8080/v3/api-docs; do
+         retries=$((retries+1))
+         if [ $retries -gt 30 ]; then
+          echo "Swagger API is not available within the allotted time."
+          exit 1
+          fi
+          echo "Waiting for Swagger API to become available..."
+          sleep 1
+         done
+
+
+      - name: Clean Swagger file
+        run: rm -f ${{ github.workspace }}/swagger.json
+
+      - name: Import Swagger specification
+        run: curl -o ${{ github.workspace }}/swagger.json http://localhost:8080/v3/api-docs
+
+      - name: Fetch tags
+        run: git fetch --tags
+
+      - name: Get current version
+        id: get_version
+        run: |
+          latest_tag=$(git describe --tags --abbrev=0 --always)
+          current_version=$(echo "$latest_tag" | sed 's/v//')
+          echo "Current version: $current_version"
+          echo "version=$current_version" >> $GITHUB_STATE
+
+      - name: Calculate new version
+        id: calculate_version
+        run: |
+          patch=$(( ${{ steps.get_version.outputs.version }} + 1 ))
+          new_version="v${{ steps.get_version.outputs.version }}"
+          echo "New version: $new_version"
+          echo "::set-output name=patch::$patch"
+          echo "::set-output name=new_version::$new_version"
+
+      - name: Update Swagger version
+        run: |
+          version="${{ steps.calculate_version.outputs.new_version }}"
+          jq --arg newVersion "$version" '.info.version = $newVersion' ${{ github.workspace }}/swagger.json > ${{ github.workspace }}/swagger_temp.json && mv ${{ github.workspace }}/swagger_temp.json ${{ github.workspace }}/swagger.json
+
+      - name: Show Swagger content
+        run: cat ${{ github.workspace }}/swagger.json
+
+        
+      - name: Publish Swagger documentation
+        id: publish_swagger
+        run: |
+          echo "::set-output name=swagger_file_path::${{ github.workspace }}/swagger.json"
+          curl -X POST \
+          -H "Content-Type: application/json" \
+          -H "Authorization: ${{ secrets.SWAGGER_API_KEY }}" \
+          -d @"${{ github.workspace }}/swagger.json" \
+          https://api.swaggerhub.com/apis/musiev_maksim/tafl
+          
