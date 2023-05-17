@@ -37,18 +37,12 @@ jobs:
       - name: Wait for application to start
         run: sleep 15
 
-      - name: Install Postman CLI
-        run: |
-          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
-      
-      - name: Login to Postman CLI
-        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
-      
-      
+      - name: Install Newman CLI
+        run: npm install -g newman
+
       - name: Run API tests
-        run: |
-          postman collection run "${{ github.workspace }}/postman/collections/test not authenticated logout.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139" --integration-id "140049-${{ github.run_id }}"
-      
+        run: newman run "${{ github.workspace }}/postman/collections/test not authenticated logout.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139" --global-var "integration-id=140049-${{ github.run_id }}"
+
       - name: Check deployment status
         run: |
           if [ $? -eq 0 ]; then
