@@ -1,15 +1,16 @@
 package kz.trankwilizator.tafl.entity.launchable;
 
 import jakarta.persistence.*;
+import kz.trankwilizator.tafl.entity.zone.Zone;
 import lombok.Getter;
 import lombok.Setter;
-import kz.trankwilizator.tafl.entity.Zone;
 
-@Table(name = "computer")
+@Table(name = "devices")
 @Entity
 @Getter
 @Setter
-public class Computer extends RunnableEntity {
-  @JoinColumn(nullable=false)
+public class Device extends RunnableEntity {
+  @ManyToOne
+  @JoinColumn(name = "zone_id")
   private Zone zone;
 }
