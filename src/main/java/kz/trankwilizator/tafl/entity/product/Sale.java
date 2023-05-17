@@ -2,6 +2,11 @@ package kz.trankwilizator.tafl.entity.product;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="sales")
@@ -15,8 +20,9 @@ public class Sale{
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(nullable=false)
   private Long id;
-  
-  @ManyToMany(nullable=false)
+
+  @ManyToMany(targetEntity = Product.class)
+  @ToString.Exclude
   private List<Product> products;
   
   @Column(nullable=false)
