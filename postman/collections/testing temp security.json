@@ -1,0 +1,482 @@
+{
+	"info": {
+		"_postman_id": "a312ba33-e60c-40a0-bef2-ce48c4dacada",
+		"name": "testing temp security",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "19077502-a312ba33-e60c-40a0-bef2-ce48c4dacada"
+	},
+	"item": [
+		{
+			"name": "temp user registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d7b89d3e-2a6b-4455-bb61-b8d6cee18ef1",
+						"exec": [
+							"pm.test(\"Temp user was created\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"const temp = pm.response.json().username;",
+							"pm.environment.set(\"temp\", temp);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "f87169e9-9ca0-4576-9400-487989e7e80a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{temp-auth-url}}/reg",
+					"host": [
+						"{{temp-auth-url}}"
+					],
+					"path": [
+						"reg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bf7e7bf0-ab54-46c4-9055-f65d9fad9e3e",
+						"exec": [
+							"const name = pm.environment.get(\"temp\");",
+							"",
+							"const temp = {",
+							"    username:name",
+							"};",
+							"",
+							"pm.request.body.raw = temp;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3c902743-ff96-4a12-9661-6ff57dfd2e8f",
+						"exec": [
+							"pm.test(\"Temp user was authenticated\", function () {",
+							"    pm.response.to.have.status(202);",
+							"});",
+							"pm.environment.set(\"temp_jwt\", pm.response.json().body.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "337a55ef-65b6-44d1-aba0-31a8dbf0e126",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{temp-auth-url}}/login",
+					"host": [
+						"{{temp-auth-url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get users with jwt token",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "83340515-56e0-42a0-af6b-275ea0633c40",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "7d5c37c2-3429-4da6-a19a-2286e6131efd",
+						"exec": [
+							"pm.test(\"Temp user can get users\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "54f4949e-2176-4c4d-a4ec-bef15d7a5db6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{temp_jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{temporary-users-url}}",
+					"host": [
+						"{{temporary-users-url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d2d4625c-e6dc-4fcf-b168-e44c69b060db",
+						"exec": [
+							"pm.test(\"User logged out\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c35f25f2-bd61-4a1b-b4d4-7b828a2cef10",
+						"exec": [
+							"//pm.request.authorizeUsing(\"Bearer Token\", \"temp_jwt\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "b1d46319-65e5-4e69-9f77-5a0b89554c2b",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{temp_jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{logout-url}}",
+					"host": [
+						"{{logout-url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check get users with jwt token",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "16ae6519-3b0a-48d3-899b-24ad6294365d",
+						"exec": [
+							"//pm.request.authorizeUsing(\"Bearer Token\", \"temp_jwt\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "1414caa7-0d47-406e-933a-7a7b72dd8e4a",
+						"exec": [
+							"pm.test(\"Temp user can't get users\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "482d6386-a88f-40b9-aeba-98ce490089ac",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{temp_jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{temporary-users-url}}",
+					"host": [
+						"{{temporary-users-url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login again with deprecated token",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "575cd43d-33b4-4935-8bbb-d337a3e13c5e",
+						"exec": [
+							"const name = pm.environment.get(\"temp\");",
+							"",
+							"const temp = {",
+							"    username:name",
+							"};",
+							"",
+							"pm.request.body.raw = temp;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "5b0244ac-1ad0-43ee-b213-ab55286e1fe6",
+						"exec": [
+							"pm.test(\"Temp user was authenticated\", function () {",
+							"    pm.response.to.have.status(202);",
+							"});",
+							"pm.environment.set(\"temp_jwt\", pm.response.json().body.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "bd7b93af-869f-4e1b-87a1-c28871f6de18",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{temp-auth-url}}/login",
+					"host": [
+						"{{temp-auth-url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get users with jwt token",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1e83d70d-aced-497c-944e-508cf88d25ae",
+						"exec": [
+							"//pm.request.authorizeUsing(\"bearer\", pm.environment.get(\"temp_jwt\"));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3b018135-a4ab-4a19-80b1-f87cc6e4a0c8",
+						"exec": [
+							"pm.test(\"Temp user can get users\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "a9cfa036-b69a-4d20-97e3-a12f13ed14fa",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{temp_jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{temporary-users-url}}",
+					"host": [
+						"{{temporary-users-url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aeb110d8-3b3b-4af3-8e00-641e2a7f118d",
+						"exec": [
+							"pm.test(\"User is logout\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "13efe0bf-1c0d-4889-9d77-8d8d032a7df2",
+						"exec": [
+							"//pm.request.authorizeUsing(\"Bearer Token\", \"temp_jwt\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "b99a9ccb-e5bb-4b21-a260-7d122d4f1dc3",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{temp_jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{logout-url}}",
+					"host": [
+						"{{logout-url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get users with jwt token Copy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "06096141-6488-49bd-80c1-94d36a69560f",
+						"exec": [
+							"//pm.request.authorizeUsing(\"bearer\", pm.environment.get(\"temp_jwt\"));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "73ad4e48-d4c8-42b5-a4f1-97dc7d9730d2",
+						"exec": [
+							"pm.test(\"Temp user can't get users\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "7463baf3-026f-4c81-ac16-219671a903ab",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{temp_jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{temporary-users-url}}",
+					"host": [
+						"{{temporary-users-url}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
