@@ -1,4 +1,4 @@
-name: Postman tests
+name: Newman tests
 on:
   push:
     branches:
@@ -11,6 +11,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
@@ -41,7 +42,8 @@ jobs:
         run: npm install -g newman
 
       - name: Run API tests
-        run: newman run "${{ github.workspace }}/postman/collections/test not authenticated logout.json" -e "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139" --integration-id "140049-${{ github.run_id }}"
+        run: newman run "${{ github.workspace }}/postman/collections/test not authenticated logout.json" -e "${{ github.workspace }}/postman/environments/19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139.postman_environment.json"
+
       - name: Check deployment status
         run: |
           if [ $? -eq 0 ]; then
