@@ -12,31 +12,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-#      - name: Set up JDK
-#        uses: actions/setup-java@v3
-#        with:
-#          java-version: 17
-#          distribution: 'oracle'
-#
-#      - name: Start PostgreSQL container
-#        run: |
-#          docker run --name pg -d -p 5432:5432 \
-#            -e POSTGRES_USER=trankwilizator \
-#            -e POSTGRES_PASSWORD=517881m \
-#            -e POSTGRES_DB=tafl_db \
-#            postgres:15-alpine
-#
-#      - name: Build the application
-#        run: mvn clean package
-#
-#      - name: Stop pg container
-#        run: docker stop pg
-#
-#      - name: Start the application container
-#        run: docker-compose up --build -d
-#
-#      - name: Wait for application to start
-#        run: sleep 15
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'oracle'
+
+      - name: Start PostgreSQL container
+        run: |
+          docker run --name pg -d -p 5432:5432 \
+            -e POSTGRES_USER=trankwilizator \
+            -e POSTGRES_PASSWORD=517881m \
+            -e POSTGRES_DB=tafl_db \
+            postgres:15-alpine
+
+      - name: Build the application
+        run: mvn clean package
+
+      - name: Stop pg container
+        run: docker stop pg
+
+      - name: Start the application container
+        run: docker-compose up --build -d
+
+      - name: Wait for application to start
+        run: sleep 15
 
       - name: Install Newman CLI
         run: npm install -g newman
