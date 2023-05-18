@@ -1,0 +1,139 @@
+{
+	"info": {
+		"_postman_id": "d5390049-f822-4482-8147-7932bda0ef82",
+		"name": "test not existing user's login",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "19077502-d5390049-f822-4482-8147-7932bda0ef82"
+	},
+	"item": [
+		{
+			"name": "login permanent",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1d1c4862-0908-4943-949a-43d8c7ce8627",
+						"exec": [
+							"const user = {",
+							"    \"username\":pm.variables.replaceIn('{{$randomUserName}}'),",
+							"    \"password\":pm.variables.replaceIn('{{$randomPassword}}')",
+							"}",
+							"",
+							"//pm.environment.set(\"per_user\", user);",
+							"",
+							"pm.request.body.raw = user;",
+							"",
+							"console.log(user);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "64b8b30b-8118-442e-afb8-3dc63419251f",
+						"exec": [
+							"pm.test(\"User doesn't exists - can't login\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "21a06c65-307a-4b24-931d-bc89ed30720c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"465498d4wadwadawd\",\n    \"password\":\"48946d5wadwad\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_path}}/auth/permanent/login",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"auth",
+						"permanent",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login temp",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cf7d3ca6-c3e3-4e66-85bb-966df1012d09",
+						"exec": [
+							"const user = {",
+							"    \"username\":pm.variables.replaceIn('{{$randomUserName}}')",
+							"}",
+							"",
+							"//pm.environment.set(\"per_user\", user);",
+							"",
+							"pm.request.body.raw = user;",
+							"",
+							"console.log(user);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "52a31913-8ea9-4bfd-a494-7ab8988f9507",
+						"exec": [
+							"pm.test(\"User doesn't exists - can't login\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "9546ec74-aa9d-4e1b-8668-f84224114de6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"465498d4wadwadawd\",\n    \"password\":\"48946d5wadwad\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_path}}/auth/permanent/login",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"auth",
+						"permanent",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "8d88b3b4-6107-4de6-8f95-2419fb5d5948",
+		"name": "test registration already exists permanent user",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "19077502-8d88b3b4-6107-4de6-8f95-2419fb5d5948"
+	},
+	"item": [
+		{
+			"name": "registration",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "676c4d8f-68ee-4e2d-9455-517325974b3b",
+						"exec": [
+							"const user = {",
+							"    username: \"almat17\",",
+							"    password: \"1234\",",
+							"    email:\"musiev_maksim@mail.ru\",",
+							"    firstname:\"Maxim\",",
+							"    lastname:\"Musiev\",",
+							"    secondName:\"Alibekovich\",",
+							"}",
+							"",
+							"pm.environment.set(\"per_user\", user);",
+							"pm.request.body.raw = user;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "34ff697b-ce9c-4dae-ad47-c14369a2a485",
+						"exec": [
+							"pm.test(\"Permanent user was registered\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "dc741abf-feac-40a1-9dbd-78bcfa141d69",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"almat17\",\n    \"password\":\"1234\",\n    \"email\":\"musiev_maksim@mail.ru\",\n    \"firstname\":\"Maxim\",\n    \"lastname\":\"Musiev\",\n    \"secondName\":\"Alibekovich\",\n    \"balance\":0.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_path}}/auth/permanent/reg",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"auth",
+						"permanent",
+						"reg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "registration again",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d2d55293-2f80-4106-bda7-ea4e8069bcab",
+						"exec": [
+							"pm.request.body.raw = pm.environment.get(\"per_user\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "a572980c-3360-44e8-9c43-2ea396f3d036",
+						"exec": [
+							"pm.test(\"Permanent User already exists\", function () {",
+							"    pm.response.to.have.status(409);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "803fd634-21ca-4bec-8ae6-178eb2f25ab1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"almat17\",\n    \"password\":\"1234\",\n    \"email\":\"musiev_maksim@mail.ru\",\n    \"firstname\":\"Maxim\",\n    \"lastname\":\"Musiev\",\n    \"secondName\":\"Alibekovich\",\n    \"balance\":0.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_path}}/auth/permanent/reg",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"auth",
+						"permanent",
+						"reg"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

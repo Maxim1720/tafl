@@ -9,7 +9,14 @@ id = e498ffcc-bad4-4cb2-8847-91611c635a9a
 
 [config.relations.collections]
 rootDirectory = postman/collections
+files[] = {"id":"19077502-96ddd0df-4e11-421c-8ed5-f38a03a07bfa","path":"permanent user password change test.json","metaData":{}}
 files[] = {"id":"19077502-fd45f9de-b373-4ffd-a643-041d91584df5","path":"test not authenticated logout.json","metaData":{}}
+files[] = {"id":"19077502-c0575664-5fe0-444a-869a-e587151399c1","path":"test not authenticated request.json","metaData":{}}
+files[] = {"id":"19077502-d5390049-f822-4482-8147-7932bda0ef82","path":"test not existing user's login.json","metaData":{}}
+files[] = {"id":"19077502-414f24cb-0d3d-4fd9-9e8d-398b82e18a51","path":"test permit all end-points.json","metaData":{}}
+files[] = {"id":"19077502-8d88b3b4-6107-4de6-8f95-2419fb5d5948","path":"test registration already exists permanent user.json","metaData":{}}
+files[] = {"id":"19077502-91788be6-3b3a-49ea-9f03-008df3cf7591","path":"testing permanent security.json","metaData":{}}
+files[] = {"id":"19077502-a312ba33-e60c-40a0-bef2-ce48c4dacada","path":"testing temp security.json","metaData":{}}
 
 [config.relations.collections.metaData]
 
