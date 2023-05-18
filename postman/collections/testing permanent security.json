@@ -17,7 +17,7 @@
 							"const user = {",
 							"    username: pm.variables.replaceIn(\"{{$randomUserName}}\"),",
 							"    password: pm.variables.replaceIn('{{$randomPassword}}'),",
-							"    email:pm.variables.replaceIn(\"{{$$randomEmail}}\"),",
+							"    email:pm.variables.replaceIn(\"{{$randomEmail}}\"),",
 							"    firstname:pm.variables.replaceIn('{{$randomFirstName}}'),",
 							"    lastname:pm.variables.replaceIn('{{$randomLastName}}'),",
 							"    secondName:pm.variables.replaceIn('{{$randomSecondName}}'),",
