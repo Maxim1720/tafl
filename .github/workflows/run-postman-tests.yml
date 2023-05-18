@@ -7,6 +7,8 @@ on:
 jobs:
   build:
     name: Build and Test
+    env:
+      postman.env.path: ${{ github.workspace }}/postman/env/tafl.postman_environment.json
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -44,7 +46,23 @@ jobs:
       - name: Run API tests
         run: |
           newman run "${{ github.workspace }}/postman/collections/test not authenticated logout.json" \
-            -e "${{ github.workspace }}/postman/env/tafl.postman_environment.json"
+            -e "$postman.env.path"
+          newman run "${{ github.workspace }}/postman/collections/permanent user password change test.json" \
+            -e "$postman.env.path"
+          newman run "${{ github.workspace }}/postman/collections/test not authenticated logout.json" \ 
+            -e "$postman.env.path"
+          newman run "${{ github.workspace }}/postman/collections/test not authenticated request.json" \
+            -e "$postman.env.path"
+          newman run "${{ github.workspace }}/postman/collections/test not existing user's login.json" \
+            -e "$postman.env.path"
+          newman run "${{ github.workspace }}/postman/collections/test permit all end-points.json" \
+            -e "$postman.env.path"
+          newman run "${{ github.workspace }}/postman/collections/test registration already exists permanent user.json" \
+            -e "$postman.env.path"
+          newman run "${{ github.workspace }}/postman/collections/testing permanent security.json" \
+            -e "$postman.env.path"
+          newman run "${{ github.workspace }}/postman/collections/testing temp security.json" \
+            -e "$postman.env.path"
 
       - name: Check deployment status
         run: |
