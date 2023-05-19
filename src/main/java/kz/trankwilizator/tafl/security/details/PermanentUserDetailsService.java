@@ -26,6 +26,7 @@ public class PermanentUserDetailsService extends AbsUserDetailsService<Permanent
         for(Permission p : permanentUserUserCrudService.getByUsername(username).getRole().getPermissions()){
             authorities.add(new SimpleGrantedAuthority(p.getName()));
         }
+        authorities.add(new SimpleGrantedAuthority(permanentUserUserCrudService.getByUsername(username).getRole().getName()));
         return authorities;
     }
 
