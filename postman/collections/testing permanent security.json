@@ -20,7 +20,7 @@
 							"    email:pm.variables.replaceIn(\"{{$randomEmail}}\"),",
 							"    firstname:pm.variables.replaceIn('{{$randomFirstName}}'),",
 							"    lastname:pm.variables.replaceIn('{{$randomLastName}}'),",
-							"    secondName:pm.variables.replaceIn('{{$randomSecondName}}'),",
+							"    secondName:pm.variables.replaceIn('{{$randomLastName}}'),",
 							"}",
 							"",
 							"pm.environment.set(\"per_user\", user);",
