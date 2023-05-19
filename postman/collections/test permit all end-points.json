@@ -1,0 +1,84 @@
+{
+	"info": {
+		"_postman_id": "414f24cb-0d3d-4fd9-9e8d-398b82e18a51",
+		"name": "test permit all end-points",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "19077502-414f24cb-0d3d-4fd9-9e8d-398b82e18a51"
+	},
+	"item": [
+		{
+			"name": "temp login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9fdc3a1c-2086-43d4-885f-554c3b3f7832",
+						"exec": [
+							"pm.test(\"Status code is not 401\", function () {",
+							"    pm.response.to.not.have.status(401)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "3cb5ef9e-4ab0-42a7-a03f-a6a5b4356c26",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_path}}/auth/temp/login",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"auth",
+						"temp",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "permanent login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "32b47c98-8657-4513-ae1b-bb593b0ae035",
+						"exec": [
+							"pm.test(\"Status code is not 401\", function () {",
+							"    pm.response.to.not.have.status(401)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "92136316-e4ef-49a9-b98d-5a6464bc39a6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_path}}/auth/permanent/login",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"auth",
+						"permanent",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

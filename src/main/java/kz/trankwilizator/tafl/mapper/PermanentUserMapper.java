@@ -1,6 +1,7 @@
 package kz.trankwilizator.tafl.mapper;
 
 import kz.trankwilizator.tafl.dto.PermanentUserDto;
+import kz.trankwilizator.tafl.dto.response.PermanentUserResponseDto;
 import kz.trankwilizator.tafl.entity.user.PermanentUser;
 import org.mapstruct.Mapper;
 
@@ -8,4 +9,5 @@ import org.mapstruct.Mapper;
 public interface PermanentUserMapper {
     PermanentUserDto toDto(PermanentUser permanentUser);
     PermanentUser toEntity(PermanentUserDto user);
+    PermanentUserResponseDto toResponse(PermanentUser permanentUser);
 }
