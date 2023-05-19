@@ -45,24 +45,24 @@ jobs:
 
       - name: Run API tests
         run: |
-          newman run "${{ github.workspace }}/postman/collections/test not authenticated logout.json" \
-            -e "$postman_env_path"
           newman run "${{ github.workspace }}/postman/collections/permanent user password change test.json" \
-            -e "$postman_env_path"
-          newman run "${{ github.workspace }}/postman/collections/test not authenticated logout.json" \ 
-            -e "$postman_env_path"
+          -e "$postman_env_path"
+          newman run "${{ github.workspace }}/postman/collections/test not authenticated logout.json" \
+          -e "$postman_env_path"
           newman run "${{ github.workspace }}/postman/collections/test not authenticated request.json" \
-            -e "$postman_env_path"
-          newman run "${{ github.workspace }}/postman/collections/test not existing user's login.json" \
-            -e "$postman_env_path"
+          -e "$postman_env_path"
           newman run "${{ github.workspace }}/postman/collections/test permit all end-points.json" \
-            -e "$postman_env_path"
+          -e "$postman_env_path"
           newman run "${{ github.workspace }}/postman/collections/test registration already exists permanent user.json" \
-            -e "$postman_env_path"
+          -e "$postman_env_path"
+          newman run "${{ github.workspace }}/postman/collections/test sign in with incorrect password.json" \
+          -e "$postman_env_path"
+          newman run "${{ github.workspace }}/postman/collections/test sign in with incorrect username.json" \
+          -e "$postman_env_path"
           newman run "${{ github.workspace }}/postman/collections/testing permanent security.json" \
-            -e "$postman_env_path"
+          -e "$postman_env_path"
           newman run "${{ github.workspace }}/postman/collections/testing temp security.json" \
-            -e "$postman_env_path"
+          -e "$postman_env_path"
 
       - name: Check deployment status
         run: |
