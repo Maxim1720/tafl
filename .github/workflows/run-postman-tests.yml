@@ -45,6 +45,7 @@ jobs:
 
       - name: Run API tests
         run: |
+
           newman run "${{ github.workspace }}/postman/collections/permanent user password change test.json" \
           -e "$postman_env_path"
           newman run "${{ github.workspace }}/postman/collections/test not authenticated logout.json" \
