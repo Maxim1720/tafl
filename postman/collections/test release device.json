@@ -149,8 +149,6 @@
 							"const zone = {",
 							"    name: pm.variables.replaceIn(\"{{$randomCompanyName}}\")",
 							"}",
-							"pm.environment.set(\"zone\", zone);",
-							"",
 							"pm.request.body.raw = zone;"
 						],
 						"type": "text/javascript"
@@ -161,29 +159,10 @@
 					"script": {
 						"id": "7d1595ed-6798-4fdc-b616-a8278b58d10c",
 						"exec": [
-							"pm.test(\"Zone was created\", function () {",
-							"    pm.response.to.have.status(201);",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
 							"});",
-							"",
-							"",
-							"var requestDetails = {",
-							"  url: pm.response.json()._links.zone.href,",
-							"  method: 'GET'",
-							"};",
-							"",
-							"",
-							"var zone = {}",
-							"",
-							"pm.sendRequest(requestDetails, function(err, response){",
-							"    if(err){",
-							"        console.log(err);",
-							"    }",
-							"    else{",
-							"        zone = response.json();",
-							"    }",
-							"});",
-							"",
-							"pm.environment.set(\"zone\", zone);"
+							"pm.collectionVariables.set(\"zone\", pm.response.json()._links.self.href);"
 						],
 						"type": "text/javascript"
 					}
@@ -228,39 +207,56 @@
 			"response": []
 		},
 		{
+			"name": "get busy device status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "078caade-87a7-4c71-afe9-8b7869da1e63",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"status\", pm.response.json()._links.self.href);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "8cee8df1-a0a7-424b-9a08-300ca439bbe3",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_path}}/deviceStatuses/2",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"deviceStatuses",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "create device",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "945cc405-7b56-41e4-879d-4c8b544f049a",
+						"id": "9feee018-8dbe-4f91-a7b6-2aaa6e204d9d",
 						"exec": [
 							"pm.test(\"Status code is 201\", function () {",
 							"    pm.response.to.have.status(201);",
 							"});",
 							"",
-							"var requestDetails = {",
-							"  url: pm.response.json()._links.self.href,",
-							"  method: 'GET',",
-							"  header: {",
-							"    'Authorization': 'Bearer ' + pm.environment.get(\"per-token\")",
-							"  }",
-							"};",
-							"",
-							"pm.sendRequest(requestDetails, function(err, response){",
-							"    if(err){",
-							"        console.log(err);",
-							"    }",
-							"    else{",
-							"        ",
-							"    }",
-							"})",
-							"",
-							"",
-							"var href = pm.response.json()._links.self.href;",
-							"var hrefSplit = href.split('/');",
-							"var id = hrefSplit[hrefSplit.length - 1];",
-							"pm.environment.set(\"device_id\", id);",
+							"pm.collectionVariables.set(\"device\", pm.response.json()._links.self.href);",
 							""
 						],
 						"type": "text/javascript"
@@ -269,13 +265,13 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "f263b426-b469-4f52-87b4-94e3cf460307",
+						"id": "b2481a9d-51ed-4768-b15d-91a4e81fb368",
 						"exec": [
 							"const device = {",
-							"    isOccupied:true,",
-							"    zoneId: pm.environment.get(\"zone\").id",
+							"    zone: pm.collectionVariables.get(\"zone\"),",
+							"    deviceStatus: pm.collectionVariables.get(\"status\"),",
+							"    number: pm.variables.replaceIn(\"{{$randomInt}}\")    ",
 							"}",
-							"",
 							"pm.request.body.raw = device;",
 							"",
 							""
@@ -284,7 +280,7 @@
 					}
 				}
 			],
-			"id": "bfa382c9-0935-4d5c-ad98-1e5369d807ca",
+			"id": "020d06c9-db53-430a-94dd-54d0adbc8599",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -318,9 +314,9 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c306cc04-4ed1-4131-8431-d84856959265",
+						"id": "deaca42b-5ec6-452d-8670-0867c2925fab",
 						"exec": [
-							"pm.test(\"Release device\", function () {",
+							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});"
 						],
@@ -328,7 +324,7 @@
 					}
 				}
 			],
-			"id": "fdd8eccf-f347-4a58-a577-671459ae48b9",
+			"id": "5c29ba6e-988f-48d0-9033-bdbfa63ef3a1",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -336,13 +332,11 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "{{base_path}}/devices/{{device_id}}/release",
+					"raw": "{{device}}/release",
 					"host": [
-						"{{base_path}}"
+						"{{device}}"
 					],
 					"path": [
-						"devices",
-						"{{device_id}}",
 						"release"
 					]
 				}
@@ -355,9 +349,9 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c8fbcf4a-4f34-4488-8806-40351c43ec9c",
+						"id": "deaca42b-5ec6-452d-8670-0867c2925fab",
 						"exec": [
-							"pm.test(\"Can't release again\", function () {",
+							"pm.test(\"Can't reserve again\", function () {",
 							"    pm.response.to.have.status(400);",
 							"});"
 						],
@@ -365,7 +359,7 @@
 					}
 				}
 			],
-			"id": "d527e92e-bb88-4407-ad75-68fd57594ee2",
+			"id": "f5f231c2-3f3a-4fdc-9b28-5670721847bf",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -373,13 +367,11 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "{{base_path}}/devices/{{device_id}}/release",
+					"raw": "{{device}}/release",
 					"host": [
-						"{{base_path}}"
+						"{{device}}"
 					],
 					"path": [
-						"devices",
-						"{{device_id}}",
 						"release"
 					]
 				}
@@ -417,6 +409,23 @@
 					""
 				]
 			}
+		}
+	],
+	"variable": [
+		{
+			"id": "e69a863e-7fcd-4d72-bac5-a0fa3427e00c",
+			"key": "status",
+			"value": ""
+		},
+		{
+			"id": "77f196c6-8440-4e1b-8b8d-98fb6550e266",
+			"key": "zone",
+			"value": ""
+		},
+		{
+			"id": "5c8a81bb-50fd-4e41-80d7-d520f002b070",
+			"key": "device",
+			"value": ""
 		}
 	]
 }
