@@ -19,6 +19,12 @@ public class Launch {
     private Long id;
 
     @OneToOne(targetEntity = RunnableEntity.class, orphanRemoval = true)
+    @JoinColumns(
+            value = {
+                    @JoinColumn(name = "runnable_entity_id", referencedColumnName = "id"),
+                    @JoinColumn(name = "runnable_entity_type_id", referencedColumnName = "type_id")
+            }
+    )
     private RunnableEntity runnableEntity;
 
     @CreationTimestamp

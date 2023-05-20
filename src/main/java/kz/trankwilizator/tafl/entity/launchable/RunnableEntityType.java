@@ -4,17 +4,16 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
-public abstract class RunnableEntity {
+@Entity
+@Table(name = "runnable_entity_type")
+public class RunnableEntityType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private RunnableEntityType type;
+    @Column(nullable = false)
+    private String name;
 }
