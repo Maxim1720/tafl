@@ -5,5 +5,4 @@ public interface Crud<E> {
     E save(E e);
 
     boolean exists(E e);
-    boolean existsByUsername(String username);
 }

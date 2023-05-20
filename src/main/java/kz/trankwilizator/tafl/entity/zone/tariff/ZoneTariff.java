@@ -1,7 +1,10 @@
-package kz.trankwilizator.tafl.entity;
+package kz.trankwilizator.tafl.entity.zone.tariff;
 
 import jakarta.persistence.*;
+import kz.trankwilizator.tafl.entity.zone.Zone;
 import lombok.*;
+
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "zone_tariffs")
@@ -23,5 +26,5 @@ public class ZoneTariff {
     @JoinColumn(name = "tariff_id")
     private Tariff tariff;
 
-    // Остальные поля и методы класса
+    private BigDecimal price;
 }

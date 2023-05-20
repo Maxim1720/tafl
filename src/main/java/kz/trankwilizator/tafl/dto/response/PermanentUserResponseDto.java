@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PermanentRegResponseDto extends UserDto {
+public class PermanentUserResponseDto extends UserDto {
     private String firstname;
     private String lastname;
     private String secondName;

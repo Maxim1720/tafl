@@ -1,0 +1,435 @@
+{
+	"info": {
+		"_postman_id": "4746b958-5f52-4146-99f5-a7a587f2aa40",
+		"name": "test reserve device",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "19077502-4746b958-5f52-4146-99f5-a7a587f2aa40"
+	},
+	"item": [
+		{
+			"name": "registration Copy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "676c4d8f-68ee-4e2d-9455-517325974b3b",
+						"exec": [
+							"const user = {",
+							"    username: pm.variables.replaceIn(\"{{$randomUserName}}\"),",
+							"    password: pm.variables.replaceIn('{{$randomPassword}}'),",
+							"    email:pm.variables.replaceIn(\"{{$randomEmail}}\"),",
+							"    firstname:pm.variables.replaceIn('{{$randomFirstName}}'),",
+							"    lastname:pm.variables.replaceIn('{{$randomLastName}}'),",
+							"    secondName:pm.variables.replaceIn('{{$randomLastName}}'),",
+							"}",
+							"",
+							"pm.environment.set(\"per_user\", user);",
+							"pm.request.body.raw = user;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "34ff697b-ce9c-4dae-ad47-c14369a2a485",
+						"exec": [
+							"pm.test(\"Permanent user was registered\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "4d9287f9-66c3-4720-9f93-8cfb0f241856",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"almat17\",\n    \"password\":\"1234\",\n    \"email\":\"musiev_maksim@mail.ru\",\n    \"firstname\":\"Maxim\",\n    \"lastname\":\"Musiev\",\n    \"secondName\":\"Alibekovich\",\n    \"balance\":0.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_path}}/auth/permanent/reg",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"auth",
+						"permanent",
+						"reg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login Copy 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "572ee19f-84bb-48e8-be8e-679eced38f25",
+						"exec": [
+							"const per_user = pm.environment.get(\"per_user\");",
+							"",
+							"const user = {",
+							"    username: per_user.username,",
+							"    password: per_user.password",
+							"}",
+							"",
+							"pm.request.body.raw = user;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "a929fa3b-a346-4dd9-8786-9ff5b0707e4b",
+						"exec": [
+							"pm.test(\"Permanent user was loggined\", function () {",
+							"    pm.response.to.have.status(202);",
+							"});",
+							"",
+							"pm.environment.set(\"per-token\", pm.response.json().body.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "9765e0b8-3748-4e55-8678-d0953b730e51",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{permanent-auth-url}}/login",
+					"host": [
+						"{{permanent-auth-url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create zone",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "dc52f5d1-5b2c-4777-83c3-8d50c69b2222",
+						"exec": [
+							"const zone = {",
+							"    name: pm.variables.replaceIn(\"{{$randomCompanyName}}\")",
+							"}",
+							"pm.environment.set(\"zone\", zone);",
+							"",
+							"pm.request.body.raw = zone;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "52e1f0ac-788a-4af1-9bd1-54ee8184d920",
+						"exec": [
+							"pm.test(\"Zone was created\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"zone\", pm.response.json()._links.self.href);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "0cbb061a-dbc1-460c-8874-56f0a299c98a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{per-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_path}}/zones",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"zones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get free device status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "078caade-87a7-4c71-afe9-8b7869da1e63",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"status\", pm.response.json()._links.self.href);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "e436a17d-488d-4da1-94fd-ded63dc6df73",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_path}}/deviceStatuses/1",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"deviceStatuses",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create device",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9feee018-8dbe-4f91-a7b6-2aaa6e204d9d",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"pm.collectionVariables.set(\"device\", pm.response.json()._links.self.href);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b2481a9d-51ed-4768-b15d-91a4e81fb368",
+						"exec": [
+							"const device = {",
+							"    zone: pm.collectionVariables.get(\"zone\"),",
+							"    deviceStatus: pm.collectionVariables.get(\"status\"),",
+							"    number: pm.variables.replaceIn(\"{{$randomInt}}\")    ",
+							"}",
+							"pm.request.body.raw = device;",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "2f72cd31-57c9-4207-b9e5-419a424bb86e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"isOccupied\":false,\n    \"zoneId\": {{$zone}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_path}}/devices",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"devices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reserve device",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "deaca42b-5ec6-452d-8670-0867c2925fab",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "34d967ca-44d2-475c-a846-28d894358c38",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{device}}/reserve",
+					"host": [
+						"{{device}}"
+					],
+					"path": [
+						"reserve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reserve device again",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "deaca42b-5ec6-452d-8670-0867c2925fab",
+						"exec": [
+							"pm.test(\"Can't reserve again\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "e69545ce-8bb0-4164-b227-31032ff6b542",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{device}}/reserve",
+					"host": [
+						"{{device}}"
+					],
+					"path": [
+						"reserve"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{per-token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "309e68c3-6337-4e45-9beb-533a60b1eddd",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "074a8b9f-1360-4b6a-b5ac-54dbe9699ea2",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "121f57af-aa31-4e72-ace1-685bb3449065",
+			"key": "zone",
+			"value": ""
+		},
+		{
+			"id": "83a01b55-7b6c-40e8-853e-bf7a7301e113",
+			"key": "status",
+			"value": ""
+		},
+		{
+			"id": "503e862b-070e-45bb-b123-dee62f520b69",
+			"key": "device",
+			"value": ""
+		}
+	]
+}

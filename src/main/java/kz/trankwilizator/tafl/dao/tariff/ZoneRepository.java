@@ -1,4 +1,6 @@
-import kz.trankwilizator.tafl.entity.Zone;
+package kz.trankwilizator.tafl.dao.tariff;
+
+import kz.trankwilizator.tafl.entity.zone.Zone;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
