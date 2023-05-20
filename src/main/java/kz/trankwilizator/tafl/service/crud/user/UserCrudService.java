@@ -55,8 +55,6 @@ public abstract class UserCrudService<U extends User> implements Crud<U> {
             }
         });
     }
-
-    @Override
     public boolean existsByUsername(String username) {
         return repository.findByUsernameIgnoreCase(username).isPresent();
     }
