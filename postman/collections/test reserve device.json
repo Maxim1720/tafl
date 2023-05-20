@@ -165,28 +165,7 @@
 							"    pm.response.to.have.status(201);",
 							"});",
 							"",
-							"",
-							"var requestDetails = {",
-							"  url: pm.response.json()._links.zone.href,",
-							"  method: 'GET',",
-							"  headers: {",
-							"    'Authorization': 'Bearer ' + pm.environment.get(\"per-token\")",
-							"  }",
-							"};",
-							"",
-							"",
-							"var zone = {}",
-							"",
-							"pm.sendRequest(requestDetails, function(err, response){",
-							"    if(err){",
-							"        console.log(err);",
-							"    }",
-							"    else{",
-							"        zone = response.json();",
-							"    }",
-							"});",
-							"",
-							"pm.environment.set(\"zone\", zone);"
+							"pm.collectionVariables.set(\"zone\", pm.response.json()._links.self.href);"
 						],
 						"type": "text/javascript"
 					}
@@ -231,6 +210,44 @@
 			"response": []
 		},
 		{
+			"name": "get free device status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "078caade-87a7-4c71-afe9-8b7869da1e63",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"status\", pm.response.json()._links.self.href);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "e436a17d-488d-4da1-94fd-ded63dc6df73",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_path}}/deviceStatuses/1",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"deviceStatuses",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "create device",
 			"event": [
 				{
@@ -242,28 +259,8 @@
 							"    pm.response.to.have.status(201);",
 							"});",
 							"",
-							"var requestDetails = {",
-							"  url: pm.response.json()._links.self.href,",
-							"  method: 'GET',",
-							"  header: {",
-							"    'Authorization': 'Bearer ' + pm.environment.get(\"per-token\")",
-							"  }",
-							"};",
 							"",
-							"pm.sendRequest(requestDetails, function(err, response){",
-							"    if(err){",
-							"        console.log(err);",
-							"    }",
-							"    else{",
-							"        ",
-							"    }",
-							"})",
-							"",
-							"",
-							"var href = pm.response.json()._links.self.href;",
-							"var hrefSplit = href.split('/');",
-							"var id = hrefSplit[hrefSplit.length - 1];",
-							"pm.environment.set(\"device_id\", id);",
+							"pm.collectionVariables.set(\"device\", pm.response.json()._links.self.href);",
 							""
 						],
 						"type": "text/javascript"
@@ -275,10 +272,10 @@
 						"id": "b2481a9d-51ed-4768-b15d-91a4e81fb368",
 						"exec": [
 							"const device = {",
-							"    isOccupied:false,",
-							"    zoneId: pm.environment.get(\"zone\").id",
+							"    zone: pm.collectionVariables.get(\"zone\"),",
+							"    deviceStatus: pm.collectionVariables.get(\"status\"),",
+							"    number: pm.variables.replaceIn(\"{{$randomInt}}\")    ",
 							"}",
-							"",
 							"pm.request.body.raw = device;",
 							"",
 							""
@@ -339,13 +336,11 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "{{base_path}}/devices/{{device_id}}/reserve",
+					"raw": "{{device}}/reserve",
 					"host": [
-						"{{base_path}}"
+						"{{device}}"
 					],
 					"path": [
-						"devices",
-						"{{device_id}}",
 						"reserve"
 					]
 				}
@@ -376,13 +371,11 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "{{base_path}}/devices/{{device_id}}/reserve",
+					"raw": "{{device}}/reserve",
 					"host": [
-						"{{base_path}}"
+						"{{device}}"
 					],
 					"path": [
-						"devices",
-						"{{device_id}}",
 						"reserve"
 					]
 				}
@@ -420,6 +413,23 @@
 					""
 				]
 			}
+		}
+	],
+	"variable": [
+		{
+			"id": "121f57af-aa31-4e72-ace1-685bb3449065",
+			"key": "zone",
+			"value": ""
+		},
+		{
+			"id": "83a01b55-7b6c-40e8-853e-bf7a7301e113",
+			"key": "status",
+			"value": ""
+		},
+		{
+			"id": "503e862b-070e-45bb-b123-dee62f520b69",
+			"key": "device",
+			"value": ""
 		}
 	]
 }
