@@ -75,7 +75,7 @@ public class JwtTokenCrudService implements Crud<JwtToken>{
         });
     }
 
-    @Override
+
     public boolean existsByUsername(String username) {
         return !jwtTokenRepository.findJwtTokensByUserUsername(username).isEmpty();
     }

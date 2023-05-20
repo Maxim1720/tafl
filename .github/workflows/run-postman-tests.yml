@@ -48,6 +48,8 @@ jobs:
 
           newman run "${{ github.workspace }}/postman/collections/permanent user password change test.json" \
           -e "$postman_env_path"
+          newman run "${{ github.workspace }}/postman/collections/test device status.json" \
+          -e "$postman_env_path"
           newman run "${{ github.workspace }}/postman/collections/test not authenticated logout.json" \
           -e "$postman_env_path"
           newman run "${{ github.workspace }}/postman/collections/test not authenticated request.json" \
@@ -55,6 +57,10 @@ jobs:
           newman run "${{ github.workspace }}/postman/collections/test permit all end-points.json" \
           -e "$postman_env_path"
           newman run "${{ github.workspace }}/postman/collections/test registration already exists permanent user.json" \
+          -e "$postman_env_path"
+          newman run "${{ github.workspace }}/postman/collections/test release device.json" \
+          -e "$postman_env_path"
+          newman run "${{ github.workspace }}/postman/collections/test reserve device.json" \
           -e "$postman_env_path"
           newman run "${{ github.workspace }}/postman/collections/test sign in with incorrect password.json" \
           -e "$postman_env_path"
