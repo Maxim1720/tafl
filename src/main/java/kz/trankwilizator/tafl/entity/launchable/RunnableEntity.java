@@ -6,7 +6,7 @@ import lombok.Setter;
 
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Getter
 @Setter
 public abstract class RunnableEntity {
