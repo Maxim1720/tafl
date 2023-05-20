@@ -40,12 +40,6 @@ jobs:
          docker-compose up --build -d
          docker-compose logs -f > app_logs.txt &
 
-      - name: Wait for logs
-        run: sleep 15
-
-      - name: Display application logs
-        run: cat app_logs.txt
-
       - name: Check Swagger API availability
         run: |
          retries=0
@@ -59,6 +53,8 @@ jobs:
           sleep 1
          done
 
+      - name: Display application logs
+        run: cat app_logs.txt
 
       - name: Clean Swagger file
         run: rm -f ${{ github.workspace }}/swagger.json
