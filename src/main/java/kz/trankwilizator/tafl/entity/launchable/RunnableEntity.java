@@ -15,6 +15,6 @@ public abstract class RunnableEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(nullable = false, name = "type_id")
+    @JoinColumn(nullable = false, referencedColumnName = "id")
     private RunnableEntityType type;
 }
