@@ -1,0 +1,548 @@
+{
+	"info": {
+		"_postman_id": "900691ef-2f98-4fe8-90e4-e4e4334d2824",
+		"name": "test device status",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "19077502-900691ef-2f98-4fe8-90e4-e4e4334d2824"
+	},
+	"item": [
+		{
+			"name": "registration Copy 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bd035dae-da8c-4db6-b91c-6cb22b59893d",
+						"exec": [
+							"const user = {",
+							"    username: pm.variables.replaceIn(\"{{$randomUserName}}\"),",
+							"    password: pm.variables.replaceIn('{{$randomPassword}}'),",
+							"    email:pm.variables.replaceIn(\"{{$randomEmail}}\"),",
+							"    firstname:pm.variables.replaceIn('{{$randomFirstName}}'),",
+							"    lastname:pm.variables.replaceIn('{{$randomLastName}}'),",
+							"    secondName:pm.variables.replaceIn('{{$randomLastName}}'),",
+							"}",
+							"",
+							"pm.environment.set(\"per_user\", user);",
+							"pm.request.body.raw = user;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "551040ff-24e0-422a-b641-811e5ec8e65d",
+						"exec": [
+							"pm.test(\"Permanent user was registered\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "34bb71ce-acda-48ba-8fd7-c72815f19aee",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"almat17\",\n    \"password\":\"1234\",\n    \"email\":\"musiev_maksim@mail.ru\",\n    \"firstname\":\"Maxim\",\n    \"lastname\":\"Musiev\",\n    \"secondName\":\"Alibekovich\",\n    \"balance\":0.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_path}}/auth/permanent/reg",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"auth",
+						"permanent",
+						"reg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login Copy 3",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c68a76b5-de43-4b06-87b5-1213e49cef81",
+						"exec": [
+							"const per_user = pm.environment.get(\"per_user\");",
+							"",
+							"const user = {",
+							"    username: per_user.username,",
+							"    password: per_user.password",
+							"}",
+							"",
+							"pm.request.body.raw = user;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3f7522ce-8c1c-42f0-97b8-e67664493031",
+						"exec": [
+							"pm.test(\"Permanent user was loggined\", function () {",
+							"    pm.response.to.have.status(202);",
+							"});",
+							"",
+							"pm.environment.set(\"per-token\", pm.response.json().body.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "c2e56b17-3e2f-42e9-8182-52e273631516",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{permanent-auth-url}}/login",
+					"host": [
+						"{{permanent-auth-url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create zone Copy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "57b2e0e1-8119-4634-9439-02ddf0c4e2d6",
+						"exec": [
+							"const zone = {",
+							"    name: pm.variables.replaceIn(\"{{$randomCompanyName}}\")",
+							"}",
+							"pm.request.body.raw = zone;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "7d1595ed-6798-4fdc-b616-a8278b58d10c",
+						"exec": [
+							"pm.test(\"Zone was created\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"pm.collectionVariables.set(\"zone\", pm.response.json());",
+							"/*",
+							"var requestDetails = {",
+							"  url: pm.response.json()._links.zone.href,",
+							"  method: 'GET'",
+							"};",
+							"",
+							"",
+							"var zone = {}",
+							"",
+							"pm.sendRequest(requestDetails, function(err, response){",
+							"    if(err){",
+							"        console.log(err);",
+							"    }",
+							"    else{",
+							"        zone = response.json();",
+							"    }",
+							"});",
+							"pm.environment.set(\"zone\", zone);",
+							"",
+							"var href = pm.response.json()._links.self.href;",
+							"var hrefSplit = href.split('/');",
+							"var id = hrefSplit[hrefSplit.length - 1];",
+							"pm.environment.set(\"zone_id\", id);*/",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "1a5124c8-b7fe-4abc-bc44-ca3bb9482b0c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{per-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_path}}/zones",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"zones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get device status free",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fbbd469c-31b1-413d-94d8-39c3d137c1af",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"status\", pm.response.json());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "1daa978b-3453-444e-82f0-7581bd57e582",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_path}}/deviceStatuses/1",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"deviceStatuses",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create device Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "945cc405-7b56-41e4-879d-4c8b544f049a",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.collectionVariables.set(",
+							"    \"device\",",
+							"    pm.response.json()._links.self.href",
+							");",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f263b426-b469-4f52-87b4-94e3cf460307",
+						"exec": [
+							"const _zone = pm.collectionVariables.get(\"zone\");",
+							"const status = pm.collectionVariables.get(\"status\");",
+							"",
+							"console.log(_zone);",
+							"console.log(status);",
+							"",
+							"const device = {",
+							"    number: parseInt(pm.variables.replaceIn(\"{{$randomInt}}\")),",
+							"    zone: _zone._links.self.href,",
+							"    deviceStatus: status._links.self.href,",
+							"}",
+							"",
+							"pm.request.body.raw = device;",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "9b1d47b2-9c8b-463a-827d-a98a68398bb1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"zone\":{\n        \"id\":1\n    },\n    \"deviceStatus\":{\n        \"id\":1,\n        \"name\":\"free\"\n    },\n    \"number\":12\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_path}}/devices",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"devices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reserve device Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "deaca42b-5ec6-452d-8670-0867c2925fab",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "cf52fc3e-0b10-4de4-a4c5-341f44a8f99d",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{device}}/reserve",
+					"host": [
+						"{{device}}"
+					],
+					"path": [
+						"reserve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check status is occupied",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "062082a1-369c-45c8-b2b7-24afb35a0639",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Device is occupied\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql('busy');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "66ccf646-bb1c-46e4-b5c7-f1a7d170c1eb",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{device}}/deviceStatus",
+					"host": [
+						"{{device}}"
+					],
+					"path": [
+						"deviceStatus"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "release device Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c306cc04-4ed1-4131-8431-d84856959265",
+						"exec": [
+							"pm.test(\"Release device\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "082c6c98-197e-47d5-8cfc-b0f269120bc5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{device}}/release",
+					"host": [
+						"{{device}}"
+					],
+					"path": [
+						"release"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check status is occupied Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bda1645e-7b29-4d1f-a330-d41e8fb5f1ba",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Device is released\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql('free');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "855f9b6b-e108-4d45-82c6-78c7f69e0c25",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{device}}/deviceStatus",
+					"host": [
+						"{{device}}"
+					],
+					"path": [
+						"deviceStatus"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{per-token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "a1ebe313-58f6-4580-8ed5-a36a572d8846",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "40e589c5-9f3b-4be2-ab45-5dd89c86cf48",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "55eae056-cbb1-4e89-90fa-a7897866cc9f",
+			"key": "zone",
+			"value": ""
+		},
+		{
+			"id": "af75c82a-a7dd-4506-ae20-9522e1bf7e40",
+			"key": "status",
+			"value": ""
+		},
+		{
+			"id": "3589bb2b-985b-4f57-8781-8fbb713b37eb",
+			"key": "device",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
