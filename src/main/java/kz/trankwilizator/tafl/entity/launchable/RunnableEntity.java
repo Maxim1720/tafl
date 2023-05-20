@@ -1,11 +1,14 @@
 package kz.trankwilizator.tafl.entity.launchable;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 
-//@MappedSuperclass
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@Getter
+@Setter
 public abstract class RunnableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
