@@ -1,12 +1,10 @@
 package kz.trankwilizator.tafl.entity.launchable.device;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import kz.trankwilizator.tafl.entity.launchable.RunnableEntity;
 import kz.trankwilizator.tafl.entity.zone.Zone;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.repository.RepositoryDefinition;
 
 import java.io.Serializable;
 

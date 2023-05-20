@@ -4,7 +4,6 @@ import jakarta.persistence.EntityNotFoundException;
 import kz.trankwilizator.tafl.dao.launchable.device.DeviceStatusRepository;
 import kz.trankwilizator.tafl.entity.launchable.device.DeviceStatus;
 import kz.trankwilizator.tafl.service.crud.CrudService;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
