@@ -44,6 +44,7 @@ jobs:
           retries=$((retries+1))
           if [ $retries -gt 20 ]; then
            echo "Swagger API is not available within the allotted time."
+           cat app_logs.txt
            exit 1
           fi
           echo "Waiting for Swagger API to become available..."
