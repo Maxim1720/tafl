@@ -37,7 +37,9 @@ jobs:
         run: docker stop pg
 
       - name: Start the application container
-        run: docker-compose up --build -d > ${{ env.log_file_path }}
+        run: |
+          docker-compose up --build -d
+          docker-compose logs -f > ${{ env.log_file_path }} &
 
       - name: Wait for application to start
         run: sleep 15
