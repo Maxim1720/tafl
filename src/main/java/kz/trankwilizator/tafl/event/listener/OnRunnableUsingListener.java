@@ -1,6 +1,7 @@
 package kz.trankwilizator.tafl.event.listener;
 
 import kz.trankwilizator.tafl.entity.launchable.Launch;
+import kz.trankwilizator.tafl.entity.launchable.runnable.RunnableEntityDetails;
 import kz.trankwilizator.tafl.event.RunnableUsingEvent;
 import kz.trankwilizator.tafl.service.crud.launch.LaunchCrudService;
 import org.springframework.context.ApplicationListener;
@@ -18,7 +19,8 @@ public class OnRunnableUsingListener implements ApplicationListener<RunnableUsin
     @Override
     public void onApplicationEvent(RunnableUsingEvent event) {
         Launch launch = new Launch();
-        launch.setRunnableEntity(event.getRunnableEntity());
+        launch.setRunnableEntityDetails(new RunnableEntityDetails(event.getRunnableEntity().getId(),
+                event.getRunnableEntityType().getName()));
 //        launch.setRunnableEntityType(event.getRunnableEntityType());
         launchCrudService.save(launch);
     }

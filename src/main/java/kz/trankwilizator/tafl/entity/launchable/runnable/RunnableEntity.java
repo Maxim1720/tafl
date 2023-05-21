@@ -1,4 +1,4 @@
-package kz.trankwilizator.tafl.entity.launchable;
+package kz.trankwilizator.tafl.entity.launchable.runnable;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -15,6 +15,6 @@ public abstract class RunnableEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(nullable = false, referencedColumnName = "id")
+    @JoinColumn(nullable = false, name = "type_id", referencedColumnName = "id")
     private RunnableEntityType type;
 }

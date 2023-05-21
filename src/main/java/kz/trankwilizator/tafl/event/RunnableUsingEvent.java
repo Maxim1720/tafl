@@ -1,7 +1,7 @@
 package kz.trankwilizator.tafl.event;
 
-import kz.trankwilizator.tafl.entity.launchable.RunnableEntity;
-import kz.trankwilizator.tafl.entity.launchable.RunnableEntityType;
+import kz.trankwilizator.tafl.entity.launchable.runnable.RunnableEntity;
+import kz.trankwilizator.tafl.entity.launchable.runnable.RunnableEntityType;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 

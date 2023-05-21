@@ -1,6 +1,6 @@
 package kz.trankwilizator.tafl.dao.launchable;
 
-import kz.trankwilizator.tafl.entity.launchable.RunnableEntityType;
+import kz.trankwilizator.tafl.entity.launchable.runnable.RunnableEntityType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 

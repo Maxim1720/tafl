@@ -2,7 +2,8 @@ package kz.trankwilizator.tafl.service.crud.launch;
 
 import kz.trankwilizator.tafl.dao.launchable.LaunchRepository;
 import kz.trankwilizator.tafl.entity.launchable.Launch;
-import kz.trankwilizator.tafl.entity.launchable.RunnableEntity;
+import kz.trankwilizator.tafl.entity.launchable.runnable.RunnableEntity;
+import kz.trankwilizator.tafl.entity.launchable.runnable.RunnableEntityDetails;
 import kz.trankwilizator.tafl.service.crud.CrudService;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class LaunchCrudService extends CrudService<Launch> {
     }
     public Launch getByRunnableEntity(RunnableEntity runnableEntity){
         return  getFromOptional(
-          launchRepository.findByRunnableEntity(runnableEntity)
+          launchRepository.findByRunnableEntityDetails(new RunnableEntityDetails(runnableEntity.getId(), runnableEntity.getType().getName()))
         );
     }
 }

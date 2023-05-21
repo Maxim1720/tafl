@@ -1,4 +1,4 @@
-package kz.trankwilizator.tafl.entity.launchable;
+package kz.trankwilizator.tafl.entity.launchable.runnable;
 
 import jakarta.persistence.*;
 import lombok.Getter;
