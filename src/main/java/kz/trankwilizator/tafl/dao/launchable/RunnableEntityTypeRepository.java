@@ -6,5 +6,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(path = "run-entity-type")
 public interface RunnableEntityTypeRepository extends JpaRepository<RunnableEntityType, Long> {
-
+    Optional<RunnableEntityType> findByNameIgnoreCase(String name);
 }
