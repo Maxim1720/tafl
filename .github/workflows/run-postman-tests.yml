@@ -70,9 +70,10 @@ jobs:
           newman run "${{ github.workspace }}/postman/collections/testing permanent security.json" \
           -e "$postman_env_path"
           newman run "${{ github.workspace }}/postman/collections/testing temp security.json" \
-          -e "$postman_env_path" || echo "Tests failed"
+          -e "$postman_env_path"
 
       - name: Log application container output
+        if: ${{ always() }}
         run: cat ${{ env.log_file_path }}
 
       - name: Check deployment status
