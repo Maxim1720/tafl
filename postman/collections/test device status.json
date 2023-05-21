@@ -164,31 +164,7 @@
 							"});",
 							"",
 							"",
-							"pm.collectionVariables.set(\"zone\", pm.response.json());",
-							"/*",
-							"var requestDetails = {",
-							"  url: pm.response.json()._links.zone.href,",
-							"  method: 'GET'",
-							"};",
-							"",
-							"",
-							"var zone = {}",
-							"",
-							"pm.sendRequest(requestDetails, function(err, response){",
-							"    if(err){",
-							"        console.log(err);",
-							"    }",
-							"    else{",
-							"        zone = response.json();",
-							"    }",
-							"});",
-							"pm.environment.set(\"zone\", zone);",
-							"",
-							"var href = pm.response.json()._links.self.href;",
-							"var hrefSplit = href.split('/');",
-							"var id = hrefSplit[hrefSplit.length - 1];",
-							"pm.environment.set(\"zone_id\", id);*/",
-							""
+							"pm.collectionVariables.set(\"zone\", pm.response.json());"
 						],
 						"type": "text/javascript"
 					}
@@ -581,23 +557,23 @@
 	],
 	"variable": [
 		{
-			"id": "597343da-6aa6-4e0e-987b-d53767e7fd49",
+			"id": "dab35a22-63f1-486d-8567-ff37cecfda36",
 			"key": "zone",
 			"value": ""
 		},
 		{
-			"id": "8b5ed86f-5494-42f8-ba44-ac9a89201fee",
+			"id": "1554cafb-bcc1-44d9-a7d2-01d7b3a17080",
 			"key": "status",
 			"value": ""
 		},
 		{
-			"id": "3a1ade28-599f-4ec4-9e27-3fe5e1407ee8",
+			"id": "15755359-ef20-415c-8fca-203f2135dbb3",
 			"key": "device",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "f37f5cd3-6196-4908-ac98-cc4fb07d3953",
+			"id": "7a4ffff9-9684-462e-aeed-e3951d088b12",
 			"key": "run-type",
 			"value": ""
 		}

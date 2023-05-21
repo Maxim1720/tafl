@@ -246,6 +246,22 @@
 		},
 		{
 			"name": "get run type Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "616f5711-403e-4bba-ac66-d36a9486952f",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"run-type\", pm.response.json()._links.self.href);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"id": "eaf386f7-0183-4729-8139-cc6b24cc9eb6",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -313,8 +329,8 @@
 							"",
 							"const device = {",
 							"    number: parseInt(pm.variables.replaceIn(\"{{$randomInt}}\")),",
-							"    zone: _zone._links.self.href,",
-							"    deviceStatus: status._links.self.href,",
+							"    zone: _zone,",
+							"    deviceStatus: status,",
 							"    type: type",
 							"}",
 							"",
@@ -459,18 +475,23 @@
 	],
 	"variable": [
 		{
-			"id": "6dd82797-e236-4ddb-9bc6-480e65f47ef2",
+			"id": "ca8664ad-4c14-4b3f-91a3-c84e6552668b",
 			"key": "status",
 			"value": ""
 		},
 		{
-			"id": "8e537450-f258-488f-8635-60571576f308",
+			"id": "a60db4eb-e2b3-4d56-bee7-e0af8d4978ab",
 			"key": "zone",
 			"value": ""
 		},
 		{
-			"id": "d37beaa7-b9d0-469b-bca7-90566878d18b",
+			"id": "b43bb62c-dd34-4064-8323-d00c626fda92",
 			"key": "device",
+			"value": ""
+		},
+		{
+			"id": "474f71dc-6308-4fd6-80f8-8f5402ec7df2",
+			"key": "run-type",
 			"value": ""
 		}
 	]

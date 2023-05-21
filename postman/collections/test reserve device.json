@@ -162,6 +162,7 @@
 						"id": "52e1f0ac-788a-4af1-9bd1-54ee8184d920",
 						"exec": [
 							"pm.test(\"Zone was created\", function () {",
+							"pm.variables.get(\"variable_key\");",
 							"    pm.response.to.have.status(201);",
 							"});",
 							"",
@@ -249,6 +250,22 @@
 		},
 		{
 			"name": "get run type Copy 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "19a5ccc2-cf95-472d-a8f0-d6f21ee0228d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"run-type\", pm.response.json()._links.self.href);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"id": "7a7a5b82-ebfc-4e90-a41f-bbc220b69996",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -316,8 +333,8 @@
 							"",
 							"const device = {",
 							"    number: parseInt(pm.variables.replaceIn(\"{{$randomInt}}\")),",
-							"    zone: _zone._links.self.href,",
-							"    deviceStatus: status._links.self.href,",
+							"    zone: _zone,",
+							"    deviceStatus: status,",
 							"    type: type",
 							"}",
 							"",
@@ -462,18 +479,23 @@
 	],
 	"variable": [
 		{
-			"id": "bfb397b4-5e47-4cf8-b034-d8f3d7c3461b",
+			"id": "0b52c4bb-2d96-4f60-89ea-da9f1b18c7ab",
 			"key": "zone",
 			"value": ""
 		},
 		{
-			"id": "c4eb25bd-9ccf-4618-aa6b-b43188207bad",
+			"id": "524d1114-e26a-419d-91b4-372ee42adb19",
 			"key": "status",
 			"value": ""
 		},
 		{
-			"id": "a379b0d3-6861-4f24-93d3-afdf2e7def0f",
+			"id": "5b152c31-923e-4d36-98d9-057e6fc366a6",
 			"key": "device",
+			"value": ""
+		},
+		{
+			"id": "d11d1f5e-e9e4-408b-812c-535ebd4a40ae",
+			"key": "run-type",
 			"value": ""
 		}
 	]
