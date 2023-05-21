@@ -232,12 +232,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_path}}/deviceStatuses/2",
+					"raw": "{{base_path}}/device-statuses/2",
 					"host": [
 						"{{base_path}}"
 					],
 					"path": [
-						"deviceStatuses",
+						"device-statuses",
 						"2"
 					]
 				}
