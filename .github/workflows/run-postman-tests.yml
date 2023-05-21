@@ -9,6 +9,7 @@ jobs:
     name: Build and Test
     env:
       postman_env_path: ${{ github.workspace }}/postman/env/tafl.postman_environment.json
+      log_file_path: ${{ github.workspace }}/docker-compose-logs.txt
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -36,7 +37,9 @@ jobs:
         run: docker stop pg
 
       - name: Start the application container
-        run: docker-compose up --build -d
+        run: |
+          docker-compose up --build -d
+          docker-compose logs -f > ${{ env.log_file_path }} &
 
       - name: Wait for application to start
         run: sleep 15
@@ -46,7 +49,6 @@ jobs:
 
       - name: Run API tests
         run: |
-
           newman run "${{ github.workspace }}/postman/collections/permanent user password change test.json" \
           -e "$postman_env_path"
           newman run "${{ github.workspace }}/postman/collections/test device status.json" \
@@ -71,6 +73,10 @@ jobs:
           -e "$postman_env_path"
           newman run "${{ github.workspace }}/postman/collections/testing temp security.json" \
           -e "$postman_env_path"
+
+      - name: Log application container output
+        if: ${{ always() }}
+        run: cat ${{ env.log_file_path }}
 
       - name: Check deployment status
         run: |

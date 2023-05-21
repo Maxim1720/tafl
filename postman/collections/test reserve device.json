@@ -235,12 +235,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_path}}/deviceStatuses/1",
+					"raw": "{{base_path}}/device-statuses/1",
 					"host": [
 						"{{base_path}}"
 					],
 					"path": [
-						"deviceStatuses",
+						"device-statuses",
 						"1"
 					]
 				}
@@ -248,19 +248,55 @@
 			"response": []
 		},
 		{
-			"name": "create device",
+			"name": "get run type Copy 2",
+			"id": "7a7a5b82-ebfc-4e90-a41f-bbc220b69996",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_path}}/run-entity-type/search/findByName?name=device",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"run-entity-type",
+						"search",
+						"findByName"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "device",
+							"type": "text"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create device Copy 3",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "9feee018-8dbe-4f91-a7b6-2aaa6e204d9d",
+						"id": "945cc405-7b56-41e4-879d-4c8b544f049a",
 						"exec": [
 							"pm.test(\"Status code is 201\", function () {",
 							"    pm.response.to.have.status(201);",
 							"});",
 							"",
+							"console.log(",
+							"    \"response: \" + pm.response.json()",
+							");",
 							"",
-							"pm.collectionVariables.set(\"device\", pm.response.json()._links.self.href);",
+							"pm.collectionVariables.set(",
+							"    \"device\",",
+							"    pm.response.json()._links.self.href",
+							");",
 							""
 						],
 						"type": "text/javascript"
@@ -269,13 +305,23 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "b2481a9d-51ed-4768-b15d-91a4e81fb368",
+						"id": "f263b426-b469-4f52-87b4-94e3cf460307",
 						"exec": [
+							"const _zone = pm.collectionVariables.get(\"zone\");",
+							"const status = pm.collectionVariables.get(\"status\");",
+							"const type = pm.collectionVariables.get('run-type');",
+							"",
+							"console.log(_zone);",
+							"console.log(status);",
+							"console.log(type);",
+							"",
 							"const device = {",
-							"    zone: pm.collectionVariables.get(\"zone\"),",
-							"    deviceStatus: pm.collectionVariables.get(\"status\"),",
-							"    number: pm.variables.replaceIn(\"{{$randomInt}}\")    ",
+							"    number: parseInt(pm.variables.replaceIn(\"{{$randomInt}}\")),",
+							"    zone: _zone._links.self.href,",
+							"    deviceStatus: status._links.self.href,",
+							"    type: type",
 							"}",
+							"",
 							"pm.request.body.raw = device;",
 							"",
 							""
@@ -284,7 +330,7 @@
 					}
 				}
 			],
-			"id": "2f72cd31-57c9-4207-b9e5-419a424bb86e",
+			"id": "cc1d198d-842c-4df4-b302-fdd660a478eb",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -293,7 +339,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"isOccupied\":false,\n    \"zoneId\": {{$zone}}\n}",
+					"raw": "{\n    \"zone\":{\n        \"id\":1\n    },\n    \"deviceStatus\":{\n        \"id\":1,\n        \"name\":\"free\"\n    },\n    \"number\":12\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -417,17 +463,17 @@
 	],
 	"variable": [
 		{
-			"id": "121f57af-aa31-4e72-ace1-685bb3449065",
+			"id": "28fd2d45-4ab2-4fcb-93c6-a0a8870e331d",
 			"key": "zone",
 			"value": ""
 		},
 		{
-			"id": "83a01b55-7b6c-40e8-853e-bf7a7301e113",
+			"id": "5c97b2b3-9531-4e1b-b88e-53df736fb230",
 			"key": "status",
 			"value": ""
 		},
 		{
-			"id": "503e862b-070e-45bb-b123-dee62f520b69",
+			"id": "f8754851-173f-435c-ac1b-166203a0f5a1",
 			"key": "device",
 			"value": ""
 		}
