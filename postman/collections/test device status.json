@@ -296,14 +296,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_path}}/run-entity-type/search/findByName?name=device",
+					"raw": "{{base_path}}/run-entity-type/search/findByNameIgnoreCase?name=device",
 					"host": [
 						"{{base_path}}"
 					],
 					"path": [
 						"run-entity-type",
 						"search",
-						"findByName"
+						"findByNameIgnoreCase"
 					],
 					"query": [
 						{
@@ -581,23 +581,23 @@
 	],
 	"variable": [
 		{
-			"id": "6f36f304-a760-481a-b7fa-7822cb86157d",
+			"id": "597343da-6aa6-4e0e-987b-d53767e7fd49",
 			"key": "zone",
 			"value": ""
 		},
 		{
-			"id": "b52a8f8a-a242-45e3-ae82-dc41ad04cf25",
+			"id": "8b5ed86f-5494-42f8-ba44-ac9a89201fee",
 			"key": "status",
 			"value": ""
 		},
 		{
-			"id": "c7d3c4da-c7e7-4eb1-b3f5-1a8003be69ef",
+			"id": "3a1ade28-599f-4ec4-9e27-3fe5e1407ee8",
 			"key": "device",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "e8aef0f2-b9cc-41d6-ba86-fe2f0cf0cdcb",
+			"id": "f37f5cd3-6196-4908-ac98-cc4fb07d3953",
 			"key": "run-type",
 			"value": ""
 		}
