@@ -33,7 +33,9 @@ jobs:
         run: docker stop pg
 
       - name: Start the application container
-        run: docker-compose up --build -d
+        run: |
+          docker-compose up --build -d
+          docker-compose logs -f > app_logs.txt &
         
       - name: Check Swagger API availability
         run: |
@@ -42,12 +44,16 @@ jobs:
           retries=$((retries+1))
           if [ $retries -gt 20 ]; then
            echo "Swagger API is not available within the allotted time."
+           cat app_logs.txt
            exit 1
           fi
           echo "Waiting for Swagger API to become available..."
           sleep 1
           done
-        
+
+      - name: Display application logs
+        run: cat app_logs.txt
+
       - name: Check deployment status
         run: |
           if [ $? -eq 0 ]; then

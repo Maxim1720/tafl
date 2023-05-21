@@ -1,7 +1,7 @@
 package kz.trankwilizator.tafl.entity.launchable.device;
 
 import jakarta.persistence.*;
-import kz.trankwilizator.tafl.entity.launchable.RunnableEntity;
+import kz.trankwilizator.tafl.entity.launchable.runnable.RunnableEntity;
 import kz.trankwilizator.tafl.entity.zone.Zone;
 import lombok.Getter;
 import lombok.Setter;
