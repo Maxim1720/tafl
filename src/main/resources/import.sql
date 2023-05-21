@@ -3,3 +3,4 @@ INSERT INTO role (id, name) values (1, 'USER'), (2, 'ADMIN'), (3, 'MODERATOR'), 
 INSERT INTO role_permissions values (1,1), (2,3), (4,1), (1,4);
 
 INSERT INTO device_status (id, name) VALUES (1, 'free'), (2, 'busy');
+INSERT INTO runnable_entity_type (id, name) VALUES (1, 'device'), (2, 'app');
