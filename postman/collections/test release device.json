@@ -245,18 +245,55 @@
 			"response": []
 		},
 		{
-			"name": "create device",
+			"name": "get run type Copy",
+			"id": "eaf386f7-0183-4729-8139-cc6b24cc9eb6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_path}}/run-entity-type/search/findByName?name=device",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"run-entity-type",
+						"search",
+						"findByName"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "device",
+							"type": "text"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create device Copy 2",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "9feee018-8dbe-4f91-a7b6-2aaa6e204d9d",
+						"id": "945cc405-7b56-41e4-879d-4c8b544f049a",
 						"exec": [
 							"pm.test(\"Status code is 201\", function () {",
 							"    pm.response.to.have.status(201);",
 							"});",
 							"",
-							"pm.collectionVariables.set(\"device\", pm.response.json()._links.self.href);",
+							"console.log(",
+							"    \"response: \" + pm.response.json()",
+							");",
+							"",
+							"pm.collectionVariables.set(",
+							"    \"device\",",
+							"    pm.response.json()._links.self.href",
+							");",
 							""
 						],
 						"type": "text/javascript"
@@ -265,13 +302,23 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "b2481a9d-51ed-4768-b15d-91a4e81fb368",
+						"id": "f263b426-b469-4f52-87b4-94e3cf460307",
 						"exec": [
+							"const _zone = pm.collectionVariables.get(\"zone\");",
+							"const status = pm.collectionVariables.get(\"status\");",
+							"const type = pm.collectionVariables.get('run-type');",
+							"",
+							"console.log(_zone);",
+							"console.log(status);",
+							"console.log(type);",
+							"",
 							"const device = {",
-							"    zone: pm.collectionVariables.get(\"zone\"),",
-							"    deviceStatus: pm.collectionVariables.get(\"status\"),",
-							"    number: pm.variables.replaceIn(\"{{$randomInt}}\")    ",
+							"    number: parseInt(pm.variables.replaceIn(\"{{$randomInt}}\")),",
+							"    zone: _zone._links.self.href,",
+							"    deviceStatus: status._links.self.href,",
+							"    type: type",
 							"}",
+							"",
 							"pm.request.body.raw = device;",
 							"",
 							""
@@ -280,7 +327,7 @@
 					}
 				}
 			],
-			"id": "020d06c9-db53-430a-94dd-54d0adbc8599",
+			"id": "40ea5cfb-33e2-4d66-8e13-9aa5a8a4df83",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -289,7 +336,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"isOccupied\":false,\n    \"zoneId\": {{$zone}}\n}",
+					"raw": "{\n    \"zone\":{\n        \"id\":1\n    },\n    \"deviceStatus\":{\n        \"id\":1,\n        \"name\":\"free\"\n    },\n    \"number\":12\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -413,17 +460,17 @@
 	],
 	"variable": [
 		{
-			"id": "e69a863e-7fcd-4d72-bac5-a0fa3427e00c",
+			"id": "f80adc35-7796-4df6-846c-78b5e41948e0",
 			"key": "status",
 			"value": ""
 		},
 		{
-			"id": "77f196c6-8440-4e1b-8b8d-98fb6550e266",
+			"id": "c255f19e-6c24-4d8d-ba70-b6942db09ad1",
 			"key": "zone",
 			"value": ""
 		},
 		{
-			"id": "5c8a81bb-50fd-4e41-80d7-d520f002b070",
+			"id": "71a098bb-7166-4a75-a168-e8b94b4974f9",
 			"key": "device",
 			"value": ""
 		}

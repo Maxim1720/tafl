@@ -271,6 +271,51 @@
 			"response": []
 		},
 		{
+			"name": "get run type",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e31f89fb-519c-4a53-830c-06ba17691858",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"run-type\", pm.response.json()._links.self.href);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "0492db5d-4946-4907-bf21-3e61df6d64f0",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_path}}/run-entity-type/search/findByName?name=device",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"run-entity-type",
+						"search",
+						"findByName"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "device"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "create device Copy",
 			"event": [
 				{
@@ -302,14 +347,17 @@
 						"exec": [
 							"const _zone = pm.collectionVariables.get(\"zone\");",
 							"const status = pm.collectionVariables.get(\"status\");",
+							"const type = pm.collectionVariables.get('run-type');",
 							"",
 							"console.log(_zone);",
 							"console.log(status);",
+							"console.log(type);",
 							"",
 							"const device = {",
 							"    number: parseInt(pm.variables.replaceIn(\"{{$randomInt}}\")),",
 							"    zone: _zone._links.self.href,",
 							"    deviceStatus: status._links.self.href,",
+							"    type: type",
 							"}",
 							"",
 							"pm.request.body.raw = device;",
@@ -533,20 +581,25 @@
 	],
 	"variable": [
 		{
-			"id": "3504b6e8-049c-4be4-8b64-17a2ceb5a35e",
+			"id": "6f36f304-a760-481a-b7fa-7822cb86157d",
 			"key": "zone",
 			"value": ""
 		},
 		{
-			"id": "2f7f86e4-8074-4c9a-9ed4-1acf750ed945",
+			"id": "b52a8f8a-a242-45e3-ae82-dc41ad04cf25",
 			"key": "status",
 			"value": ""
 		},
 		{
-			"id": "558acd29-0e04-450a-a802-f6201527b8cd",
+			"id": "c7d3c4da-c7e7-4eb1-b3f5-1a8003be69ef",
 			"key": "device",
 			"value": "",
 			"type": "string"
+		},
+		{
+			"id": "e8aef0f2-b9cc-41d6-ba86-fe2f0cf0cdcb",
+			"key": "run-type",
+			"value": ""
 		}
 	]
 }
