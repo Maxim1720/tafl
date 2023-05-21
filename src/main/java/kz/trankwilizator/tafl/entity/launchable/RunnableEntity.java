@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public abstract class RunnableEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @ManyToOne
