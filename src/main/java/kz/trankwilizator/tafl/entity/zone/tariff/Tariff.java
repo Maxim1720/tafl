@@ -7,6 +7,8 @@ import java.util.Date;
 
 @Entity
 @Table(name = "tariffs")
+@Getter
+@Setter
 public class Tariff {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
