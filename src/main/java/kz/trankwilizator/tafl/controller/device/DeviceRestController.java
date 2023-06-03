@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import kz.trankwilizator.tafl.dto.response.ResponseDto;
 import kz.trankwilizator.tafl.logic.DeviceReleaser;
 import kz.trankwilizator.tafl.logic.DeviceReserver;
-import kz.trankwilizator.tafl.service.crud.device.DeviceCrudService;
+import kz.trankwilizator.tafl.service.crud.launch.device.DeviceCrudService;
 import kz.trankwilizator.tafl.util.ResponseDtoFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

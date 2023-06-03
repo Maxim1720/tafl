@@ -5,7 +5,7 @@ import kz.trankwilizator.tafl.entity.launchable.device.Device;
 import kz.trankwilizator.tafl.entity.launchable.device.DeviceStatus;
 import kz.trankwilizator.tafl.exception.BadOperationException;
 import kz.trankwilizator.tafl.mapper.DeviceMapper;
-import kz.trankwilizator.tafl.service.crud.device.DeviceCrudService;
+import kz.trankwilizator.tafl.service.crud.launch.device.DeviceCrudService;
 
 
 public abstract class DeviceStatusChanger {

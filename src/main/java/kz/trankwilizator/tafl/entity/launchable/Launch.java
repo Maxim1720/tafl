@@ -1,7 +1,7 @@
 package kz.trankwilizator.tafl.entity.launchable;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import kz.trankwilizator.tafl.entity.launchable.runnable.RunnableEntityDetails;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -18,8 +18,8 @@ public class Launch {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne(targetEntity = RunnableEntity.class, orphanRemoval = true)
-    private RunnableEntity runnableEntity;
+    @Embedded
+    private RunnableEntityDetails runnableEntityDetails;
 
     @CreationTimestamp
     @Column(nullable = false)

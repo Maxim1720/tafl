@@ -1,4 +1,4 @@
-package kz.trankwilizator.tafl.service.crud.device;
+package kz.trankwilizator.tafl.service.crud.launch.device;
 
 import jakarta.persistence.EntityNotFoundException;
 import kz.trankwilizator.tafl.dao.launchable.device.DeviceStatusRepository;

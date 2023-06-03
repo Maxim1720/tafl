@@ -2,11 +2,16 @@ package kz.trankwilizator.tafl.entity.zone.tariff;
 
 
 import jakarta.persistence.*;
+import kz.trankwilizator.tafl.entity.schedule.Schedule;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "tariffs")
+@Getter
+@Setter
 public class Tariff {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,6 +20,8 @@ public class Tariff {
 
     @Column(nullable = false)
     private String name;
-    private Date startOfAction;
-    private Date endOfAction;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Schedule schedule;
 }

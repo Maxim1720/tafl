@@ -1,4 +1,4 @@
-package kz.trankwilizator.tafl.dao.launchable;
+package kz.trankwilizator.tafl.dao.launchable.device;
 
 import kz.trankwilizator.tafl.entity.launchable.device.Device;
 import org.springframework.data.jpa.repository.JpaRepository;

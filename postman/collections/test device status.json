@@ -164,31 +164,7 @@
 							"});",
 							"",
 							"",
-							"pm.collectionVariables.set(\"zone\", pm.response.json());",
-							"/*",
-							"var requestDetails = {",
-							"  url: pm.response.json()._links.zone.href,",
-							"  method: 'GET'",
-							"};",
-							"",
-							"",
-							"var zone = {}",
-							"",
-							"pm.sendRequest(requestDetails, function(err, response){",
-							"    if(err){",
-							"        console.log(err);",
-							"    }",
-							"    else{",
-							"        zone = response.json();",
-							"    }",
-							"});",
-							"pm.environment.set(\"zone\", zone);",
-							"",
-							"var href = pm.response.json()._links.self.href;",
-							"var hrefSplit = href.split('/');",
-							"var id = hrefSplit[hrefSplit.length - 1];",
-							"pm.environment.set(\"zone_id\", id);*/",
-							""
+							"pm.collectionVariables.set(\"zone\", pm.response.json());"
 						],
 						"type": "text/javascript"
 					}
@@ -258,13 +234,58 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_path}}/deviceStatuses/1",
+					"raw": "{{base_path}}/device-statuses/1",
 					"host": [
 						"{{base_path}}"
 					],
 					"path": [
-						"deviceStatuses",
+						"device-statuses",
 						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get run type",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e31f89fb-519c-4a53-830c-06ba17691858",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"run-type\", pm.response.json()._links.self.href);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "0492db5d-4946-4907-bf21-3e61df6d64f0",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_path}}/run-entity-type/search/findByNameIgnoreCase?name=device",
+					"host": [
+						"{{base_path}}"
+					],
+					"path": [
+						"run-entity-type",
+						"search",
+						"findByNameIgnoreCase"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "device"
+						}
 					]
 				}
 			},
@@ -282,6 +303,10 @@
 							"    pm.response.to.have.status(201);",
 							"});",
 							"",
+							"console.log(",
+							"    \"response: \" + pm.response.json()",
+							");",
+							"",
 							"pm.collectionVariables.set(",
 							"    \"device\",",
 							"    pm.response.json()._links.self.href",
@@ -298,14 +323,17 @@
 						"exec": [
 							"const _zone = pm.collectionVariables.get(\"zone\");",
 							"const status = pm.collectionVariables.get(\"status\");",
+							"const type = pm.collectionVariables.get('run-type');",
 							"",
 							"console.log(_zone);",
 							"console.log(status);",
+							"console.log(type);",
 							"",
 							"const device = {",
 							"    number: parseInt(pm.variables.replaceIn(\"{{$randomInt}}\")),",
 							"    zone: _zone._links.self.href,",
 							"    deviceStatus: status._links.self.href,",
+							"    type: type",
 							"}",
 							"",
 							"pm.request.body.raw = device;",
@@ -529,20 +557,25 @@
 	],
 	"variable": [
 		{
-			"id": "3504b6e8-049c-4be4-8b64-17a2ceb5a35e",
+			"id": "dab35a22-63f1-486d-8567-ff37cecfda36",
 			"key": "zone",
 			"value": ""
 		},
 		{
-			"id": "2f7f86e4-8074-4c9a-9ed4-1acf750ed945",
+			"id": "1554cafb-bcc1-44d9-a7d2-01d7b3a17080",
 			"key": "status",
 			"value": ""
 		},
 		{
-			"id": "558acd29-0e04-450a-a802-f6201527b8cd",
+			"id": "15755359-ef20-415c-8fca-203f2135dbb3",
 			"key": "device",
 			"value": "",
 			"type": "string"
+		},
+		{
+			"id": "7a4ffff9-9684-462e-aeed-e3951d088b12",
+			"key": "run-type",
+			"value": ""
 		}
 	]
 }
