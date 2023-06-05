@@ -6,6 +6,7 @@ import kz.trankwilizator.tafl.entity.JwtToken;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -22,7 +23,7 @@ public abstract class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(length = 50, nullable = false, unique = true)
+    @Column(length = 50, nullable = false, unique = true, updatable = false)
     private String username;
 
 
@@ -34,8 +35,9 @@ public abstract class User {
     private Boolean enabled = true;
 
     @CreationTimestamp
+    @CreatedDate
     @Column(nullable = false)
-    private Date createdAt;
+    private Date createdAt = new Date();
 
 
     @OneToMany(targetEntity = JwtToken.class, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true/*, fetch = FetchType.EAGER*/)

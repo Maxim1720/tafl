@@ -1,5 +1,6 @@
 package kz.trankwilizator.tafl.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
@@ -8,8 +9,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
-import java.io.Serializable;
 import java.util.Date;
 
 @Getter
@@ -18,7 +20,7 @@ import java.util.Date;
 @Entity(name = "user_profile")
 @Table(name = "user_profile")
 @DiscriminatorValue("permanent")
-public class PermanentUser extends User implements Serializable {
+public class PermanentUser extends User {
 
     @Column(length = 75, nullable = false)
     private String firstname;
@@ -32,6 +34,7 @@ public class PermanentUser extends User implements Serializable {
     @Column(length = 256, nullable = false)
     private String email;
 
+    @JsonIgnore
     @Column(length = 200, nullable = false)
     private String password;
 
@@ -42,6 +45,8 @@ public class PermanentUser extends User implements Serializable {
 
     @UpdateTimestamp
     @Column(nullable = false)
+    @LastModifiedDate
+    @LastModifiedBy
     private Date updatedAt;
 
     @ToString.Exclude

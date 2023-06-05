@@ -58,8 +58,6 @@ public abstract class JwtAuthenticationFilter<U extends User> extends OncePerReq
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        logger.info("request uri will be filtering: " + request.getRequestURI());
-
         String jwt = requestUtil.getJwtTokenFromRequest(request);
         if (!validateToken(jwt) || !userCrudService.existsByUsername(jwtTokenProvider.getUsernameFromToken(jwt))) {
             filterChain.doFilter(request, response);
