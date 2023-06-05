@@ -22,7 +22,7 @@ public abstract class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(length = 50, nullable = false, unique = true)
+    @Column(length = 50, nullable = false, unique = true, updatable = false)
     private String username;
 
 
