@@ -1,5 +1,6 @@
 package kz.trankwilizator.tafl.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
@@ -33,6 +34,7 @@ public class PermanentUser extends User {
     @Column(length = 256, nullable = false)
     private String email;
 
+    @JsonIgnore
     @Column(length = 200, nullable = false)
     private String password;
 
