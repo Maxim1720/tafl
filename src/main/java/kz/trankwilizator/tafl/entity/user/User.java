@@ -37,7 +37,7 @@ public abstract class User {
     @CreationTimestamp
     @CreatedDate
     @Column(nullable = false)
-    private Date createdAt;
+    private Date createdAt = new Date();
 
 
     @OneToMany(targetEntity = JwtToken.class, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true/*, fetch = FetchType.EAGER*/)
