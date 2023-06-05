@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -42,6 +44,8 @@ public class PermanentUser extends User implements Serializable {
 
     @UpdateTimestamp
     @Column(nullable = false)
+    @LastModifiedDate
+    @LastModifiedBy
     private Date updatedAt;
 
     @ToString.Exclude

@@ -60,7 +60,7 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic()
-                .and()
+                .disable()
                 .logout(logoutConfigurer -> logoutConfigurer.addLogoutHandler(logoutHandler).logoutUrl("/auth/logout"))
                 ;
 
