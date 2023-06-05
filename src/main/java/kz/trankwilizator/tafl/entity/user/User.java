@@ -6,6 +6,7 @@ import kz.trankwilizator.tafl.entity.JwtToken;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -34,6 +35,7 @@ public abstract class User {
     private Boolean enabled = true;
 
     @CreationTimestamp
+    @CreatedDate
     @Column(nullable = false)
     private Date createdAt;
 
