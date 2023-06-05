@@ -36,7 +36,9 @@
 						"exec": [
 							"pm.test(\"Permanent user was registered\", function () {",
 							"    pm.response.to.have.status(201);",
-							"});"
+							"});",
+							"",
+							"pm.collectionVariables.set(\"id\", pm.response.json().id);"
 						],
 						"type": "text/javascript"
 					}
@@ -47,6 +49,9 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -174,22 +179,72 @@
 				"disableBodyPruning": true
 			},
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{per-token}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{permanent-users-url}}",
+					"raw": "{{permanent-users-url}}/{{id}}",
 					"host": [
 						"{{permanent-users-url}}"
+					],
+					"path": [
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6c08f099-3a3c-45ea-a079-0d46265ac96f",
+						"exec": [
+							"var user = pm.environment.get(\"per_user\");",
+							"user.firstname='haahah12321' + pm.variables.replaceIn(\"{{$randomInt}}\");",
+							"",
+							"pm.request.body.raw = user;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "72a6d1ff-6ba7-473f-9f74-2ff72800dabf",
+						"exec": [
+							"pm.test(\"Username was updated\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "ba9c8ec4-609f-4bed-b0d5-9c7f3de1766c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{permanent-users-url}}/{{id}}",
+					"host": [
+						"{{permanent-users-url}}"
+					],
+					"path": [
+						"{{id}}"
 					]
 				}
 			},
@@ -216,16 +271,6 @@
 				"disableBodyPruning": true
 			},
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{per-token}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "POST",
 				"header": [],
 				"url": {
@@ -272,16 +317,6 @@
 				"disableBodyPruning": true
 			},
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{per-token}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -292,6 +327,45 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{per-token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "840ebafa-bd39-4f00-9e37-d443f92b5db5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "309cf027-b437-4c21-8d34-d498ed3970bc",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "a6597ee1-a977-4ffd-bc94-31e9cb9f5b76",
+			"key": "id",
+			"value": ""
 		}
 	]
 }
