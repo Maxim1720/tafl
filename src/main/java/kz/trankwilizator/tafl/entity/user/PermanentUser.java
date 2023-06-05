@@ -11,7 +11,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import java.io.Serializable;
 import java.util.Date;
 
 @Getter
@@ -20,7 +19,7 @@ import java.util.Date;
 @Entity(name = "user_profile")
 @Table(name = "user_profile")
 @DiscriminatorValue("permanent")
-public class PermanentUser extends User implements Serializable {
+public class PermanentUser extends User {
 
     @Column(length = 75, nullable = false)
     private String firstname;
