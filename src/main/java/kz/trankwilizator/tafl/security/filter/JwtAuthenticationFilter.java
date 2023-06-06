@@ -59,7 +59,6 @@ public abstract class JwtAuthenticationFilter<U extends User> extends OncePerReq
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         logger.info("Current authentication: " + SecurityContextHolder.getContext().getAuthentication());
-
         logger.info("Trying get token from request");
         String jwt = requestUtil.getJwtTokenFromRequest(request);
 
