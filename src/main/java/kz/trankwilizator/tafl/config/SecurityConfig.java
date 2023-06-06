@@ -1,5 +1,6 @@
 package kz.trankwilizator.tafl.config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import kz.trankwilizator.tafl.security.authentication.provider.TempUserAuthenticationProvider;
 import kz.trankwilizator.tafl.security.details.PermanentUserDetailsService;
 import kz.trankwilizator.tafl.security.details.TemporaryUserDetailsService;
@@ -13,6 +14,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -52,8 +54,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .csrf()
-                .disable()
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         (r)-> r.requestMatchers(WHITE_LIST_URLS)
                                 .permitAll()
@@ -61,9 +62,15 @@ public class SecurityConfig {
                                 .authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .httpBasic()
-                .disable()
-                .logout(logoutConfigurer -> logoutConfigurer.addLogoutHandler(logoutHandler).logoutUrl("/auth/logout"))
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .logout(logoutConfigurer -> logoutConfigurer
+                        .addLogoutHandler(logoutHandler)
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                        })
+                        .logoutUrl("/auth/logout")
+                        .invalidateHttpSession(true)
+                )
                 ;
 
         for (OncePerRequestFilter j: jwtAuthenticationFilters){
@@ -73,7 +80,7 @@ public class SecurityConfig {
             httpSecurity = httpSecurity.authenticationProvider(a);
         }
         for (AuthenticationEntryPoint authenticationEntryPoint : authEntryPoints){
-            httpSecurity = httpSecurity.httpBasic().authenticationEntryPoint(authenticationEntryPoint).and();
+//            httpSecurity = httpSecurity.httpBasic().authenticationEntryPoint(authenticationEntryPoint).and();
         }
         return httpSecurity.build();
     }
