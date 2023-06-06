@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "91788be6-3b3a-49ea-9f03-008df3cf7591",
-		"name": "testing permanent security",
+		"_postman_id": "51ef8ad3-a848-4fc4-8ba6-db4457b29c3b",
+		"name": "test security of WRITE_ROLES",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_uid": "19077502-91788be6-3b3a-49ea-9f03-008df3cf7591"
+		"_uid": "19077502-51ef8ad3-a848-4fc4-8ba6-db4457b29c3b"
 	},
 	"item": [
 		{
-			"name": "registration",
+			"name": "registration Copy",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -44,7 +44,7 @@
 					}
 				}
 			],
-			"id": "c64a0ce6-e0e1-48ee-974f-d4b8ed136c32",
+			"id": "b7719ef2-59c4-4451-a56b-9c3e5c54a9cf",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -73,7 +73,7 @@
 			"response": []
 		},
 		{
-			"name": "login",
+			"name": "login Copy",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -107,7 +107,7 @@
 					}
 				}
 			],
-			"id": "69862934-bc40-47e8-bda1-e04e9131dbdc",
+			"id": "ded60758-b01a-43bc-bbe8-37782f2f717f",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -139,7 +139,7 @@
 			"response": []
 		},
 		{
-			"name": "get users",
+			"name": "try access to products",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -174,7 +174,7 @@
 					}
 				}
 			],
-			"id": "e4864390-db39-422d-a0f8-e194601623cc",
+			"id": "520adcd4-66cc-4939-9c6b-06a25eccce67",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -182,76 +182,20 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{permanent-users-url}}/{{id}}",
+					"raw": "{{base_path}}/products/prikol",
 					"host": [
-						"{{permanent-users-url}}"
+						"{{base_path}}"
 					],
 					"path": [
-						"{{id}}"
+						"products",
+						"prikol"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "update",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "6c08f099-3a3c-45ea-a079-0d46265ac96f",
-						"exec": [
-							"var user = pm.environment.get(\"per_user\");",
-							"user.firstname='haahah12321' + pm.variables.replaceIn(\"{{$randomInt}}\");",
-							"",
-							"pm.request.body.raw = user;"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"id": "72a6d1ff-6ba7-473f-9f74-2ff72800dabf",
-						"exec": [
-							"pm.test(\"Username was updated\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"id": "ba9c8ec4-609f-4bed-b0d5-9c7f3de1766c",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{permanent-users-url}}/{{id}}",
-					"host": [
-						"{{permanent-users-url}}"
-					],
-					"path": [
-						"{{id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "logout",
+			"name": "logout Copy",
 			"event": [
 				{
 					"listen": "test",
@@ -266,7 +210,7 @@
 					}
 				}
 			],
-			"id": "e0e87ee1-f18e-4f6d-9a01-03cac8ffeae9",
+			"id": "b67e46de-a4aa-4132-9e69-cd94105fbabf",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -281,48 +225,6 @@
 					"path": [
 						"auth",
 						"logout"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "get users again",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "3be1d481-2765-4357-bf36-68501133cec7",
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"id": "157d97cf-13ad-49c3-8490-2a69c6cf5106",
-						"exec": [
-							"pm.test(\"Users can't be getted\", function () {",
-							"    pm.response.to.have.status(401);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"id": "62f2620b-6535-4b75-9f5f-5d5799e63352",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{permanent-users-url}}",
-					"host": [
-						"{{permanent-users-url}}"
 					]
 				}
 			},
@@ -343,7 +245,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "840ebafa-bd39-4f00-9e37-d443f92b5db5",
+				"id": "6a243402-f787-49dc-b214-fd6dd6796201",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -353,7 +255,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "309cf027-b437-4c21-8d34-d498ed3970bc",
+				"id": "503e7be0-2b55-4086-a148-7f2dfade0de0",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -363,7 +265,7 @@
 	],
 	"variable": [
 		{
-			"id": "67ff94a5-c0b5-415e-b9cc-6fd27a6cf620",
+			"id": "1cc00288-52b8-467c-87e9-de8bbce28c2a",
 			"key": "id",
 			"value": ""
 		}
