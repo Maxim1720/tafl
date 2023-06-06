@@ -4,8 +4,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import kz.trankwilizator.tafl.dto.error.ErrorDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.naming.AuthenticationException;
 
@@ -17,4 +19,9 @@ public class AuthControllerAdvice {
         return CrudControllerAdvice.errorResponse(HttpStatus.UNAUTHORIZED, e.getMessage(), request.getRequestURI(), null);
     }
 
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseEntity<ErrorDto> handleAccessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
+        return CrudControllerAdvice.errorResponse(HttpStatus.FORBIDDEN, ex.getMessage(), request.getRequestURI(), null);
+    }
 }
