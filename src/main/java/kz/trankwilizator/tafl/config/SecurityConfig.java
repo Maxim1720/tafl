@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Configuration
@@ -37,19 +38,21 @@ public class SecurityConfig {
     private final AuthenticationProvider[] authenticationProviders;
     private final AuthenticationEntryPoint[] authEntryPoints;
     private final LogoutHandler logoutHandler;
+    private final LogoutSuccessHandler logoutSuccessHandler;
 
     public SecurityConfig(PermanentUserDetailsService permanentUserDetailsService,
                           TemporaryUserDetailsService temporaryUserDetailsService,
                           OncePerRequestFilter[] jwtAuthenticationFilters,
                           AuthenticationProvider[] authenticationProviders,
                           AuthenticationEntryPoint[] authEntryPoints,
-                          LogoutHandler logoutHandler) {
+                          LogoutHandler logoutHandler, LogoutSuccessHandler logoutSuccessHandler) {
         this.permanentUserDetailsService = permanentUserDetailsService;
         this.temporaryUserDetailsService = temporaryUserDetailsService;
         this.jwtAuthenticationFilters = jwtAuthenticationFilters;
         this.authenticationProviders = authenticationProviders;
         this.authEntryPoints = authEntryPoints;
         this.logoutHandler = logoutHandler;
+        this.logoutSuccessHandler = logoutSuccessHandler;
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -65,9 +68,7 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .logout(logoutConfigurer -> logoutConfigurer
                         .addLogoutHandler(logoutHandler)
-                        .logoutSuccessHandler((request, response, authentication) -> {
-                            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-                        })
+                        .logoutSuccessHandler(logoutSuccessHandler)
                         .logoutUrl("/auth/logout")
                         .invalidateHttpSession(true)
                 )
