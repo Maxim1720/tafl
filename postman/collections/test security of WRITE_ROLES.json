@@ -182,13 +182,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_path}}/products/prikol",
+					"raw": "{{base_path}}/products",
 					"host": [
 						"{{base_path}}"
 					],
 					"path": [
-						"products",
-						"prikol"
+						"products"
 					]
 				}
 			},
@@ -265,7 +264,7 @@
 	],
 	"variable": [
 		{
-			"id": "1cc00288-52b8-467c-87e9-de8bbce28c2a",
+			"id": "9f352cc5-b3e1-4509-bbf2-8c2a06a3c2bd",
 			"key": "id",
 			"value": ""
 		}
