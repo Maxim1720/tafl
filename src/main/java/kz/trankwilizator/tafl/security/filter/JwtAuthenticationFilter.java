@@ -58,8 +58,13 @@ public abstract class JwtAuthenticationFilter<U extends User> extends OncePerReq
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
+        logger.info("Current authentication: " + SecurityContextHolder.getContext().getAuthentication());
+        logger.info("Trying get token from request");
         String jwt = requestUtil.getJwtTokenFromRequest(request);
+
+        logger.info("Validating token and check to existing");
         if (!validateToken(jwt) || !userCrudService.existsByUsername(jwtTokenProvider.getUsernameFromToken(jwt))) {
+            logger.info("invalid or not existing username in token");
             filterChain.doFilter(request, response);
             return;
         }
@@ -72,13 +77,20 @@ public abstract class JwtAuthenticationFilter<U extends User> extends OncePerReq
     }
 
     private void authenticate(String jwt, HttpServletRequest request) {
+        logger.info("Trying authenticate..");
+        logger.info("parsing username from token");
         String username = jwtTokenProvider.getUsernameFromToken(jwt);
         if (!jwtTokenService.isExpired(jwt)) {
+            logger.info("token doesn't expired");
             setAuthentication(username, request);
+        }
+        else{
+            logger.info("token is expired");
         }
     }
 
     private void setAuthentication(String username, HttpServletRequest request) {
+        logger.info("Setting authentication");
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         Authentication auth = authenticationCreator.getUsernamePasswordAuthentication(userDetails, request);
         SecurityContextHolder.getContext().setAuthentication(auth);
