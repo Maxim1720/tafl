@@ -8,6 +8,6 @@ import org.springframework.security.access.annotation.Secured;
 
 @Secured("MODERATOR")
 @RepositoryRestResource(path="products")
-public interface ProductRepository extends JpaRepository<Product, Integer> {
-  
+public interface ProductRepository extends JpaRepository<Product, Long> {
+
 }
