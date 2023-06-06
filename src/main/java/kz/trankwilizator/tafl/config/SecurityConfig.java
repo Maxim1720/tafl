@@ -1,6 +1,5 @@
 package kz.trankwilizator.tafl.config;
 
-import jakarta.servlet.http.HttpServletResponse;
 import kz.trankwilizator.tafl.security.authentication.provider.TempUserAuthenticationProvider;
 import kz.trankwilizator.tafl.security.details.PermanentUserDetailsService;
 import kz.trankwilizator.tafl.security.details.TemporaryUserDetailsService;
