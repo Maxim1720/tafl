@@ -5,14 +5,14 @@ on:
     branches:
       - '*'
 
-env:
-  ENVIRONMENT_NAME: DB
+#env:
+#  ENVIRONMENT_NAME: DB
 
 jobs:
   build:
     name: Build and Deploy
     runs-on: ubuntu-latest
-    environment: ${{ env.ENVIRONMENT_NAME }}
+    environment: DB#${{ env.ENVIRONMENT_NAME }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
