@@ -56,7 +56,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\":\"almat17\",\n    \"password\":\"1234\",\n    \"email\":\"musiev_maksim@mail.ru\",\n    \"firstname\":\"Maxim\",\n    \"lastname\":\"Musiev\",\n    \"secondName\":\"Alibekovich\",\n    \"balance\":0.0\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -320,9 +320,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{permanent-users-url}}",
+					"raw": "{{permanent-users-url}}/{{id}}",
 					"host": [
 						"{{permanent-users-url}}"
+					],
+					"path": [
+						"{{id}}"
 					]
 				}
 			},
@@ -363,7 +366,7 @@
 	],
 	"variable": [
 		{
-			"id": "67ff94a5-c0b5-415e-b9cc-6fd27a6cf620",
+			"id": "db653dc9-93be-41af-8f93-ba4ba547a920",
 			"key": "id",
 			"value": ""
 		}

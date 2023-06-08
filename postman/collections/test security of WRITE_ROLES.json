@@ -167,7 +167,7 @@
 						"id": "e8d4b8ca-afca-4ca0-a70c-f48675be9a42",
 						"exec": [
 							"pm.test(\"Users getted\", function () {",
-							"    pm.response.to.have.status(200);",
+							"    pm.response.to.have.status(403);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -264,7 +264,7 @@
 	],
 	"variable": [
 		{
-			"id": "9f352cc5-b3e1-4509-bbf2-8c2a06a3c2bd",
+			"id": "1805587b-48cb-4f3f-963e-b320490ba91f",
 			"key": "id",
 			"value": ""
 		}

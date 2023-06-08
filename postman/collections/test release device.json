@@ -351,7 +351,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"zone\":{\n        \"id\":1\n    },\n    \"deviceStatus\":{\n        \"id\":1,\n        \"name\":\"free\"\n    },\n    \"number\":12\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -475,22 +475,22 @@
 	],
 	"variable": [
 		{
-			"id": "ca8664ad-4c14-4b3f-91a3-c84e6552668b",
+			"id": "b3d9a47d-7986-4279-bc3d-7ce3e50c1b3d",
 			"key": "status",
 			"value": ""
 		},
 		{
-			"id": "a60db4eb-e2b3-4d56-bee7-e0af8d4978ab",
+			"id": "aed34366-1f57-45e7-a373-e916a38bc9c5",
 			"key": "zone",
 			"value": ""
 		},
 		{
-			"id": "b43bb62c-dd34-4064-8323-d00c626fda92",
+			"id": "00020598-7553-4a7d-896b-810b6ebca418",
 			"key": "device",
 			"value": ""
 		},
 		{
-			"id": "474f71dc-6308-4fd6-80f8-8f5402ec7df2",
+			"id": "80949fa9-4483-417f-86ba-9627e6156f6b",
 			"key": "run-type",
 			"value": ""
 		}

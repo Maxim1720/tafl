@@ -15,7 +15,7 @@
 						"id": "49056119-7e20-4259-873a-4adad126765e",
 						"exec": [
 							"pm.test(\"can't get users\", function () {\r",
-							"    pm.response.to.have.status(403);\r",
+							"    pm.response.to.have.status(401);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -50,7 +50,7 @@
 						"id": "2d9754d4-afa5-469e-a404-d459c2859ab4",
 						"exec": [
 							"pm.test(\"can't get roles\", function () {",
-							"    pm.response.to.have.status(403);",
+							"    pm.response.to.have.status(401);",
 							"});"
 						],
 						"type": "text/javascript"
