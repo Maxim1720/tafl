@@ -1,0 +1,84 @@
+{
+	"id": "36180bb5-ffc0-44f9-9a7e-2e2783bcd747",
+	"name": "test sign in with incorrect username",
+	"timestamp": "2023-05-21T15:26:26.493Z",
+	"collection_id": "19077502-d5390049-f822-4482-8147-7932bda0ef82",
+	"folder_id": 0,
+	"environment_id": "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139",
+	"totalPass": 2,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2023-05-21T15:26:25.990Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "21a06c65-307a-4b24-931d-bc89ed30720c",
+			"name": "login permanent",
+			"url": "http://localhost:8080/auth/permanent/login",
+			"time": 17,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"User doesn't exists - can't login": true
+			},
+			"testPassFailCounts": {
+				"User doesn't exists - can't login": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				17
+			],
+			"allTests": [
+				{
+					"User doesn't exists - can't login": true
+				}
+			]
+		},
+		{
+			"id": "9546ec74-aa9d-4e1b-8668-f84224114de6",
+			"name": "login temp",
+			"url": "http://localhost:8080/auth/permanent/login",
+			"time": 6,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"User doesn't exists - can't login": true
+			},
+			"testPassFailCounts": {
+				"User doesn't exists - can't login": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"User doesn't exists - can't login": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 23,
+	"collection": {
+		"requests": [
+			{
+				"id": "21a06c65-307a-4b24-931d-bc89ed30720c",
+				"method": "POST"
+			},
+			{
+				"id": "9546ec74-aa9d-4e1b-8668-f84224114de6",
+				"method": "POST"
+			}
+		]
+	}
+}
