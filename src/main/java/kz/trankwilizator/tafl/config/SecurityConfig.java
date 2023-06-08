@@ -1,9 +1,12 @@
 package kz.trankwilizator.tafl.config;
 
+import jakarta.servlet.http.HttpServletResponse;
+import kz.trankwilizator.tafl.security.authentication.entrypoint.UnauthorizedEntryPoint;
 import kz.trankwilizator.tafl.security.authentication.provider.TempUserAuthenticationProvider;
 import kz.trankwilizator.tafl.security.details.PermanentUserDetailsService;
 import kz.trankwilizator.tafl.security.details.TemporaryUserDetailsService;
 import kz.trankwilizator.tafl.security.logout.LogoutHandler;
+import kz.trankwilizator.tafl.security.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -63,6 +66,13 @@ public class SecurityConfig {
                                 .anyRequest()
                                 .authenticated()
                 )
+
+                .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer
+                        .authenticationEntryPoint(new UnauthorizedEntryPoint(new RequestUtil()))
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                        }))
+
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .logout(logoutConfigurer -> logoutConfigurer
