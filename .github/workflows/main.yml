@@ -19,14 +19,10 @@ jobs:
           cache: 'maven'
 
       - name: Start PostgreSQL Container
-        env:
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_NAME: ${{ secrets.DB_NAME }}
         run: docker run --name pg -d -p 5432:5432 \
-          -e POSTGRES_USER="$DB_USERNAME" \
-          -e POSTGRES_PASSWORD="$DB_PASSWORD" \
-          -e POSTGRES_DB="$DB_NAME" \
+          -e POSTGRES_USER=${{ env.DB.USERNAME }} \
+          -e POSTGRES_PASSWORD=${{ env.DB.PASSWORD }} \
+          -e POSTGRES_DB=${{ env.DB.NAME }} \
           postgres:15-alpine
 
 
