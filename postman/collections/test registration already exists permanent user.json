@@ -15,12 +15,12 @@
 						"id": "676c4d8f-68ee-4e2d-9455-517325974b3b",
 						"exec": [
 							"const user = {",
-							"    username: \"almat17\",",
-							"    password: \"1234\",",
-							"    email:\"musiev_maksim@mail.ru\",",
-							"    firstname:\"Maxim\",",
-							"    lastname:\"Musiev\",",
-							"    secondName:\"Alibekovich\",",
+							"    username: pm.variables.replaceIn(\"{{$randomUserName}}\"),",
+							"    password: pm.variables.replaceIn('{{$randomPassword}}'),",
+							"    email:pm.variables.replaceIn(\"{{$randomEmail}}\"),",
+							"    firstname:pm.variables.replaceIn('{{$randomFirstName}}'),",
+							"    lastname:pm.variables.replaceIn('{{$randomLastName}}'),",
+							"    secondName:pm.variables.replaceIn('{{$randomLastName}}'),",
 							"}",
 							"",
 							"pm.environment.set(\"per_user\", user);",
@@ -51,7 +51,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\":\"almat17\",\n    \"password\":\"1234\",\n    \"email\":\"musiev_maksim@mail.ru\",\n    \"firstname\":\"Maxim\",\n    \"lastname\":\"Musiev\",\n    \"secondName\":\"Alibekovich\",\n    \"balance\":0.0\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -107,7 +107,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\":\"almat17\",\n    \"password\":\"1234\",\n    \"email\":\"musiev_maksim@mail.ru\",\n    \"firstname\":\"Maxim\",\n    \"lastname\":\"Musiev\",\n    \"secondName\":\"Alibekovich\",\n    \"balance\":0.0\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
