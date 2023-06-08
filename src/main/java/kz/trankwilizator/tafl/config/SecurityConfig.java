@@ -38,7 +38,6 @@ public class SecurityConfig {
     private final TemporaryUserDetailsService temporaryUserDetailsService;
     private final OncePerRequestFilter[] jwtAuthenticationFilters;
     private final AuthenticationProvider[] authenticationProviders;
-    private final AuthenticationEntryPoint[] authEntryPoints;
     private final LogoutHandler logoutHandler;
     private final LogoutSuccessHandler logoutSuccessHandler;
 
@@ -46,13 +45,11 @@ public class SecurityConfig {
                           TemporaryUserDetailsService temporaryUserDetailsService,
                           OncePerRequestFilter[] jwtAuthenticationFilters,
                           AuthenticationProvider[] authenticationProviders,
-                          AuthenticationEntryPoint[] authEntryPoints,
                           LogoutHandler logoutHandler, LogoutSuccessHandler logoutSuccessHandler) {
         this.permanentUserDetailsService = permanentUserDetailsService;
         this.temporaryUserDetailsService = temporaryUserDetailsService;
         this.jwtAuthenticationFilters = jwtAuthenticationFilters;
         this.authenticationProviders = authenticationProviders;
-        this.authEntryPoints = authEntryPoints;
         this.logoutHandler = logoutHandler;
         this.logoutSuccessHandler = logoutSuccessHandler;
     }
@@ -69,9 +66,8 @@ public class SecurityConfig {
 
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer
                         .authenticationEntryPoint(new UnauthorizedEntryPoint(new RequestUtil()))
-                        .accessDeniedHandler((request, response, accessDeniedException) -> {
-                            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                        }))
+                        .accessDeniedHandler((request, response, accessDeniedException) ->
+                                response.setStatus(HttpServletResponse.SC_FORBIDDEN)))
 
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(AbstractHttpConfigurer::disable)
@@ -87,10 +83,7 @@ public class SecurityConfig {
             httpSecurity = httpSecurity.addFilterBefore(j, UsernamePasswordAuthenticationFilter.class);
         }
         for (AuthenticationProvider a : authenticationProviders){
-            httpSecurity = httpSecurity.authenticationProvider(a);
-        }
-        for (AuthenticationEntryPoint authenticationEntryPoint : authEntryPoints){
-//            httpSecurity = httpSecurity.httpBasic().authenticationEntryPoint(authenticationEntryPoint).and();
+            httpSecurity.authenticationProvider(a);
         }
         return httpSecurity.build();
     }
