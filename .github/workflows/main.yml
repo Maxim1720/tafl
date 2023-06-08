@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - '*'
-
-#env:
-#  ENVIRONMENT_NAME: DB
-
 jobs:
   build:
     name: Build and Deploy
@@ -24,12 +20,12 @@ jobs:
           cache: 'maven'
 
       - name: Start PostgreSQL Container
-        run: docker run --name pg -d -p 5432:5432 \
-          -e POSTGRES_USER=${{ vars.USERNAME }} \
-          -e POSTGRES_PASSWORD=${{ vars.PASSWORD }} \
-          -e POSTGRES_DB=${{ vars.NAME }} \
-          postgres:15-alpine
-
+        run: |
+          docker run --name pg -d -p 5432:5432 \
+            -e POSTGRES_USER=${{ vars.USERNAME }} \
+            -e POSTGRES_PASSWORD=${{ vars.PASSWORD }} \
+            -e POSTGRES_DB=${{ vars.NAME }} \
+            postgres:15-alpine
 
       - name: Build the application
         run: mvn clean package
