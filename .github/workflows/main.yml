@@ -12,7 +12,7 @@ jobs:
   build:
     name: Build and Deploy
     runs-on: ubuntu-latest
-    environment: DB#${{ env.ENVIRONMENT_NAME }}
+    environment: DB
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
