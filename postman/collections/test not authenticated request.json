@@ -30,12 +30,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_path}}/users",
+					"raw": "{{base_path}}/temp-users",
 					"host": [
 						"{{base_path}}"
 					],
 					"path": [
-						"users"
+						"temp-users"
 					]
 				}
 			},
