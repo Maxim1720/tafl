@@ -1,0 +1,84 @@
+{
+	"id": "e2bd1b9f-74f2-4f6f-a11f-e9be7394d57f",
+	"name": "test permit all end-points",
+	"timestamp": "2023-05-21T15:43:52.990Z",
+	"collection_id": "19077502-414f24cb-0d3d-4fd9-9e8d-398b82e18a51",
+	"folder_id": 0,
+	"environment_id": "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139",
+	"totalPass": 2,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2023-05-21T15:43:52.540Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "3cb5ef9e-4ab0-42a7-a03f-a6a5b4356c26",
+			"name": "temp login",
+			"url": "http://localhost:8080/auth/temp/login",
+			"time": 18,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is not 401": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 401": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				18
+			],
+			"allTests": [
+				{
+					"Status code is not 401": true
+				}
+			]
+		},
+		{
+			"id": "92136316-e4ef-49a9-b98d-5a6464bc39a6",
+			"name": "permanent login",
+			"url": "http://localhost:8080/auth/permanent/login",
+			"time": 5,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is not 401": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 401": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is not 401": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 23,
+	"collection": {
+		"requests": [
+			{
+				"id": "3cb5ef9e-4ab0-42a7-a03f-a6a5b4356c26",
+				"method": "POST"
+			},
+			{
+				"id": "92136316-e4ef-49a9-b98d-5a6464bc39a6",
+				"method": "POST"
+			}
+		]
+	}
+}

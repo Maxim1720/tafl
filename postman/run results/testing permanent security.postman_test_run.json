@@ -1,0 +1,177 @@
+{
+	"id": "d70e0b9a-56c4-4ebe-895e-accf2ddc3346",
+	"name": "testing permanent security",
+	"timestamp": "2023-05-21T15:08:23.992Z",
+	"collection_id": "19077502-91788be6-3b3a-49ea-9f03-008df3cf7591",
+	"folder_id": 0,
+	"environment_id": "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139",
+	"totalPass": 5,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2023-05-21T15:08:22.225Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "c64a0ce6-e0e1-48ee-974f-d4b8ed136c32",
+			"name": "registration",
+			"url": "http://localhost:8080/auth/permanent/reg",
+			"time": 552,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Permanent user was registered": true
+			},
+			"testPassFailCounts": {
+				"Permanent user was registered": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				552
+			],
+			"allTests": [
+				{
+					"Permanent user was registered": true
+				}
+			]
+		},
+		{
+			"id": "69862934-bc40-47e8-bda1-e04e9131dbdc",
+			"name": "login",
+			"url": "http://localhost:8080/auth/permanent/login",
+			"time": 542,
+			"responseCode": {
+				"code": 202,
+				"name": "Accepted"
+			},
+			"tests": {
+				"Permanent user was loggined": true
+			},
+			"testPassFailCounts": {
+				"Permanent user was loggined": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				542
+			],
+			"allTests": [
+				{
+					"Permanent user was loggined": true
+				}
+			]
+		},
+		{
+			"id": "e4864390-db39-422d-a0f8-e194601623cc",
+			"name": "get users",
+			"url": "http://localhost:8080/permanent-users",
+			"time": 71,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Users getted": true
+			},
+			"testPassFailCounts": {
+				"Users getted": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				71
+			],
+			"allTests": [
+				{
+					"Users getted": true
+				}
+			]
+		},
+		{
+			"id": "e0e87ee1-f18e-4f6d-9a01-03cac8ffeae9",
+			"name": "logout",
+			"url": "http://localhost:8080/auth/logout",
+			"time": 24,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Permanent user was logouted": true
+			},
+			"testPassFailCounts": {
+				"Permanent user was logouted": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				24
+			],
+			"allTests": [
+				{
+					"Permanent user was logouted": true
+				}
+			]
+		},
+		{
+			"id": "62f2620b-6535-4b75-9f5f-5d5799e63352",
+			"name": "get users again",
+			"url": "http://localhost:8080/permanent-users",
+			"time": 20,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Users can't be getted": true
+			},
+			"testPassFailCounts": {
+				"Users can't be getted": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				20
+			],
+			"allTests": [
+				{
+					"Users can't be getted": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 1209,
+	"collection": {
+		"requests": [
+			{
+				"id": "c64a0ce6-e0e1-48ee-974f-d4b8ed136c32",
+				"method": "POST"
+			},
+			{
+				"id": "69862934-bc40-47e8-bda1-e04e9131dbdc",
+				"method": "POST"
+			},
+			{
+				"id": "e4864390-db39-422d-a0f8-e194601623cc",
+				"method": "GET"
+			},
+			{
+				"id": "e0e87ee1-f18e-4f6d-9a01-03cac8ffeae9",
+				"method": "POST"
+			},
+			{
+				"id": "62f2620b-6535-4b75-9f5f-5d5799e63352",
+				"method": "GET"
+			}
+		]
+	}
+}

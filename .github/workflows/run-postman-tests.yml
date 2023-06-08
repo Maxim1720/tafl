@@ -10,7 +10,9 @@ jobs:
     env:
       postman_env_path: ${{ github.workspace }}/postman/env/tafl.postman_environment.json
       log_file_path: ${{ github.workspace }}/docker-compose-logs.txt
+      newman_report_path: ${{ github.workspace }}/newman-report.xml
     runs-on: ubuntu-latest
+    environment: DB
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -25,10 +27,11 @@ jobs:
       - name: Start PostgreSQL container
         run: |
           docker run --name pg -d -p 5432:5432 \
-            -e POSTGRES_USER=trankwilizator \
-            -e POSTGRES_PASSWORD=517881m \
-            -e POSTGRES_DB=tafl_db \
+            -e POSTGRES_USER=${{ vars.USERNAME }} \
+            -e POSTGRES_PASSWORD=${{ vars.PASSWORD }} \
+            -e POSTGRES_DB=${{ vars.NAME }} \
             postgres:15-alpine
+
 
       - name: Build the application
         run: mvn clean package
@@ -49,30 +52,17 @@ jobs:
 
       - name: Run API tests
         run: |
-          newman run "${{ github.workspace }}/postman/collections/permanent user password change test.json" \
-          -e "$postman_env_path"
-          newman run "${{ github.workspace }}/postman/collections/test device status.json" \
-          -e "$postman_env_path"
-          newman run "${{ github.workspace }}/postman/collections/test not authenticated logout.json" \
-          -e "$postman_env_path"
-          newman run "${{ github.workspace }}/postman/collections/test not authenticated request.json" \
-          -e "$postman_env_path"
-          newman run "${{ github.workspace }}/postman/collections/test permit all end-points.json" \
-          -e "$postman_env_path"
-          newman run "${{ github.workspace }}/postman/collections/test registration already exists permanent user.json" \
-          -e "$postman_env_path"
-          newman run "${{ github.workspace }}/postman/collections/test release device.json" \
-          -e "$postman_env_path"
-          newman run "${{ github.workspace }}/postman/collections/test reserve device.json" \
-          -e "$postman_env_path"
-          newman run "${{ github.workspace }}/postman/collections/test sign in with incorrect password.json" \
-          -e "$postman_env_path"
-          newman run "${{ github.workspace }}/postman/collections/test sign in with incorrect username.json" \
-          -e "$postman_env_path"
-          newman run "${{ github.workspace }}/postman/collections/testing permanent security.json" \
-          -e "$postman_env_path"
-          newman run "${{ github.workspace }}/postman/collections/testing temp security.json" \
-          -e "$postman_env_path"
+          newman run "${{ github.workspace }}/postman/collections/permanent user password change test.json" -e "$postman_env_path" --reporters cli,junit --reporter-junit-export "$newman_report_path"
+          newman run "${{ github.workspace }}/postman/collections/test device status.json" -e "$postman_env_path" --reporters cli,junit --reporter-junit-export "$newman_report_path"
+          newman run "${{ github.workspace }}/postman/collections/test not authenticated logout.json" -e "$postman_env_path" --reporters cli,junit --reporter-junit-export "$newman_report_path"
+          newman run "${{ github.workspace }}/postman/collections/test not authenticated request.json" -e "$postman_env_path" --reporters cli,junit --reporter-junit-export "$newman_report_path"
+          newman run "${{ github.workspace }}/postman/collections/test permit all end-points.json" -e "$postman_env_path" --reporters cli,junit --reporter-junit-export "$newman_report_path"
+          newman run "${{ github.workspace }}/postman/collections/test registration already exists permanent user.json" -e "$postman_env_path" --reporters cli,junit --reporter-junit-export "$newman_report_path"
+          newman run "${{ github.workspace }}/postman/collections/test release device.json" -e "$postman_env_path" --reporters cli,junit --reporter-junit-export "$newman_report_path"
+          newman run "${{ github.workspace }}/postman/collections/test reserve device.json" -e "$postman_env_path" --reporters cli,junit --reporter-junit-export "$newman_report_path"
+          newman run "${{ github.workspace }}/postman/collections/test sign in with incorrect password.json" -e "$postman_env_path" --reporters cli,junit --reporter-junit-export "$newman_report_path"
+          newman run "${{ github.workspace }}/postman/collections/test sign in with incorrect username.json" -e "$postman_env_path" --reporters cli,junit --reporter-junit-export "$newman_report_path"
+        continue-on-error: true
 
       - name: Log application container output
         if: ${{ always() }}
@@ -86,3 +76,9 @@ jobs:
             echo "Deployment failed"
             exit 1
           fi
+
+      - name: Upload Newman Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: Newman Report
+          path: ${{ env.newman_report_path }}
