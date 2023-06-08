@@ -9,7 +9,7 @@ on:
 jobs:
   publish-swagger:
     runs-on: ubuntu-latest
-  
+    environment: DB
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

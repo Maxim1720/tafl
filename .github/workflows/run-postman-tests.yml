@@ -12,6 +12,7 @@ jobs:
       log_file_path: ${{ github.workspace }}/docker-compose-logs.txt
       newman_report_path: ${{ github.workspace }}/newman-report.xml
     runs-on: ubuntu-latest
+    environment: DB
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
