@@ -62,6 +62,8 @@ jobs:
           newman run "${{ github.workspace }}/postman/collections/test reserve device.json" -e "$postman_env_path" --reporters cli,junit --reporter-junit-export "$newman_report_path"
           newman run "${{ github.workspace }}/postman/collections/test sign in with incorrect password.json" -e "$postman_env_path" --reporters cli,junit --reporter-junit-export "$newman_report_path"
           newman run "${{ github.workspace }}/postman/collections/test sign in with incorrect username.json" -e "$postman_env_path" --reporters cli,junit --reporter-junit-export "$newman_report_path"
+          newman run "${{ github.workspace }}/postman/collections/testing permanent security.json" -e "$postman_env_path"
+          newman run "${{ github.workspace }}/postman/collections/testing temp security.json" -e "$postman_env_path"
         continue-on-error: true
 
       - name: Log application container output
