@@ -72,7 +72,7 @@ public abstract class UserCrudService<U extends User> implements ExistenceChecke
     }
 
     @Override
-    public boolean existsById(Long id){
+    public boolean existsWithId(Long id){
         return repository.findById(id).isPresent();
     }
     
