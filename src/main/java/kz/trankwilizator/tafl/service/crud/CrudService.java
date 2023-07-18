@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.Collection;
 
-public abstract class CrudService<E> implements Crud<E>, Saver<E>, Finder<E, Long> {
+public abstract class CrudService<E> implements ExistenceChecker<E, Long>, Saver<E>, Finder<E, Long> {
 
     private final JpaRepository<E, Long> repository;
 
@@ -29,6 +29,11 @@ public abstract class CrudService<E> implements Crud<E>, Saver<E>, Finder<E, Lon
                 return ExampleMatcher.matchingAll();
             }
         });
+    }
+
+    @Override
+    public boolean existsWithId(Long id){
+        return repository.findById(id).isPresent();
     }
 
     @Override
