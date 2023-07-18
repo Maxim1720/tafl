@@ -18,7 +18,7 @@ public abstract class DeviceStatusChanger {
     }
 
     public DeviceResponseDto change(Long id){
-        Device device = deviceCrudService.getById(id);
+        Device device = deviceCrudService.findById(id);
         if(device.getDeviceStatus().getName().equals(getStatus().getName())){
             throw new BadOperationException("This device status already set upped", id);
         }
