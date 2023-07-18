@@ -13,7 +13,7 @@ import java.util.Collection;
 
 import java.util.Optional;
 
-public abstract class UserCrudService<U extends User> implements Crud<U>, Saver<U>, Finder<U, Long> {
+public abstract class UserCrudService<U extends User> implements ExistenceChecker<U, Long>, Saver<U>, Finder<U, Long> {
     private final UserRepository<U> repository;
 
     protected UserCrudService(UserRepository<U> repository) {
@@ -69,6 +69,12 @@ public abstract class UserCrudService<U extends User> implements Crud<U>, Saver<
             }
         });
     }
+
+    @Override
+    public boolean existsById(Long id){
+        return repository.findById(id).isPresent();
+    }
+    
     public boolean existsByUsername(String username) {
         return repository.findByUsernameIgnoreCase(username).isPresent();
     }
