@@ -19,7 +19,7 @@ import java.util.Collection;
 @Transactional
 @Service
 @Log
-public class JwtTokenCrudService implements Crud<JwtToken>, Saver<JwtToken>, Finder<JwtToken, Long>{
+public class JwtTokenCrudService implements ExistenceChecker<JwtToken, Long>, Saver<JwtToken>, Finder<JwtToken, Long>{
     private final JwtTokenRepository jwtTokenRepository;
 
     public JwtTokenCrudService(JwtTokenRepository jwtTokenRepository) {
@@ -83,6 +83,10 @@ public class JwtTokenCrudService implements Crud<JwtToken>, Saver<JwtToken>, Fin
         });
     }
 
+    @Override
+    public boolean existsWithId(Long id){
+        return jwtTokenRepository.findById(id).isPresent();
+    }
 
     public boolean existsByUsername(String username) {
         return !jwtTokenRepository.findJwtTokensByUserUsername(username).isEmpty();
