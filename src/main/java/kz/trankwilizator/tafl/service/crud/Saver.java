@@ -1,4 +1,4 @@
-package trankwilizator.tafl.service.crud;
+package kz.trankwilizator.tafl.service.crud;
 
 public interface Saver<ST>{
   ST save(ST);
