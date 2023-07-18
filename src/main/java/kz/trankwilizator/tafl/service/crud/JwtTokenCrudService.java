@@ -14,11 +14,12 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
+import java.util.Collection;
 
 @Transactional
 @Service
 @Log
-public class JwtTokenCrudService implements Crud<JwtToken>{
+public class JwtTokenCrudService implements Crud<JwtToken>, Saver<JwtToken>{
     private final JwtTokenRepository jwtTokenRepository;
 
     public JwtTokenCrudService(JwtTokenRepository jwtTokenRepository) {
@@ -59,7 +60,11 @@ public class JwtTokenCrudService implements Crud<JwtToken>{
     public JwtToken save(JwtToken jwtToken){
         return jwtTokenRepository.save(jwtToken);
     }
+    public Collection<JwtToken> saveAll(Collection<JwtToken> values){
+        return jwtTokenRepository.saveAll(values);
+    }
 
+    
     @Override
     public boolean exists(JwtToken jwtToken) {
         return jwtTokenRepository.exists(new Example<>() {
