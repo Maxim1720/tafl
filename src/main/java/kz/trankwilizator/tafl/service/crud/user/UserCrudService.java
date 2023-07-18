@@ -5,6 +5,7 @@ import kz.trankwilizator.tafl.dao.user.UserRepository;
 import kz.trankwilizator.tafl.entity.user.User;
 import kz.trankwilizator.tafl.service.crud.Crud;
 import kz.trankwilizator.tafl.service.crud.Saver;
+import kz.trankwilizator.tafl.service.crud.Finder;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 
@@ -12,7 +13,7 @@ import java.util.Collection;
 
 import java.util.Optional;
 
-public abstract class UserCrudService<U extends User> implements Crud<U>, Saver<U> {
+public abstract class UserCrudService<U extends User> implements Crud<U>, Saver<U>, Finder<U, Long> {
     private final UserRepository<U> repository;
 
     protected UserCrudService(UserRepository<U> repository) {
@@ -20,8 +21,13 @@ public abstract class UserCrudService<U extends User> implements Crud<U>, Saver<
     }
 
     @Override
-    public U getById(Long id) {
+    public U findById(Long id) {
         return getFromOptional(repository.findById(id));
+    }
+
+    @Override
+    public Collection<U> findAll(){
+        return repository.findAll();
     }
 
     @Override
