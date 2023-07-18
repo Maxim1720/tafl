@@ -6,8 +6,9 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
+import java.util.Collection;
 
-public abstract class CrudService<E> implements Crud<E> {
+public abstract class CrudService<E> implements Crud<E>, Saver<E> {
 
     private final JpaRepository<E, Long> repository;
 
@@ -33,6 +34,11 @@ public abstract class CrudService<E> implements Crud<E> {
     @Override
     public E save(E e) {
         return repository.save(e);
+    }
+
+    @Override 
+    public Collection<E> saveAll(Collection<E> value){
+        return repository.saveAll(value);
     }
 
     @Override
