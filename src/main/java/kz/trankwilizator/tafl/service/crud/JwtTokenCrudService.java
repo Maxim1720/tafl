@@ -57,11 +57,9 @@ public class JwtTokenCrudService implements Crud<JwtToken>, Saver<JwtToken>{
         }
     }
 
+    @Override
     public JwtToken save(JwtToken jwtToken){
         return jwtTokenRepository.save(jwtToken);
-    }
-    public Collection<JwtToken> saveAll(Collection<JwtToken> values){
-        return jwtTokenRepository.saveAll(values);
     }
 
     
