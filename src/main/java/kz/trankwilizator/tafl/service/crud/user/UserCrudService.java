@@ -6,6 +6,7 @@ import kz.trankwilizator.tafl.entity.user.User;
 import kz.trankwilizator.tafl.service.crud.Crud;
 import kz.trankwilizator.tafl.service.crud.Saver;
 import kz.trankwilizator.tafl.service.crud.Finder;
+import kz.trankwilizator.tafl.service.crud.ExistenceChecker;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 
