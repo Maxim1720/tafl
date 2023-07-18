@@ -8,6 +8,8 @@ import kz.trankwilizator.tafl.service.crud.Saver;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 
+import java.util.Collection;
+
 import java.util.Optional;
 
 public abstract class UserCrudService<U extends User> implements Crud<U>, Saver<U> {
