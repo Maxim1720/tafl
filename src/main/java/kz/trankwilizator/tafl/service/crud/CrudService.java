@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.Collection;
 
-public abstract class CrudService<E> implements Crud<E>, Saver<E> {
+public abstract class CrudService<E> implements Crud<E>, Saver<E>, Finder<E, Long> {
 
     private final JpaRepository<E, Long> repository;
 
@@ -42,8 +42,13 @@ public abstract class CrudService<E> implements Crud<E>, Saver<E> {
     }
 
     @Override
-    public E getById(Long id) {
+    public E findById(Long id) {
         return getFromOptional(repository.findById(id));
+    }
+
+    @Override
+    public Collection<E> findAll(){
+        return repository.findAll();
     }
 
     protected E getFromOptional(Optional<E> eOptional){
