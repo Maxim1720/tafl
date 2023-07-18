@@ -19,7 +19,7 @@ import java.util.Collection;
 @Transactional
 @Service
 @Log
-public class JwtTokenCrudService implements Crud<JwtToken>, Saver<JwtToken>{
+public class JwtTokenCrudService implements Crud<JwtToken>, Saver<JwtToken>, Finder<JwtToken, Long>{
     private final JwtTokenRepository jwtTokenRepository;
 
     public JwtTokenCrudService(JwtTokenRepository jwtTokenRepository) {
@@ -48,13 +48,18 @@ public class JwtTokenCrudService implements Crud<JwtToken>, Saver<JwtToken>{
     }
 
     @Override
-    public JwtToken getById(Long id) {
+    public JwtToken findById(Long id) {
         try {
             return getFromOptional(jwtTokenRepository.findById(id));
         }catch (EntityExistsException e){
             e.addSuppressed(new EntityNotFoundException("with id: "+ id));
             throw e;
         }
+    }
+
+    @Override
+    public Collection<JwtToken> findAll(){
+        return jwtTokenRepository.findAll();
     }
 
     @Override
