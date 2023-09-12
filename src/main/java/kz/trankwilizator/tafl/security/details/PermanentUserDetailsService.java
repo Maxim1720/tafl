@@ -32,6 +32,6 @@ public class PermanentUserDetailsService extends AbsUserDetailsService<Permanent
 
     @Override
     protected String password(String username) {
-        return permanentUserUserCrudService.getByUsername(username).getPassword();
+        return Arrays.toString(permanentUserUserCrudService.getByUsername(username).getPassword());
     }
 }
