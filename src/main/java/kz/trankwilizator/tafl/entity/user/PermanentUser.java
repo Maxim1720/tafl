@@ -36,7 +36,7 @@ public class PermanentUser extends User {
 
     @JsonIgnore
     @Column(length = 200, nullable = false)
-    private String password;
+    private char[] password;
 
     @DecimalMin(value = "0")
     @DecimalMax(value = "1")
