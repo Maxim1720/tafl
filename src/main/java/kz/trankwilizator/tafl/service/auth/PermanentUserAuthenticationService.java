@@ -12,6 +12,8 @@ import lombok.extern.java.Log;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+
 @Log
 @Service
 public class PermanentUserAuthenticationService extends AuthenticationService<PermanentUserAuthDto, PermanentUser> {
