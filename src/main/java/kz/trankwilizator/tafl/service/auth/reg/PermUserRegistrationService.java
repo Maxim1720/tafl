@@ -29,7 +29,7 @@ public class PermUserRegistrationService implements PermanentUserRegistrationSer
     @Override
     public PermanentUserDto createUser(PermanentUserDto user) {
         checkExisting(user);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(Arrays.toString(user.getPassword())).toCharArray());
 
         PermanentUser permanent = userMapper.toEntity(user);
         permanent.setBalance(0.0);
