@@ -10,6 +10,8 @@ import kz.trankwilizator.tafl.mapper.PermanentUserMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+
 @Service
 public class PermUserRegistrationService implements PermanentUserRegistrationService{
     private final UserRepository<PermanentUser> userRepository;
