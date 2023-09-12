@@ -14,5 +14,5 @@ public class PermanentUserDto extends UserDto {
     private String lastname;
     private String secondName;
     private String email;
-    private String password;
+    private char[] password;
 }
