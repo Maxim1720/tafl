@@ -12,7 +12,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/tafl_db
       - SPRING_DATASOURCE_USERNAME=trankwilizator
       - SPRING_DATASOURCE_PASSWORD=517881m
-    profiles: ["pgdb"] 
+      - SPRING_PROFILES_ACTIVE=pgdb
   db:
     image: postgres:15-alpine
     ports:
