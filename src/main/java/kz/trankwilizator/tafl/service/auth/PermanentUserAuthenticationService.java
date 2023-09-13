@@ -12,6 +12,8 @@ import lombok.extern.java.Log;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+
 @Log
 @Service
 public class PermanentUserAuthenticationService extends AuthenticationService<PermanentUserAuthDto, PermanentUser> {
@@ -32,7 +34,8 @@ public class PermanentUserAuthenticationService extends AuthenticationService<Pe
     @Override
     public AuthToken authenticate(PermanentUserAuthDto userAuthDto) {
         PermanentUser user = permanentUserCrudService.getByUsername(userAuthDto.getUsername());
-        if(!passwordEncoder.matches(userAuthDto.getPassword(), user.getPassword())){
+        if(!passwordEncoder.matches(Arrays.toString(userAuthDto.getPassword()),
+                                    Arrays.toString(user.getPassword()))){
             throw new EntityNotFoundException("Incorrect username or password");
         }
         return super.authenticate(userAuthDto);

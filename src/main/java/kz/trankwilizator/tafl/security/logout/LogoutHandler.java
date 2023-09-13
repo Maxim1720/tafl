@@ -40,14 +40,16 @@ public class LogoutHandler implements org.springframework.security.web.authentic
         String token = requestUtil.getJwtTokenFromRequest(request);
 
         if (!token.equals("") && jwtTokenProvider.validateToken(token)) {
-
+            log.info("valid token = true");
             String username = jwtTokenProvider.getUsernameFromToken(token);
             Optional<JwtToken> optional = jwtTokenCrudService.getActual(username);
 
             if(optional.isPresent()){
+                log.info("trying logout");
                 logoutUser(request, optional.get());
             }
             else {
+                log.info("jwt token doesn't exists.");
                 response = toUnauthorizedRequest(response,request);
             }
         } else {
@@ -56,10 +58,13 @@ public class LogoutHandler implements org.springframework.security.web.authentic
     }
 
     private void logoutUser(HttpServletRequest request, JwtToken token){
+        log.info("Invalidating token...");
         invalidateToken(token);
         try {
+            log.info("trying logout in request");
             request.logout();
         } catch (ServletException e) {
+            log.warning("Can't logout");
             throw new RuntimeException(e);
         }
     }
@@ -76,7 +81,9 @@ public class LogoutHandler implements org.springframework.security.web.authentic
 
 
     private void invalidateToken(JwtToken jwtToken){
+        log.info("trying set expire token");
         jwtToken.setExpiryAt(new Date());
+        log.info("trying save expired token");
         jwtTokenCrudService.save(jwtToken);
     }
 

@@ -8,6 +8,20 @@
 	"item": [
 		{
 			"name": "get users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "49056119-7e20-4259-873a-4adad126765e",
+						"exec": [
+							"pm.test(\"can't get users\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"id": "ae170c5a-cc2f-4bea-99c3-4d7f59d5c2a4",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -16,12 +30,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_path}}/users",
+					"raw": "{{base_path}}/temp-users",
 					"host": [
 						"{{base_path}}"
 					],
 					"path": [
-						"users"
+						"temp-users"
 					]
 				}
 			},

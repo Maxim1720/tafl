@@ -10,6 +10,8 @@ import kz.trankwilizator.tafl.mapper.PermanentUserMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+
 @Service
 public class PermUserRegistrationService implements PermanentUserRegistrationService{
     private final UserRepository<PermanentUser> userRepository;
@@ -29,7 +31,7 @@ public class PermUserRegistrationService implements PermanentUserRegistrationSer
     @Override
     public PermanentUserDto createUser(PermanentUserDto user) {
         checkExisting(user);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(Arrays.toString(user.getPassword())).toCharArray());
 
         PermanentUser permanent = userMapper.toEntity(user);
         permanent.setBalance(0.0);

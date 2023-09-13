@@ -14,11 +14,12 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
+import java.util.Collection;
 
 @Transactional
 @Service
 @Log
-public class JwtTokenCrudService implements Crud<JwtToken>{
+public class JwtTokenCrudService implements ExistenceChecker<JwtToken, Long>, Saver<JwtToken>, Finder<JwtToken, Long>{
     private final JwtTokenRepository jwtTokenRepository;
 
     public JwtTokenCrudService(JwtTokenRepository jwtTokenRepository) {
@@ -47,7 +48,7 @@ public class JwtTokenCrudService implements Crud<JwtToken>{
     }
 
     @Override
-    public JwtToken getById(Long id) {
+    public JwtToken findById(Long id) {
         try {
             return getFromOptional(jwtTokenRepository.findById(id));
         }catch (EntityExistsException e){
@@ -56,10 +57,17 @@ public class JwtTokenCrudService implements Crud<JwtToken>{
         }
     }
 
+    @Override
+    public Collection<JwtToken> findAll(){
+        return jwtTokenRepository.findAll();
+    }
+
+    @Override
     public JwtToken save(JwtToken jwtToken){
         return jwtTokenRepository.save(jwtToken);
     }
 
+    
     @Override
     public boolean exists(JwtToken jwtToken) {
         return jwtTokenRepository.exists(new Example<>() {
@@ -75,6 +83,10 @@ public class JwtTokenCrudService implements Crud<JwtToken>{
         });
     }
 
+    @Override
+    public boolean existsWithId(Long id){
+        return jwtTokenRepository.findById(id).isPresent();
+    }
 
     public boolean existsByUsername(String username) {
         return !jwtTokenRepository.findJwtTokensByUserUsername(username).isEmpty();

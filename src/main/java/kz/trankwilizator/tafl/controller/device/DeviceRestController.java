@@ -45,7 +45,7 @@ public class DeviceRestController {
         return ResponseEntity.ok(
           ResponseDtoFactory.ok(
                   request.getRequestURI(),
-                  deviceCrudService.getById(id).getDeviceStatus(),
+                  deviceCrudService.findById(id).getDeviceStatus(),
                   "Currently status of device 'true' - is occupied, 'false' - is free."
           )
         );

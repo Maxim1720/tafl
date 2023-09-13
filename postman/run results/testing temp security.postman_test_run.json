@@ -1,0 +1,301 @@
+{
+	"id": "a5265e44-bd4d-4d77-be81-edbec37f309c",
+	"name": "testing temp security",
+	"timestamp": "2023-05-21T15:21:49.979Z",
+	"collection_id": "19077502-a312ba33-e60c-40a0-bef2-ce48c4dacada",
+	"folder_id": 0,
+	"environment_id": "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139",
+	"totalPass": 9,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2023-05-21T15:21:49.134Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "f87169e9-9ca0-4576-9400-487989e7e80a",
+			"name": "temp user registration",
+			"url": "http://localhost:8080/auth/temp/reg",
+			"time": 35,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Temp user was created": true
+			},
+			"testPassFailCounts": {
+				"Temp user was created": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				35
+			],
+			"allTests": [
+				{
+					"Temp user was created": true
+				}
+			]
+		},
+		{
+			"id": "337a55ef-65b6-44d1-aba0-31a8dbf0e126",
+			"name": "login",
+			"url": "http://localhost:8080/auth/temp/login",
+			"time": 21,
+			"responseCode": {
+				"code": 202,
+				"name": "Accepted"
+			},
+			"tests": {
+				"Temp user was authenticated": true
+			},
+			"testPassFailCounts": {
+				"Temp user was authenticated": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				21
+			],
+			"allTests": [
+				{
+					"Temp user was authenticated": true
+				}
+			]
+		},
+		{
+			"id": "54f4949e-2176-4c4d-a4ec-bef15d7a5db6",
+			"name": "get users with jwt token",
+			"url": "http://localhost:8080/temporary-users",
+			"time": 42,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Temp user can get users": true
+			},
+			"testPassFailCounts": {
+				"Temp user can get users": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				42
+			],
+			"allTests": [
+				{
+					"Temp user can get users": true
+				}
+			]
+		},
+		{
+			"id": "b1d46319-65e5-4e69-9f77-5a0b89554c2b",
+			"name": "logout",
+			"url": "http://localhost:8080/auth/logout",
+			"time": 16,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"User logged out": true
+			},
+			"testPassFailCounts": {
+				"User logged out": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				16
+			],
+			"allTests": [
+				{
+					"User logged out": true
+				}
+			]
+		},
+		{
+			"id": "482d6386-a88f-40b9-aeba-98ce490089ac",
+			"name": "check get users with jwt token",
+			"url": "http://localhost:8080/temporary-users",
+			"time": 18,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Temp user can't get users": true
+			},
+			"testPassFailCounts": {
+				"Temp user can't get users": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				18
+			],
+			"allTests": [
+				{
+					"Temp user can't get users": true
+				}
+			]
+		},
+		{
+			"id": "bd7b93af-869f-4e1b-87a1-c28871f6de18",
+			"name": "login again with deprecated token",
+			"url": "http://localhost:8080/auth/temp/login",
+			"time": 15,
+			"responseCode": {
+				"code": 202,
+				"name": "Accepted"
+			},
+			"tests": {
+				"Temp user was authenticated": true
+			},
+			"testPassFailCounts": {
+				"Temp user was authenticated": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				15
+			],
+			"allTests": [
+				{
+					"Temp user was authenticated": true
+				}
+			]
+		},
+		{
+			"id": "a9cfa036-b69a-4d20-97e3-a12f13ed14fa",
+			"name": "get users with jwt token",
+			"url": "http://localhost:8080/temporary-users",
+			"time": 27,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Temp user can get users": true
+			},
+			"testPassFailCounts": {
+				"Temp user can get users": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				27
+			],
+			"allTests": [
+				{
+					"Temp user can get users": true
+				}
+			]
+		},
+		{
+			"id": "b99a9ccb-e5bb-4b21-a260-7d122d4f1dc3",
+			"name": "logout",
+			"url": "http://localhost:8080/auth/logout",
+			"time": 16,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"User is logout": true
+			},
+			"testPassFailCounts": {
+				"User is logout": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				16
+			],
+			"allTests": [
+				{
+					"User is logout": true
+				}
+			]
+		},
+		{
+			"id": "7463baf3-026f-4c81-ac16-219671a903ab",
+			"name": "get users with jwt token Copy",
+			"url": "http://localhost:8080/temporary-users",
+			"time": 19,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Temp user can't get users": true
+			},
+			"testPassFailCounts": {
+				"Temp user can't get users": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				19
+			],
+			"allTests": [
+				{
+					"Temp user can't get users": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 209,
+	"collection": {
+		"requests": [
+			{
+				"id": "f87169e9-9ca0-4576-9400-487989e7e80a",
+				"method": "POST"
+			},
+			{
+				"id": "337a55ef-65b6-44d1-aba0-31a8dbf0e126",
+				"method": "POST"
+			},
+			{
+				"id": "54f4949e-2176-4c4d-a4ec-bef15d7a5db6",
+				"method": "GET"
+			},
+			{
+				"id": "b1d46319-65e5-4e69-9f77-5a0b89554c2b",
+				"method": "POST"
+			},
+			{
+				"id": "482d6386-a88f-40b9-aeba-98ce490089ac",
+				"method": "GET"
+			},
+			{
+				"id": "bd7b93af-869f-4e1b-87a1-c28871f6de18",
+				"method": "POST"
+			},
+			{
+				"id": "a9cfa036-b69a-4d20-97e3-a12f13ed14fa",
+				"method": "GET"
+			},
+			{
+				"id": "b99a9ccb-e5bb-4b21-a260-7d122d4f1dc3",
+				"method": "POST"
+			},
+			{
+				"id": "7463baf3-026f-4c81-ac16-219671a903ab",
+				"method": "GET"
+			}
+		]
+	}
+}

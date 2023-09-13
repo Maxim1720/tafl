@@ -8,6 +8,7 @@ jobs:
   build:
     name: Build and Deploy
     runs-on: ubuntu-latest
+    environment: DB
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -18,12 +19,12 @@ jobs:
           distribution: 'oracle'
           cache: 'maven'
 
-      - name: Start PostgreSQL container
+      - name: Start PostgreSQL Container
         run: |
           docker run --name pg -d -p 5432:5432 \
-            -e POSTGRES_USER=trankwilizator \
-            -e POSTGRES_PASSWORD=517881m \
-            -e POSTGRES_DB=tafl_db \
+            -e POSTGRES_USER=${{ vars.USERNAME }} \
+            -e POSTGRES_PASSWORD=${{ vars.PASSWORD }} \
+            -e POSTGRES_DB=${{ vars.NAME }} \
             postgres:15-alpine
 
       - name: Build the application

@@ -1,0 +1,115 @@
+{
+	"id": "00af722e-2d9f-492a-955e-21ebf819153d",
+	"name": "test not authenticated logout",
+	"timestamp": "2023-06-08T00:12:09.956Z",
+	"collection_id": "19077502-fd45f9de-b373-4ffd-a643-041d91584df5",
+	"folder_id": 0,
+	"environment_id": "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139",
+	"totalPass": 3,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2023-06-08T00:12:09.474Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "902d221d-95c5-4389-8b38-4ba76a321ded",
+			"name": "logout without token",
+			"url": "http://localhost:8080/auth/logout",
+			"time": 103,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"can't logout": true
+			},
+			"testPassFailCounts": {
+				"can't logout": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				103
+			],
+			"allTests": [
+				{
+					"can't logout": true
+				}
+			]
+		},
+		{
+			"id": "bf40e67b-ed42-43a5-8d58-a3da92359527",
+			"name": "logout with wrong token",
+			"url": "http://localhost:8080/auth/logout",
+			"time": 39,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"can't logout": true
+			},
+			"testPassFailCounts": {
+				"can't logout": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				39
+			],
+			"allTests": [
+				{
+					"can't logout": true
+				}
+			]
+		},
+		{
+			"id": "5819b595-c77d-4a68-9856-2c39ebdb76cb",
+			"name": "logout by removed user",
+			"url": "http://localhost:8080/auth/logout",
+			"time": 6,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"can't logout": true
+			},
+			"testPassFailCounts": {
+				"can't logout": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"can't logout": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 148,
+	"collection": {
+		"requests": [
+			{
+				"id": "902d221d-95c5-4389-8b38-4ba76a321ded",
+				"method": "POST"
+			},
+			{
+				"id": "bf40e67b-ed42-43a5-8d58-a3da92359527",
+				"method": "POST"
+			},
+			{
+				"id": "5819b595-c77d-4a68-9856-2c39ebdb76cb",
+				"method": "POST"
+			}
+		]
+	}
+}

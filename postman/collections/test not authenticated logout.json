@@ -14,7 +14,7 @@
 					"script": {
 						"id": "82b1617e-ca66-4562-b50d-5c82b3b4b677",
 						"exec": [
-							"pm.test(\"status code is 401\", function () {",
+							"pm.test(\"can't logout\", function () {",
 							"    pm.response.to.have.status(401);",
 							"});"
 						],
@@ -46,7 +46,7 @@
 					"script": {
 						"id": "1d9dd11f-092d-4287-8630-0f68c49e0b65",
 						"exec": [
-							"pm.test(\"status code is 401\", function () {",
+							"pm.test(\"can't logout\", function () {",
 							"    pm.response.to.have.status(401);",
 							"});"
 						],
@@ -88,7 +88,7 @@
 					"script": {
 						"id": "a7854e4e-5f25-45b9-aae0-2eb3d2ae175b",
 						"exec": [
-							"pm.test(\"User doesn't exists\", function () {",
+							"pm.test(\"can't logout\", function () {",
 							"    pm.response.to.have.status(401);",
 							"});"
 						],

@@ -1,8 +1,5 @@
 package kz.trankwilizator.tafl.service.crud;
 
-public interface Crud<E> {
-    E getById(Long id);
-    E save(E e);
-
+public interface Crud<E>{
     boolean exists(E e);
 }
