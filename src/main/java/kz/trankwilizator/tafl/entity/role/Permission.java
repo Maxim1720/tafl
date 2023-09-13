@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,6 +19,10 @@ public class Permission {
 
     @Column(length = 50, nullable = false)
     private String name;
+
+    @ManyToMany(cascade = CascadeType.REMOVE)
+    private Set<Role> roles;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

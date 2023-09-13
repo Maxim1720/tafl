@@ -1,10 +1,13 @@
 package kz.trankwilizator.tafl.entity.role;
 
 import jakarta.persistence.*;
+import kz.trankwilizator.tafl.entity.user.PermanentUser;
+import kz.trankwilizator.tafl.entity.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -24,5 +27,6 @@ public class Role {
     @JoinTable(name = "role_permissions",
             joinColumns = @JoinColumn(name = "role_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "permissions_id", nullable = false))
-    private Set<Permission> permissions = new LinkedHashSet<>();
+    private Set<Permission> permissions;
+
 }
