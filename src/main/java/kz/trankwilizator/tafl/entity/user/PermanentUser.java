@@ -4,13 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
 import kz.trankwilizator.tafl.entity.role.Role;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.util.Date;
 
@@ -19,7 +18,6 @@ import java.util.Date;
 @ToString
 @Entity(name = "user_profile")
 @Table(name = "user_profile")
-@DiscriminatorValue("permanent")
 public class PermanentUser extends User {
 
     @Column(length = 75, nullable = false)
@@ -45,13 +43,12 @@ public class PermanentUser extends User {
 
     @UpdateTimestamp
     @Column(nullable = false)
-    @LastModifiedDate
-    @LastModifiedBy
     private Date updatedAt;
 
     @ToString.Exclude
-    @ManyToOne
+    @ManyToOne(optional = false, targetEntity = Role.class)
     @JoinColumn(name = "role_id", nullable = false)
+    @NotNull
     private Role role;
 
 }
