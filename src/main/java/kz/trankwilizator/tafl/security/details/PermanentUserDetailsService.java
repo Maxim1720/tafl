@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -32,6 +33,6 @@ public class PermanentUserDetailsService extends AbsUserDetailsService<Permanent
 
     @Override
     protected String password(String username) {
-        return permanentUserUserCrudService.getByUsername(username).getPassword();
+        return Arrays.toString(permanentUserUserCrudService.getByUsername(username).getPassword());
     }
 }

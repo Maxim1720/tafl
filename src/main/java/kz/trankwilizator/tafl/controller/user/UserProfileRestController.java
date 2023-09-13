@@ -48,7 +48,7 @@ public class UserProfileRestController {
         PermanentUser user = permanentUserCrudService.getByUsername(
                 SecurityContextHolder.getContext().getAuthentication().getName()
         );
-        user.setPassword(passwordEncoder.encode(password));
+        user.setPassword(passwordEncoder.encode(password).toCharArray());
 
         HttpStatus httpStatus = HttpStatus.ACCEPTED;
         ResponseDto responseDto = new ResponseDto();

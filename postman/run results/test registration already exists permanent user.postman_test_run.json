@@ -1,0 +1,84 @@
+{
+	"id": "8769f222-e84a-4ec6-9882-1d8dea6b65ee",
+	"name": "test registration already exists permanent user",
+	"timestamp": "2023-05-21T15:35:56.354Z",
+	"collection_id": "19077502-8d88b3b4-6107-4de6-8f95-2419fb5d5948",
+	"folder_id": 0,
+	"environment_id": "19077502-1929ddfd-36b2-46a7-8e81-3ebf52eea139",
+	"totalPass": 2,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2023-05-21T15:35:55.328Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "dc741abf-feac-40a1-9dbd-78bcfa141d69",
+			"name": "registration",
+			"url": "http://localhost:8080/auth/permanent/reg",
+			"time": 555,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Permanent user was registered": true
+			},
+			"testPassFailCounts": {
+				"Permanent user was registered": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				555
+			],
+			"allTests": [
+				{
+					"Permanent user was registered": true
+				}
+			]
+		},
+		{
+			"id": "803fd634-21ca-4bec-8ae6-178eb2f25ab1",
+			"name": "registration again",
+			"url": "http://localhost:8080/auth/permanent/reg",
+			"time": 15,
+			"responseCode": {
+				"code": 409,
+				"name": "Conflict"
+			},
+			"tests": {
+				"Permanent User already exists": true
+			},
+			"testPassFailCounts": {
+				"Permanent User already exists": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				15
+			],
+			"allTests": [
+				{
+					"Permanent User already exists": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 570,
+	"collection": {
+		"requests": [
+			{
+				"id": "dc741abf-feac-40a1-9dbd-78bcfa141d69",
+				"method": "POST"
+			},
+			{
+				"id": "803fd634-21ca-4bec-8ae6-178eb2f25ab1",
+				"method": "POST"
+			}
+		]
+	}
+}

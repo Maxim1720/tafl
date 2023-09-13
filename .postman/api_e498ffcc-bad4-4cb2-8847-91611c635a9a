@@ -17,6 +17,7 @@ files[] = {"id":"19077502-414f24cb-0d3d-4fd9-9e8d-398b82e18a51","path":"test per
 files[] = {"id":"19077502-8d88b3b4-6107-4de6-8f95-2419fb5d5948","path":"test registration already exists permanent user.json","metaData":{}}
 files[] = {"id":"19077502-d4526800-4262-44fd-b8b6-a3c939882860","path":"test release device.json","metaData":{}}
 files[] = {"id":"19077502-4746b958-5f52-4146-99f5-a7a587f2aa40","path":"test reserve device.json","metaData":{}}
+files[] = {"id":"19077502-51ef8ad3-a848-4fc4-8ba6-db4457b29c3b","path":"test security of WRITE_ROLES.json","metaData":{}}
 files[] = {"id":"19077502-5a3465ea-00df-4669-9db4-dbb9f41a1645","path":"test sign in with incorrect password.json","metaData":{}}
 files[] = {"id":"19077502-d5390049-f822-4482-8147-7932bda0ef82","path":"test sign in with incorrect username.json","metaData":{}}
 files[] = {"id":"19077502-91788be6-3b3a-49ea-9f03-008df3cf7591","path":"testing permanent security.json","metaData":{}}

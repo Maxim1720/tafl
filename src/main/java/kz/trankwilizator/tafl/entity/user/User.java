@@ -6,6 +6,7 @@ import kz.trankwilizator.tafl.entity.JwtToken;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -22,9 +23,8 @@ public abstract class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(length = 50, nullable = false, unique = true)
+    @Column(length = 50, nullable = false, unique = true, updatable = false)
     private String username;
-
 
     @DecimalMin("0")
     @Column(columnDefinition = "decimal(10,2)", nullable = false)

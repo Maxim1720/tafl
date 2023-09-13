@@ -6,8 +6,6 @@ import kz.trankwilizator.tafl.entity.schedule.Schedule;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Entity
 @Table(name = "tariffs")
 @Getter

@@ -6,8 +6,9 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
+import java.util.Collection;
 
-public abstract class CrudService<E> implements Crud<E> {
+public abstract class CrudService<E> implements ExistenceChecker<E, Long>, Saver<E>, Finder<E, Long> {
 
     private final JpaRepository<E, Long> repository;
 
@@ -31,13 +32,28 @@ public abstract class CrudService<E> implements Crud<E> {
     }
 
     @Override
+    public boolean existsWithId(Long id){
+        return repository.findById(id).isPresent();
+    }
+
+    @Override
     public E save(E e) {
         return repository.save(e);
     }
 
+    @Override 
+    public Collection<E> saveAll(Collection<E> value){
+        return repository.saveAll(value);
+    }
+
     @Override
-    public E getById(Long id) {
+    public E findById(Long id) {
         return getFromOptional(repository.findById(id));
+    }
+
+    @Override
+    public Collection<E> findAll(){
+        return repository.findAll();
     }
 
     protected E getFromOptional(Optional<E> eOptional){
