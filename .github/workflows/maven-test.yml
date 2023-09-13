@@ -29,7 +29,16 @@ jobs:
         java-version: 17
         distribution: 'oracle'
         cache: 'maven'
-    - name: Build with Maven
+
+    - name: Start PostgreSQL container
+      run: |
+          docker run --name pg -d -p 5432:5432 \
+            -e POSTGRES_USER=trankwilizator \
+            -e POSTGRES_PASSWORD=517881m \
+            -e POSTGRES_DB=tafl_db \
+            postgres:15-alpine
+            
+    - name: Test
       run: mvn clean test
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
