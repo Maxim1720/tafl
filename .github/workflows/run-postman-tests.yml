@@ -11,6 +11,7 @@ jobs:
       postman_env_path: ${{ github.workspace }}/postman/env/tafl.postman_environment.json
       log_file_path: ${{ github.workspace }}/docker-compose-logs.txt
       newman_report_path: ${{ github.workspace }}/newman-report.xml
+
     runs-on: ubuntu-latest
     environment: DB
     steps:
@@ -65,6 +66,10 @@ jobs:
           newman run "${{ github.workspace }}/postman/collections/testing permanent security.json" -e "$postman_env_path"
           newman run "${{ github.workspace }}/postman/collections/testing temp security.json" -e "$postman_env_path"
         continue-on-error: true
+
+      - name: Log application container output
+        if: ${{ always() }}
+        run: cat ${{ env.log_file_path }}
 
       - name: Log application container output
         if: ${{ always() }}
