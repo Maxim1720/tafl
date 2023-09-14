@@ -2,10 +2,14 @@ package kz.trankwilizator.tafl.entity.user;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import kz.trankwilizator.tafl.entity.JwtToken;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.util.Date;
@@ -23,21 +27,30 @@ public abstract class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @NotBlank
+    @NotNull
+    @Size(max = 50, min = 1)
     @Column(length = 50, nullable = false, unique = true, updatable = false)
     private String username;
 
+    @NotNull
     @DecimalMin("0")
     @Column(columnDefinition = "decimal(10,2)", nullable = false)
-    private Double balance = 0.0;
+    private Double balance;
 
+    @NotNull
     @Column(nullable = false)
-    private Boolean enabled = true;
+    private Boolean enabled;
 
     @CreationTimestamp
-    @Column(nullable = false)
+    @Column(updatable = false)
     private Date createdAt;
 
 
-    @OneToMany(targetEntity = JwtToken.class, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true/*, fetch = FetchType.EAGER*/)
+    @OneToMany(targetEntity = JwtToken.class,
+            cascade = CascadeType.ALL,
+            mappedBy = "user",
+            orphanRemoval = true/*,
+            fetch = FetchType.EAGER*/)
     private Set<JwtToken> jwtTokens = new HashSet<>();
 }
