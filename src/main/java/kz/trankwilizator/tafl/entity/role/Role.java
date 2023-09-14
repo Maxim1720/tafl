@@ -1,6 +1,7 @@
 package kz.trankwilizator.tafl.entity.role;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import kz.trankwilizator.tafl.entity.user.PermanentUser;
 import kz.trankwilizator.tafl.entity.user.User;
 import lombok.Getter;
@@ -23,6 +24,7 @@ public class Role {
     @Column(length = 75, nullable = false)
     private String name;
 
+    @NotNull
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "role_permissions",
             joinColumns = @JoinColumn(name = "role_id", nullable = false),
