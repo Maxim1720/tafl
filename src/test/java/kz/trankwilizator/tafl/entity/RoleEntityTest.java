@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Set;
 
 @DataJpaTest(properties = "spring.jpa.properties.hibernate.check_nullability=true")
-@Transactional(propagation = Propagation.NOT_SUPPORTED)
 public class RoleEntityTest {
     private final RoleRepository roleRepository;
     private final PermissionRepository permissionRepository;
@@ -44,18 +43,13 @@ public class RoleEntityTest {
         permission = permissionRepository.save(permission);
     }*/
 
-    @AfterEach
-    public void destroy(){
-//        permissionRepository.delete(permission);
-        roleRepository.delete(role);
-    }
 
     @Test
     public void givenIdNull_whenSave_thenIdNotNull(){
         role = new Role();
         role.setPermissions(Set.of(permission));
         role.setName("TEST ROLE");
-        role = roleRepository.save(role);
+        role = roleRepository.saveAndFlush(role);
         Assertions.assertNotNull(role.getId());
     }
 
@@ -64,7 +58,8 @@ public class RoleEntityTest {
         role = new Role();
         role.setPermissions(null);
         role.setName("TEST ROLE");
-        Assertions.assertThrows(ConstraintViolationException.class, () -> role = roleRepository.save(role));
+        Assertions.assertThrows(ConstraintViolationException.class,
+                () -> role = roleRepository.saveAndFlush(role));
     }
 
 }
