@@ -7,19 +7,20 @@ import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Payload;
 import jakarta.validation.constraints.*;
 import kz.trankwilizator.tafl.entity.role.Role;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import java.util.Date;
 
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 @Entity(name = "user_profile")
 @Table(name = "user_profile")
+@NoArgsConstructor
+@AllArgsConstructor
 public class PermanentUser extends User {
 
     @NotBlank
@@ -44,14 +45,17 @@ public class PermanentUser extends User {
     @NotNull
     @Size(min = 1, max = 75)
     @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
-    @Column(length = 256, nullable = false)
+    @Column(length = 256, nullable = false, unique = true, updatable = false)
     private String email;
 
+    @NotNull
+    @NotEmpty
     @Size(min = 60, max = 60)
     @JsonIgnore
     @Column(length = 60, nullable = false)
     private char[] password;
 
+    @NotNull
     @PositiveOrZero()
     @DecimalMin(value = "0")
     @DecimalMax(value = "1")

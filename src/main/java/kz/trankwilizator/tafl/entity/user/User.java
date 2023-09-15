@@ -1,13 +1,9 @@
 package kz.trankwilizator.tafl.entity.user;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import kz.trankwilizator.tafl.entity.JwtToken;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
@@ -21,6 +17,9 @@ import java.util.Set;
 @Setter
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,8 +32,9 @@ public abstract class User {
     @Column(length = 50, nullable = false, unique = true, updatable = false)
     private String username;
 
+
     @NotNull
-    @DecimalMin("0")
+    @PositiveOrZero
     @Column(columnDefinition = "decimal(10,2)", nullable = false)
     private Double balance;
 
