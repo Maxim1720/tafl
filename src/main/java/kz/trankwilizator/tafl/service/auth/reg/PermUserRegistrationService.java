@@ -36,8 +36,13 @@ public class PermUserRegistrationService implements PermanentUserRegistrationSer
         PermanentUser permanent = userMapper.toEntity(user);
         permanent.setBalance(0.0);
         permanent.setRole(roleRepository.findByNameIgnoreCase("user").orElseThrow(()->new EntityExistsException("Role doesn't exists")));
+        permanent.setDiscount(0.0);
+        permanent.setBalance(0.0);
+        permanent.setEnabled(true);
         return userMapper.toDto(userRepository.save(permanent));
     }
+
+
 
     private void checkExisting(PermanentUserDto user){
         userRepository.findByUsernameIgnoreCase(user.getUsername()).ifPresent((u)-> {
