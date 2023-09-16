@@ -13,6 +13,13 @@ public class RoleTestConfig {
     @Autowired
     private PermissionRepository permissionRepository;
 
+    public static Role INSTANCE;
+
+    static {
+        INSTANCE = new Role();
+        INSTANCE.setName("TEST_ROLE");
+        INSTANCE.setPermissions(new HashSet<>());
+    }
     @Bean
     public Role testRole(){
         Role role = new Role();
