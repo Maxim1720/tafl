@@ -7,14 +7,10 @@ import kz.trankwilizator.tafl.entity.user.PermanentUser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
 
 import java.util.Set;
 
-@DataJpaTest
-@Import({PermanentUserEntityTestConfig.class})
+
 public class PermanentUserEntityValidationTest {
 
     private PermanentUser permanentUser;
@@ -22,7 +18,8 @@ public class PermanentUserEntityValidationTest {
     private Validator validator ;
 
     @BeforeEach
-    public void setUp(@Autowired PermanentUser permanentUserInstance) {
+    public void setUp() {
+        PermanentUser permanentUserInstance = PermanentUserEntityTestConfig.INSTANCE;
         this.permanentUser = new PermanentUser(permanentUserInstance.getFirstname(),
                 permanentUserInstance.getLastname(),
                 permanentUserInstance.getSecondName(),
