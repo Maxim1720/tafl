@@ -17,6 +17,7 @@ import java.util.Date;
 @Table(name = "user_profile")
 @NoArgsConstructor
 @AllArgsConstructor
+@DynamicUpdate
 public class PermanentUser extends User {
 
     @NotBlank
