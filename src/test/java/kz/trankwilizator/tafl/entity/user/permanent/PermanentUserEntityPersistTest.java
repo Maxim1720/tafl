@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @DataJpaTest
 @Import({PermanentUserEntityTestConfig.class})
@@ -70,4 +73,15 @@ public class PermanentUserEntityPersistTest {
         Assertions.assertNotNull(permanentUser.getCreatedAt());
     }
 
+
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    @Test
+    public void givenUser_whenSaveAgainThrowsException() {
+        repository.save(permanentUser);
+        permanentUser.setId(123L);
+        Assertions.assertThrows(DataIntegrityViolationException.class, () ->
+                permanentUser = repository.save(permanentUser)
+        );
+        repository.deleteAll();
+    }
 }
