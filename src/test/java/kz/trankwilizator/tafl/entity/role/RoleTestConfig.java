@@ -6,7 +6,6 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 
 import java.util.HashSet;
-import java.util.stream.Collectors;
 
 @TestConfiguration
 public class RoleTestConfig {
