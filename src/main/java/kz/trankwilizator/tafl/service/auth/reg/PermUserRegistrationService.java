@@ -1,16 +1,14 @@
 package kz.trankwilizator.tafl.service.auth.reg;
 
 import jakarta.persistence.EntityExistsException;
-import kz.trankwilizator.tafl.dao.user.UserRepository;
 import kz.trankwilizator.tafl.dao.role.RoleRepository;
+import kz.trankwilizator.tafl.dao.user.UserRepository;
 import kz.trankwilizator.tafl.dto.PermanentUserDto;
 import kz.trankwilizator.tafl.entity.user.PermanentUser;
 import kz.trankwilizator.tafl.exception.ExistsException;
 import kz.trankwilizator.tafl.mapper.PermanentUserMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
 
 @Service
 public class PermUserRegistrationService implements PermanentUserRegistrationService{
