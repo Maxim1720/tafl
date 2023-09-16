@@ -1,7 +1,7 @@
 package kz.trankwilizator.tafl.entity.user.permanent;
 
 import jakarta.persistence.PersistenceException;
-import jakarta.validation.Validation;
+import kz.trankwilizator.tafl.dao.user.PermanentUserRepository;
 import kz.trankwilizator.tafl.entity.user.PermanentUser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +17,8 @@ public class PermanentUserEntityPersistTest {
 
     @Autowired
     private TestEntityManager testEntityManager;
+    @Autowired
+    private PermanentUserRepository repository;
 
     private PermanentUser permanentUser;
 
