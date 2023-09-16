@@ -1,14 +1,13 @@
 package kz.trankwilizator.tafl.entity.role;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import kz.trankwilizator.tafl.entity.user.PermanentUser;
-import kz.trankwilizator.tafl.entity.user.User;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -21,6 +20,9 @@ public class Role {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @NotBlank
+    @Size(min = 2, max= 75)
+    @Pattern(regexp = "^[A-Z_?]+[A-Z]+$")
     @Column(length = 75, nullable = false)
     private String name;
 
