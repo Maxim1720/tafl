@@ -56,7 +56,21 @@ public class UserProfileRestController {
         responseDto.setPath(request.getRequestURI());
         responseDto.setMessage("Password was changed!");
         responseDto.setBody(permanentUserMapper.toResponse(permanentUserCrudService.save(user)));
+        return responseDto;
+    }
 
+    @PutMapping(path = "/username/change")
+    public ResponseDto changeUsername(HttpServletRequest request, @RequestParam("username") String newUsername){
+        PermanentUser user = permanentUserCrudService.getByUsername(
+                SecurityContextHolder.getContext().getAuthentication().getName()
+        );
+        user.setUsername(newUsername);
+
+        ResponseDto responseDto = new ResponseDto();
+        responseDto.setMessage("Username changed to " + newUsername);
+        responseDto.setPath(request.getRequestURI());
+        responseDto.setStatus(HttpStatus.OK.value());
+        responseDto.setBody(permanentUserMapper.toResponse(permanentUserCrudService.save(user)));
         return responseDto;
     }
 
