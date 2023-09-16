@@ -1,16 +1,12 @@
 package kz.trankwilizator.tafl.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import jakarta.validation.ConstraintViolationException;
-import jakarta.validation.Payload;
 import jakarta.validation.constraints.*;
 import kz.trankwilizator.tafl.entity.role.Role;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import java.util.Date;
 
@@ -72,9 +68,4 @@ public class PermanentUser extends User {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
-    @Column(updatable = false, name = "username", unique = true, nullable = false)
-    @Override
-    public String getUsername() {
-        return super.getUsername();
-    }
 }
