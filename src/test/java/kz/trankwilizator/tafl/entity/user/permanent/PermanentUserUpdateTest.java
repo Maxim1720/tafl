@@ -38,6 +38,7 @@ public class PermanentUserUpdateTest {
         repository.deleteAll();
     }
 
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     @Test
     public void givenNullUpdatedAt_whenUpdate_thenGenerateUpdatedAt() {
         permanentUser = repository.save(permanentUser);
