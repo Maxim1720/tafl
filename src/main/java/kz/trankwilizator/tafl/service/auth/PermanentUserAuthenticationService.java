@@ -34,8 +34,9 @@ public class PermanentUserAuthenticationService extends AuthenticationService<Pe
     @Override
     public AuthToken authenticate(PermanentUserAuthDto userAuthDto) {
         PermanentUser user = permanentUserCrudService.getByUsername(userAuthDto.getUsername());
-        if(!passwordEncoder.matches(Arrays.toString(userAuthDto.getPassword()),
-                                    Arrays.toString(user.getPassword()))){
+        if(!passwordEncoder.matches(String.copyValueOf(userAuthDto.getPassword()),
+                String.copyValueOf(user.getPassword())
+        )){
             throw new EntityNotFoundException("Incorrect username or password");
         }
         return super.authenticate(userAuthDto);
