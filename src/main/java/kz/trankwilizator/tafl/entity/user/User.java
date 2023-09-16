@@ -6,7 +6,6 @@ import kz.trankwilizator.tafl.entity.JwtToken;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -17,6 +16,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@DynamicUpdate
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
@@ -50,7 +50,6 @@ public abstract class User {
     @OneToMany(targetEntity = JwtToken.class,
             cascade = CascadeType.ALL,
             mappedBy = "user",
-            orphanRemoval = true/*,
-            fetch = FetchType.EAGER*/)
+            orphanRemoval = true)
     private Set<JwtToken> jwtTokens = new HashSet<>();
 }
