@@ -17,9 +17,13 @@ public class Permission {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
+    @Size(min = 1, max = 50)
+    @Pattern(regexp = "^([A-Z]+_?[A-Z])+$")
     @Column(length = 50, nullable = false)
     private String name;
 
+    @NotNull
     @ManyToMany(cascade = CascadeType.REMOVE)
     private Set<Role> roles;
 
