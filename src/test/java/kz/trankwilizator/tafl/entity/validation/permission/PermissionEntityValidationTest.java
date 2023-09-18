@@ -10,12 +10,6 @@ import java.util.HashSet;
 
 public class PermissionEntityValidationTest extends ValidationTest<Permission> {
 
-    private final EntityPropertyValidator<Permission> entityPropertyValidator;
-
-    public PermissionEntityValidationTest(){
-        entityPropertyValidator = new EntityPropertyValidator<>();
-    }
-
     @BeforeEach
     @Override
     public void setUpEntity() {
