@@ -29,36 +29,27 @@ public class PermanentUserEntityPersistTest {
 
     @BeforeEach
     public void setUp(@Autowired PermanentUser permanentUserInstance) {
-        this.permanentUser = new PermanentUser(permanentUserInstance.getFirstname(),
-                permanentUserInstance.getLastname(),
-                permanentUserInstance.getSecondName(),
-                permanentUserInstance.getEmail(),
-                permanentUserInstance.getPassword(),
-                permanentUserInstance.getDiscount(),
-                permanentUserInstance.getUpdatedAt(),
-                permanentUserInstance.getRole());
-        permanentUser.setUsername(permanentUserInstance.getUsername());
-        permanentUser.setEnabled(permanentUserInstance.getEnabled());
-        permanentUser.setBalance(permanentUserInstance.getBalance());
+        this.permanentUser = permanentUserInstance.toBuilder().build();
     }
 
     @Test
-    public void givenEmail_whenSaveNewUserWithSameEmail_throwException(){
-        PermanentUser p = new PermanentUser();
-        p.setEmail(permanentUser.getEmail());
-        p.setFirstname("dwadwa");
-        p.setLastname("dwadwa");
-        p.setRole(permanentUser.getRole());
-        p.setBalance(permanentUser.getBalance());
-        p.setDiscount(permanentUser.getDiscount());
-        p.setEnabled(permanentUser.getEnabled());
-        p.setUsername("dwadwadwa");
-        p.setPassword(permanentUser.getPassword());
+    public void givenEmail_whenSaveNewUserWithSameEmail_thenThrowException(@Autowired PermanentUser testPermanentUser){
+        PermanentUser p = testPermanentUser.toBuilder().build();
+        p.setUsername("dwadawd");
+        whenSaveNewUserWithMainUser_thenThrowException(p);
+    }
 
+    @Test
+    public void givenUsername_whenSaveNewUserWithSameUsername_thenThrowException(@Autowired PermanentUser test){
+        PermanentUser p = test.toBuilder().build();
+        p.setEmail("dwadaw@fwafdaw.ru");
+        whenSaveNewUserWithMainUser_thenThrowException(p);
+    }
+    private void whenSaveNewUserWithMainUser_thenThrowException(PermanentUser newUser){
         testEntityManager.persistAndFlush(permanentUser);
         Assertions.assertThrows(
                 PersistenceException.class,
-                ()->testEntityManager.persistAndFlush(p)
+                ()->testEntityManager.persistAndFlush(newUser)
         );
     }
 
