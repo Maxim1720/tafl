@@ -150,18 +150,6 @@ public class PermanentUserEntityValidationTest extends ValidationTest<PermanentU
         whenValidate_thenExistsConstraintViolation(property, exists);
     }
 
-    private void whenValidate_thenViolationsSetIsNotEmpty(){
-        AtomicReference<Boolean> hasErrors = new AtomicReference<>(false);
-        EntityPropertyValidator<PermanentUser> entityPropertyValidator = new EntityPropertyValidator<>();
-
-        Arrays.stream(getEntity().getClass().getFields()).forEach(f->{
-            if(entityPropertyValidator.validate(getEntity(),f.getName())){
-                hasErrors.set(true);
-            }
-        });
-        Assertions.assertTrue(hasErrors.get());
-    }
-
     @Override
     protected PermanentUser createInstance() {
         return PermanentUser.builder().build();
