@@ -1,7 +1,8 @@
-package kz.trankwilizator.tafl.entity.user.permanent;
+package kz.trankwilizator.tafl.entity.update;
 
 import kz.trankwilizator.tafl.dao.user.PermanentUserRepository;
 import kz.trankwilizator.tafl.entity.user.PermanentUser;
+import kz.trankwilizator.tafl.entity.config.user.PermanentUserEntityTestConfig;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

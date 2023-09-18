@@ -1,6 +1,7 @@
-package kz.trankwilizator.tafl.entity.role;
+package kz.trankwilizator.tafl.entity.config.role;
 
 import kz.trankwilizator.tafl.dao.role.PermissionRepository;
+import kz.trankwilizator.tafl.entity.role.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;

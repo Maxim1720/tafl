@@ -1,51 +1,45 @@
-package kz.trankwilizator.tafl.entity.role;
+package kz.trankwilizator.tafl.entity.validation.role;
 
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
-import org.junit.jupiter.api.Assertions;
+import kz.trankwilizator.tafl.entity.validation.ValidationTest;
+import kz.trankwilizator.tafl.entity.role.Role;
+import kz.trankwilizator.tafl.entity.config.role.RoleTestConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 
-import java.util.Set;
+import java.util.Arrays;
 
 @Import(value = RoleTestConfig.class)
 @ContextConfiguration(classes = RoleTestConfig.class)
-public class RoleEntityValidationTest {
+public class RoleEntityValidationTest extends ValidationTest<Role> {
 
-    private final Validator validator;
-    private Role role;
-    private final Role testRole;
-
-    public RoleEntityValidationTest(){
-        this.testRole = RoleTestConfig.INSTANCE;
-        validator = Validation.buildDefaultValidatorFactory().getValidator();
+    @Override
+    protected Role createInstance() {
+        return RoleTestConfig.INSTANCE.toBuilder().build();
     }
+
 
     @BeforeEach
-    public void setUp(){
-        role = new Role();
-        role.setName(testRole.getName());
-        role.setPermissions(testRole.getPermissions());
-        role.setId(testRole.getId());
+    @Override
+    public void setUpEntity() {
+        super.setUpEntity();
     }
+
     @Test
     public void givenNullName_whenValidate_thenConstraintViolationsNotEmpty(){
-        role.setName(null);
-        whenValidate_thenConstraintViolationsIsEmpty(false);
+        validateName(null, false);
     }
 
     @Test
     public void givenNullPermissions_whenValidate_thenConstraintViolationsNotEmpty(){
-        role.setPermissions(null);
-        whenValidate_thenConstraintViolationsIsEmpty(false);
+        getEntity().setPermissions(null);
+        whenValidate_thenExistsConstraintViolation("permissions", true);
     }
 
     @Test
     public void givenCorrectRole_whenValidate_thenConstraintViolationsIsEmpty(){
-        whenValidate_thenConstraintViolationsIsEmpty(true);
+        Arrays.stream(Role.class.getFields()).forEach(f->whenValidate_thenExistsConstraintViolation(f.getName(), false));
     }
 
     @Test
@@ -75,6 +69,26 @@ public class RoleEntityValidationTest {
     }
 
     @Test
+    public void givenName_TEST__whenValidate_thenConstraintViolationsExists(){
+        validateName("_TEST__", false);
+    }
+
+    @Test
+    public void givenNameTEST__TEST_whenValidate_thenConstraintViolationsExists(){
+        validateName("TEST__TEST", false);
+    }
+
+    @Test
+    public void givenNameTEST_TEST__whenValidate_thenConstraintViolationsExists(){
+        validateName("TEST_TEST_", false);
+    }
+
+    @Test
+    public void givenNameTEST_TEST_TEST_whenValidate_thenConstraintViolationsNotExists(){
+        validateName("TEST_TEST_TEST", true);
+    }
+
+    @Test
     public void givenBlankRoleName_whenValidate_thenConstraintViolationsIsNotEmpty(){
         validateName("   \n\t\r", false);
     }
@@ -84,16 +98,9 @@ public class RoleEntityValidationTest {
         validateName("", false);
     }
 
-
-
     private void validateName(String name, boolean constraintViolationsIsEmpty){
-        role.setName(name);
-        whenValidate_thenConstraintViolationsIsEmpty(constraintViolationsIsEmpty);
-    }
-
-    private void whenValidate_thenConstraintViolationsIsEmpty(boolean isEmpty){
-        Set<ConstraintViolation<Role>> constraintViolations = validator.validate(role);
-        constraintViolations.forEach(System.out::println);
-        Assertions.assertEquals(isEmpty,constraintViolations.isEmpty());
+        getEntity().setName(name);
+//        new ValidationTester<Role>().thenHasConstraintViolations(getEntity(), "name", !constraintViolationsIsEmpty);
+        whenValidate_thenExistsConstraintViolation("name",!constraintViolationsIsEmpty);
     }
 }
