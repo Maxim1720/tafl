@@ -41,7 +41,7 @@ public class PermanentUserUpdateTest {
 
     //todo: failed test
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
-//    @Test
+    @Test
     public void givenUsername_whenUpdate_thenThrowDataIntegrityViolationException(){
         permanentUser = repository.save(permanentUser);
         permanentUser.setUsername("dwadaw@test.ru");
