@@ -24,7 +24,7 @@ public class Role {
 
     @NotBlank
     @Size(min = 2, max= 75)
-    @Pattern(regexp = "^[A-Z_?]+[A-Z]+$")
+    @Pattern(regexp = "^([A-Z]+_?[A-Z])+$")
     @Column(length = 75, nullable = false)
     private String name;
 
