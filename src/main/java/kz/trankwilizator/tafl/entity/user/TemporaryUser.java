@@ -1,9 +1,7 @@
 package kz.trankwilizator.tafl.entity.user;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -14,6 +12,9 @@ import java.util.Date;
 @Setter
 @ToString
 @DiscriminatorValue(value = "temporary")
+@Builder(toBuilder = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class TemporaryUser extends User {
 
     @Transient
