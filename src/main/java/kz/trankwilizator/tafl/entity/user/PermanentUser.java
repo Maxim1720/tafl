@@ -18,6 +18,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicUpdate
+@Builder(toBuilder = true)
 public class PermanentUser extends User {
 
     @NotBlank
