@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import kz.trankwilizator.tafl.entity.role.Role;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -18,7 +19,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicUpdate
-@Builder(toBuilder = true)
+@SuperBuilder(toBuilder = true)
 public class PermanentUser extends User {
 
     @NotBlank
