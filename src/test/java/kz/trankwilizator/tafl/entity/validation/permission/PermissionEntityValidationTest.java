@@ -1,8 +1,7 @@
 package kz.trankwilizator.tafl.entity.validation.permission;
 
-import kz.trankwilizator.tafl.entity.validation.ValidationTest;
-import kz.trankwilizator.tafl.entity.validation.EntityPropertyValidator;
 import kz.trankwilizator.tafl.entity.role.Permission;
+import kz.trankwilizator.tafl.entity.validation.ValidationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

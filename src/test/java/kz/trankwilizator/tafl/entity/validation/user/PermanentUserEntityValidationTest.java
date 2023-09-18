@@ -1,14 +1,9 @@
 package kz.trankwilizator.tafl.entity.validation.user;
 
-import kz.trankwilizator.tafl.entity.validation.ValidationTest;
-import kz.trankwilizator.tafl.entity.validation.EntityPropertyValidator;
 import kz.trankwilizator.tafl.entity.user.PermanentUser;
-import org.junit.jupiter.api.Assertions;
+import kz.trankwilizator.tafl.entity.validation.ValidationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicReference;
 
 
 public class PermanentUserEntityValidationTest extends ValidationTest<PermanentUser> {
