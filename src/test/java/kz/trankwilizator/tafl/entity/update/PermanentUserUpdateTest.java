@@ -25,17 +25,7 @@ public class PermanentUserUpdateTest {
 
     @BeforeEach
     public void setUp(@Autowired PermanentUser permanentUserInstance) {
-        this.permanentUser = new PermanentUser(permanentUserInstance.getFirstname(),
-                permanentUserInstance.getLastname(),
-                permanentUserInstance.getSecondName(),
-                permanentUserInstance.getEmail(),
-                permanentUserInstance.getPassword(),
-                permanentUserInstance.getDiscount(),
-                permanentUserInstance.getUpdatedAt(),
-                permanentUserInstance.getRole());
-        permanentUser.setUsername(permanentUserInstance.getUsername());
-        permanentUser.setEnabled(permanentUserInstance.getEnabled());
-        permanentUser.setBalance(permanentUserInstance.getBalance());
+        permanentUser = permanentUserInstance.toBuilder().build();
         repository.deleteAll();
     }
 
