@@ -3,8 +3,7 @@ package kz.trankwilizator.tafl.entity.launchable.device;
 import jakarta.persistence.*;
 import kz.trankwilizator.tafl.entity.launchable.runnable.RunnableEntity;
 import kz.trankwilizator.tafl.entity.zone.Zone;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -12,6 +11,9 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class Device extends RunnableEntity implements Serializable {
 
 
