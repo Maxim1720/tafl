@@ -2,9 +2,7 @@ package kz.trankwilizator.tafl.entity;
 
 import jakarta.persistence.*;
 import kz.trankwilizator.tafl.entity.user.User;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
@@ -14,6 +12,9 @@ import java.util.Date;
 @ToString
 @Entity(name = "jwt_token")
 @Table(name = "jwt_token")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder(toBuilder = true)
 public class JwtToken {
 
     @Id
