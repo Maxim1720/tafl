@@ -10,6 +10,7 @@ public abstract class ValidationTest<E> {
     private final EntityPropertyValidator<E> entityPropertyValidator;
     public ValidationTest(){
         entityPropertyValidator = new EntityPropertyValidator<>();
+        entity = createInstance();
     }
     public void setUpEntity(){
         this.entity = createInstance();
