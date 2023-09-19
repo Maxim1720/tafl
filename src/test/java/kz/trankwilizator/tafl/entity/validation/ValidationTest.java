@@ -23,7 +23,7 @@ public abstract class ValidationTest<E> {
         Assertions.assertEquals(exists, entityPropertyValidator.validate(getEntity(),propertyName));
     }
 
-    public boolean hasConstraintViolations(E e, String propertyName){
-        return entityPropertyValidator.validate(e,propertyName);
+    public boolean hasConstraintViolations(String propertyName){
+        return entityPropertyValidator.validate(getEntity(), propertyName);
     }
 }
