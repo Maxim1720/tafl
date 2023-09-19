@@ -2,7 +2,6 @@ package kz.trankwilizator.tafl.entity.validation.device;
 
 import kz.trankwilizator.tafl.entity.launchable.device.Device;
 import kz.trankwilizator.tafl.entity.launchable.device.DeviceStatus;
-import kz.trankwilizator.tafl.entity.validation.EntityPropertyValidator;
 import kz.trankwilizator.tafl.entity.validation.ValidationTest;
 import kz.trankwilizator.tafl.entity.zone.Zone;
 import org.junit.jupiter.api.Assertions;
@@ -43,10 +42,9 @@ public class DeviceValidationTest extends ValidationTest<Device> {
     }
 
     @Test
-    public void givenCorrectInitedDevice_whenValidate_thenHasNotConstraintViolations(){
-        EntityPropertyValidator<Device> propertyValidator = new EntityPropertyValidator<>();
+    public void givenCorrectInitializedDevice_whenValidate_thenHasNotConstraintViolations(){
         Arrays.stream(getEntity().getClass().getFields()).forEach(f->Assertions.assertFalse(
-                propertyValidator.validate(getEntity(), f.getName())
+                hasConstraintViolations(f.getName())
         ));
     }
 }
