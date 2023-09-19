@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,14 +37,15 @@ public class PermanentUserUpdateTest {
         System.out.println(permanentUser);
         Assertions.assertNotNull(permanentUser.getUpdatedAt());
     }
-
-    //todo: failed test
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     @Test
-    public void givenUsername_whenUpdate_thenThrowDataIntegrityViolationException(){
+    public void givenUsername_whenUpdate_thenCantUpdate(){
         permanentUser = repository.save(permanentUser);
-        permanentUser.setUsername("dwadaw@test.ru");
-        Assertions.assertThrows(DataIntegrityViolationException.class,
-                ()->permanentUser = repository.save(permanentUser));
+        String newUsername = "test@dwadwadawd.ru";
+        permanentUser.setUsername(newUsername);
+        permanentUser = repository.save(permanentUser);
+        Assertions.assertFalse(
+                repository.findByUsernameIgnoreCase(newUsername).isPresent()
+        );
     }
 }
