@@ -7,7 +7,6 @@ import kz.trankwilizator.tafl.entity.validation.arguments.provider.DescriptionAr
 import kz.trankwilizator.tafl.entity.validation.arguments.provider.NameArgumentsProvider;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 public class EventValidationTest extends ValidationTest<Event> {
     @Override

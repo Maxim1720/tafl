@@ -37,7 +37,7 @@ public class CategoryValidationTest extends ValidationTest<Category> {
     private static class NameArgumentsProvider implements ArgumentsProvider{
 
         @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) throws Exception {
+        public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) {
             return Stream.of(
                     Arguments.of("", true),
                     Arguments.of("\n\n\n  \t", true),
@@ -53,7 +53,7 @@ public class CategoryValidationTest extends ValidationTest<Category> {
     private static class ParentCategoryProvider implements ArgumentsProvider{
 
         @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) throws Exception {
+        public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) {
             return Stream.of(
                     Arguments.of(null, false),
                     Arguments.of(new Category(), false)

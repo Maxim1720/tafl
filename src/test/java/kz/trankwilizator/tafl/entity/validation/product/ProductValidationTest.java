@@ -48,7 +48,7 @@ public class ProductValidationTest extends ValidationTest<Product> {
     private static class CategoryArgumentsProvider implements ArgumentsProvider{
 
         @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) throws Exception {
+        public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) {
             return Stream.of(
                     Arguments.of(null, true),
                     Arguments.of(new Category(), false)

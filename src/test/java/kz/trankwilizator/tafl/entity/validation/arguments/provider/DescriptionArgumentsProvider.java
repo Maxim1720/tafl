@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 public class DescriptionArgumentsProvider implements ArgumentsProvider {
     @Override
-    public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) throws Exception {
+    public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) {
         return Stream.of(
                 Arguments.of("", true),
                 Arguments.of("\n\n\n", true),

@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 public class TariffArgumentsProvider implements ArgumentsProvider {
     @Override
-    public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) throws Exception {
+    public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) {
         return Stream.of(
                 Arguments.of(null, true),
                 Arguments.of(new Tariff(), false)
