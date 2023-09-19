@@ -1,6 +1,7 @@
 package kz.trankwilizator.tafl.entity.launchable.runnable;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,8 @@ public class RunnableEntityType {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false)
+    @NotBlank
+    @Column(nullable = false, length = 75)
     private String name;
 
     @OneToMany(targetEntity = RunnableEntity.class, mappedBy = "type")
