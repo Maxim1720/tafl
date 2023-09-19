@@ -14,11 +14,8 @@ public abstract class ValidationTest<E> {
     @Getter
     private E entity;
     private final EntityPropertyValidator<E> entityPropertyValidator;
-//    @Getter
-//    private final Logger logger;
     public ValidationTest(){
         entityPropertyValidator = new EntityPropertyValidator<>();
-//        logger = LogManager.getLogger();
         entity = createInstance();
     }
     @BeforeEach
