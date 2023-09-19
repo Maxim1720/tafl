@@ -1,8 +1,7 @@
 package kz.trankwilizator.tafl.entity.schedule;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalTime;
 
@@ -10,6 +9,10 @@ import java.time.LocalTime;
 @Table
 @Getter
 @Setter
+@ToString
+@Builder(toBuilder = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class Schedule {
 
     @Id
