@@ -31,9 +31,7 @@ public class ZoneValidationTest extends ValidationTest<Zone> {
     }
     @Test
     public void givenCorrectZone_whenValidate_thenHasNotConstraintViolations(){
-        Arrays.stream(getEntity().getClass().getFields()).forEach(
-                f-> whenValidate_thenHasConstraintViolation(f.getName(), false)
-        );
+        whenValidate_thenHasNotConstraintViolations();
     }
     private void validateName(String name, boolean exists){
         getEntity().setName(name);
