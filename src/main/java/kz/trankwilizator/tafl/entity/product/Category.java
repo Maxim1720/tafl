@@ -10,6 +10,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder(toBuilder = true)
 public class Category {
 
     @Id
