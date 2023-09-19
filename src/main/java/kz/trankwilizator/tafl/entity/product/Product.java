@@ -1,5 +1,6 @@
 package kz.trankwilizator.tafl.entity.product;
 
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import jakarta.persistence.*;
@@ -20,12 +21,17 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Size(min = 1, max = 75)
+    @NotBlank
+    @Column(name = "name", length = 75, nullable = false)
     private String name;
 
+    @PositiveOrZero
+    @NotNull
     @Column(name = "price")
     private BigDecimal price;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     @ToString.Exclude
