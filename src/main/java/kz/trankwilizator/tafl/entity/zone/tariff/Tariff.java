@@ -2,6 +2,8 @@ package kz.trankwilizator.tafl.entity.zone.tariff;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import kz.trankwilizator.tafl.entity.schedule.Schedule;
 import lombok.*;
 
@@ -19,9 +21,11 @@ public class Tariff {
     @Column(nullable = false)
     private Long id;
 
+    @NotBlank
     @Column(nullable = false)
     private String name;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(nullable = false)
     private Schedule schedule;
