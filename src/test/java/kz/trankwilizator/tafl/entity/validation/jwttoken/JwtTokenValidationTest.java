@@ -20,7 +20,7 @@ public class JwtTokenValidationTest extends ValidationTest<JwtToken> {
     @Test
     public void givenNullUser_whenValidate_thenHasConstraintViolations(){
         getEntity().setUser(null);
-        whenValidate_thenExistsConstraintViolation("user", true);
+        whenValidate_thenHasConstraintViolation("user", true);
     }
     @Test
     public void givenNullToken_whenValidate_thenHasConstraintViolations(){
@@ -29,7 +29,7 @@ public class JwtTokenValidationTest extends ValidationTest<JwtToken> {
     @Test
     public void givenNullExpireAt_whenValidate_thenHasConstraintViolations(){
         getEntity().setExpiryAt(null);
-        whenValidate_thenExistsConstraintViolation("expiryAt", true);
+        whenValidate_thenHasConstraintViolation("expiryAt", true);
     }
     @Test
     public void givenTooLongToken_whenValidate_thenHasConstraintViolations(){
@@ -50,7 +50,7 @@ public class JwtTokenValidationTest extends ValidationTest<JwtToken> {
     }
     private void validateToken(String token, boolean exists){
         getEntity().setToken(token);
-        whenValidate_thenExistsConstraintViolation("token", exists);
+        whenValidate_thenHasConstraintViolation("token", exists);
     }
 
 

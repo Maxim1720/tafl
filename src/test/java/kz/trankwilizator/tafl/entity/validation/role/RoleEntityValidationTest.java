@@ -34,12 +34,12 @@ public class RoleEntityValidationTest extends ValidationTest<Role> {
     @Test
     public void givenNullPermissions_whenValidate_thenConstraintViolationsNotEmpty(){
         getEntity().setPermissions(null);
-        whenValidate_thenExistsConstraintViolation("permissions", true);
+        whenValidate_thenHasConstraintViolation("permissions", true);
     }
 
     @Test
     public void givenCorrectRole_whenValidate_thenConstraintViolationsIsEmpty(){
-        Arrays.stream(Role.class.getFields()).forEach(f->whenValidate_thenExistsConstraintViolation(f.getName(), false));
+        Arrays.stream(Role.class.getFields()).forEach(f-> whenValidate_thenHasConstraintViolation(f.getName(), false));
     }
 
     @Test
@@ -101,6 +101,6 @@ public class RoleEntityValidationTest extends ValidationTest<Role> {
     private void validateName(String name, boolean constraintViolationsIsEmpty){
         getEntity().setName(name);
 //        new ValidationTester<Role>().thenHasConstraintViolations(getEntity(), "name", !constraintViolationsIsEmpty);
-        whenValidate_thenExistsConstraintViolation("name",!constraintViolationsIsEmpty);
+        whenValidate_thenHasConstraintViolation("name",!constraintViolationsIsEmpty);
     }
 }

@@ -76,7 +76,7 @@ public class PermissionEntityValidationTest extends ValidationTest<Permission> {
     private void givenPermissionName_whenValidate_thenNamePropertyHasConstraintViolation(String name, boolean exists){
         getEntity().setName(name);
 //        validationTester.thenHasConstraintViolations(getEntity(), "name", exists);
-        whenValidate_thenExistsConstraintViolation("name", exists);
+        whenValidate_thenHasConstraintViolation("name", exists);
     }
 
 }

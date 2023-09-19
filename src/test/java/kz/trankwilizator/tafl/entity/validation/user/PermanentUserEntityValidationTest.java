@@ -120,7 +120,7 @@ public class PermanentUserEntityValidationTest extends ValidationTest<PermanentU
     @Test
     public void givenDiscount0_whenValidate_thenViolationsSetIsEmpty(){
         getEntity().setDiscount(0.0);
-        whenValidate_thenExistsConstraintViolation("discount", false);
+        whenValidate_thenHasConstraintViolation("discount", false);
     }
 
     @Test
@@ -142,7 +142,7 @@ public class PermanentUserEntityValidationTest extends ValidationTest<PermanentU
     }
 
     private void whenValidateProperty_thenConstraintViolationsExists(String property, boolean exists){
-        whenValidate_thenExistsConstraintViolation(property, exists);
+        whenValidate_thenHasConstraintViolation(property, exists);
     }
 
     @Override

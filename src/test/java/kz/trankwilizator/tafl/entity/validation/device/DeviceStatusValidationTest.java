@@ -50,6 +50,6 @@ public class DeviceStatusValidationTest extends ValidationTest<DeviceStatus> {
 
     public void validateName(String name, boolean violationsExist){
         getEntity().setName(name);
-        whenValidate_thenExistsConstraintViolation("name", violationsExist);
+        whenValidate_thenHasConstraintViolation("name", violationsExist);
     }
 }
