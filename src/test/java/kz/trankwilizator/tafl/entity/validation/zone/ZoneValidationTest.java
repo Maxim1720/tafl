@@ -4,8 +4,6 @@ import kz.trankwilizator.tafl.entity.validation.ValidationTest;
 import kz.trankwilizator.tafl.entity.zone.Zone;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 public class ZoneValidationTest extends ValidationTest<Zone> {
     @Override
     protected Zone createInstance() {

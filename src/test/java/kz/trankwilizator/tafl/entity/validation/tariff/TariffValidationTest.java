@@ -51,7 +51,7 @@ public class TariffValidationTest extends ValidationTest<Tariff> {
     private static class SheduleArgumentsProvider implements ArgumentsProvider{
 
         @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) throws Exception {
+        public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) {
             return Stream.of(
                     Arguments.of(null, true),
                     Arguments.of(new Schedule(), false)
