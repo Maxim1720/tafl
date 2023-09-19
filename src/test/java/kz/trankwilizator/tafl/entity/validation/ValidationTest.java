@@ -2,6 +2,7 @@ package kz.trankwilizator.tafl.entity.validation;
 
 import lombok.Getter;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 
 
 public abstract class ValidationTest<E> {
@@ -12,6 +13,7 @@ public abstract class ValidationTest<E> {
         entityPropertyValidator = new EntityPropertyValidator<>();
         entity = createInstance();
     }
+    @BeforeEach
     public void setUpEntity(){
         this.entity = createInstance();
     }
