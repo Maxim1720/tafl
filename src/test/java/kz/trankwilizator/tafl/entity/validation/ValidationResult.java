@@ -4,7 +4,7 @@ public enum ValidationResult {
     ERROR(true),
     OK(false);
 
-    final Boolean existsError;
+    private final Boolean existsError;
     ValidationResult(Boolean b){
         existsError = b;
     }
