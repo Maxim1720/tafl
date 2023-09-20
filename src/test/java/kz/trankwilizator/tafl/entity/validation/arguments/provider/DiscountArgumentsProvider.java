@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 public class DiscountArgumentsProvider implements ArgumentsProvider {
     @Override
-    public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) throws Exception {
+    public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) {
         return Stream.of(
                 Arguments.of(1.001, ValidationResult.ERROR),
                 Arguments.of(-1.0, ValidationResult.ERROR),
