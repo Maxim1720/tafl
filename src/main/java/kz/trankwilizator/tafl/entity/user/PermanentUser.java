@@ -43,7 +43,7 @@ public class PermanentUser extends User {
     @NotEmpty
     @NotNull
     @Size(min = 1, max = 75)
-    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
+    @Pattern(regexp = "^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
     @Column(length = 256, nullable = false, unique = true, updatable = false)
     private String email;
 
