@@ -1,20 +1,18 @@
 package kz.trankwilizator.tafl.entity.validation.arguments.provider;
 
-import org.junit.jupiter.api.extension.ExtensionContext;
+import kz.trankwilizator.tafl.entity.validation.ValidationResult;
+import kz.trankwilizator.tafl.entity.validation.arguments.provider.string.StringArgumentProvider;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.ArgumentsProvider;
 
-import java.util.stream.Stream;
+import java.util.List;
 
-public class DescriptionArgumentsProvider implements ArgumentsProvider {
+public class DescriptionArgumentsProvider extends StringArgumentProvider {
+
     @Override
-    public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) {
-        return Stream.of(
-                Arguments.of("", true),
-                Arguments.of("\n\n\n", true),
-                Arguments.of(null, true),
-                Arguments.of("somedexccwadwada", false)
-
+    protected List<Arguments> arguments() {
+        return List.of(
+                Arguments.of("somedexccwadwada", ValidationResult.OK),
+                Arguments.of("r".repeat(256), ValidationResult.ERROR)
         );
     }
 }
