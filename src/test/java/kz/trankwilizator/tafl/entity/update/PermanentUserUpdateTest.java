@@ -40,10 +40,10 @@ public class PermanentUserUpdateTest {
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     @Test
     public void givenUsername_whenUpdate_thenCantUpdate(){
-        permanentUser = repository.save(permanentUser);
+        permanentUser = repository.saveAndFlush(permanentUser);
         String newUsername = "test@dwadwadawd.ru";
         permanentUser.setUsername(newUsername);
-        permanentUser = repository.save(permanentUser);
+        permanentUser = repository.saveAndFlush(permanentUser);
         Assertions.assertFalse(
                 repository.findByUsernameIgnoreCase(newUsername).isPresent()
         );
