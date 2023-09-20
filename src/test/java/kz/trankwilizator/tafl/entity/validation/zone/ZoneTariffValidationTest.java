@@ -1,7 +1,8 @@
 package kz.trankwilizator.tafl.entity.validation.zone;
 
+import kz.trankwilizator.tafl.entity.validation.ValidationResult;
 import kz.trankwilizator.tafl.entity.validation.ValidationTest;
-import kz.trankwilizator.tafl.entity.validation.arguments.provider.PriceArgumentsProvider;
+import kz.trankwilizator.tafl.entity.validation.arguments.provider.MoneyArgumentsProvider;
 import kz.trankwilizator.tafl.entity.validation.arguments.provider.TariffArgumentsProvider;
 import kz.trankwilizator.tafl.entity.zone.tariff.Tariff;
 import kz.trankwilizator.tafl.entity.zone.tariff.ZoneTariff;
@@ -18,18 +19,18 @@ public class ZoneTariffValidationTest extends ValidationTest<ZoneTariff> {
                 .tariff(new Tariff())
                 .build();
     }
-    @ParameterizedTest(name = "test {index}: price={0}, exists={1}")
-    @ArgumentsSource(PriceArgumentsProvider.class)
-    public void givenPrice_whenValidate_thenHasConstraintViolations(BigDecimal price, boolean exists){
+    @ParameterizedTest(name = "test {index}: price={0}, result={1}")
+    @ArgumentsSource(MoneyArgumentsProvider.class)
+    public void givenPrice_whenValidate_thenHasConstraintViolations(BigDecimal price, ValidationResult result){
         getEntity().setPrice(price);
-        whenValidate_thenHasConstraintViolation("price", exists);
+        whenValidate_thenHasConstraintViolation("price", result);
     }
 
-    @ParameterizedTest(name = "test {index}: price={0}, exists={1}")
+    @ParameterizedTest(name = "test {index}: price={0}, result={1}")
     @ArgumentsSource(TariffArgumentsProvider.class)
-    public void givenTariff_whenValidate_thenHasConstraintViolations(Tariff tariff, boolean exists){
+    public void givenTariff_whenValidate_thenHasConstraintViolations(Tariff tariff, ValidationResult result){
         getEntity().setTariff(tariff);
-        whenValidate_thenHasConstraintViolation("tariff", exists);
+        whenValidate_thenHasConstraintViolation("tariff", result);
     }
 
 }
