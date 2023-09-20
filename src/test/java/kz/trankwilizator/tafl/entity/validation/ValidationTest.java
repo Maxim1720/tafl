@@ -31,6 +31,13 @@ public abstract class ValidationTest<E> {
         Assertions.assertEquals(exists, !constraintViolations.isEmpty());
     }
 
+    public void whenValidate_thenHasConstraintViolation(String propertyName, ValidationResult result){
+        Set<ConstraintViolation<E>> constraintViolations = entityPropertyValidator.violations(getEntity(),
+                propertyName);
+        constraintViolations.forEach(c->log.warning(c::toString));
+        Assertions.assertEquals(result.getBoolResult(), !constraintViolations.isEmpty());
+    }
+
     public void whenValidate_thenHasNotConstraintViolations(){
         Arrays.stream(getEntity().getClass().getFields())
                 .forEach(f-> whenValidate_thenHasConstraintViolation(f.getName(),false));
