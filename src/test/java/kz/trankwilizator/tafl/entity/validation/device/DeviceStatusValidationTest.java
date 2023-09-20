@@ -1,8 +1,11 @@
 package kz.trankwilizator.tafl.entity.validation.device;
 
 import kz.trankwilizator.tafl.entity.launchable.device.DeviceStatus;
+import kz.trankwilizator.tafl.entity.validation.ValidationResult;
 import kz.trankwilizator.tafl.entity.validation.ValidationTest;
-import org.junit.jupiter.api.Test;
+import kz.trankwilizator.tafl.entity.validation.arguments.provider.string.name.ConstantNameArgumentsProvider;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ArgumentsSource;
 
 public class DeviceStatusValidationTest extends ValidationTest<DeviceStatus> {
     @Override
@@ -11,43 +14,11 @@ public class DeviceStatusValidationTest extends ValidationTest<DeviceStatus> {
         deviceStatus.setName("TEST NAME");
         return deviceStatus;
     }
-
-    @Test
-    public void givenNullName_whenValidate_thenConstraintViolationsExist(){
-        validateName(null, true);
+    @ParameterizedTest(name = "test {index}: name={0}, result={1}")
+    @ArgumentsSource(ConstantNameArgumentsProvider.class)
+    public void givenNullName_whenValidate_thenConstraintViolationsExist(String name, ValidationResult result){
+        validateName(name, result.getBoolResult());
     }
-
-    @Test
-    public void givenEmptyName_whenValidate_thenConstraintViolationsExist(){
-        validateName("", true);
-    }
-
-    @Test
-    public void givenBlankName_whenValidate_thenConstraintViolationsExist(){
-        validateName("\n\n\n\n    ", true);
-    }
-
-    @Test
-    public void givenTESTName_whenValidate_thenConstraintViolationsNotExist(){
-        validateName("TEST", false);
-    }
-
-    @Test
-    public void givenTLetter50countName_whenValidate_thenConstraintViolationsNotExist(){
-        validateName("T".repeat(50), false);
-    }
-
-    @Test
-    public void givenTName_whenValidate_thenConstraintViolationsNotExist(){
-        validateName("T", false);
-    }
-
-    @Test
-    public void givenTLetter51countName_whenValidate_thenConstraintViolationsNotExist(){
-        validateName("T".repeat(51), true);
-    }
-
-
     public void validateName(String name, boolean violationsExist){
         getEntity().setName(name);
         whenValidate_thenHasConstraintViolation("name", violationsExist);
