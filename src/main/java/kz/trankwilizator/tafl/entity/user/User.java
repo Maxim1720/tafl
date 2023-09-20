@@ -14,8 +14,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-@Getter
-@Setter
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @DynamicUpdate
@@ -24,32 +22,40 @@ import java.util.Set;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 public abstract class User {
+
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
 
+
+    @Setter
     @NotBlank
-    @NotNull
-    @Size(max = 50, min = 1)
-    @Column(length = 50, nullable = false, unique = true, updatable = false)
-    private String username;
+    @Column(nullable = false, unique = true, updatable = false)
+    protected String username;
 
-
+    @Getter
+    @Setter
     @NotNull
     @PositiveOrZero
     @Column(columnDefinition = "decimal(10,2)", nullable = false)
     private BigDecimal balance;
 
+    @Getter
+    @Setter
     @NotNull
     @Column(nullable = false)
     private Boolean enabled;
 
+    @Getter
     @CreationTimestamp
     @Column(updatable = false)
     private Date createdAt;
 
 
+    @Getter
+    @Setter
     @OneToMany(targetEntity = JwtToken.class,
             cascade = CascadeType.ALL,
             mappedBy = "user",

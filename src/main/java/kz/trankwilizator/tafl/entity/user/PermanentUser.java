@@ -70,5 +70,9 @@ public class PermanentUser extends User {
     @ManyToOne(optional = false, targetEntity = Role.class)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
-
+    @Size(max = 50, min = 1)
+    @Column(length = 50, nullable = false, unique = true, updatable = false)
+    public String getUsername() {
+        return username;
+    }
 }
