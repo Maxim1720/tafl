@@ -29,6 +29,7 @@ public class Event {
     private String name;
 
 
+    @Size(min = 1, max = 255)
     @NotBlank
     @Column(nullable = false)
     private String description;
