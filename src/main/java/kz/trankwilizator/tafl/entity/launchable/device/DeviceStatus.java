@@ -2,6 +2,7 @@ package kz.trankwilizator.tafl.entity.launchable.device;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +17,7 @@ public class DeviceStatus {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Pattern(regexp = "^([A-Z]+(_[A-Z]+)*)+$")
     @NotBlank
     @Size(min = 1, max = 50)
     @Column(nullable = false, length = 50)
