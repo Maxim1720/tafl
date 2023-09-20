@@ -8,6 +8,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -38,7 +39,7 @@ public abstract class User {
     @NotNull
     @PositiveOrZero
     @Column(columnDefinition = "decimal(10,2)", nullable = false)
-    private Double balance;
+    private BigDecimal balance;
 
     @NotNull
     @Column(nullable = false)
