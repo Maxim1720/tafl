@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 
+import java.math.BigDecimal;
+
 @TestConfiguration
 public class PermanentUserEntityTestConfig {
 
@@ -23,7 +25,7 @@ public class PermanentUserEntityTestConfig {
         permanentUser.setSecondName("test second name");
         permanentUser.setEmail("test@test.test");
         permanentUser.setDiscount(0.0);
-        permanentUser.setBalance(0.0);
+        permanentUser.setBalance(BigDecimal.valueOf(0.0));
         permanentUser.setPassword("$2a$12$mgn/TIcF3e/SIKb3o8uoIuKPxAOlQwRiK3QVHDs3UX8Os3XUN468W".toCharArray());
         permanentUser.setEnabled(false);
         permanentUser.setRole(roleRepository.findByNameIgnoreCase("PERMANENT").orElseThrow(EntityNotFoundException::new));
@@ -40,7 +42,7 @@ public class PermanentUserEntityTestConfig {
         INSTANCE.setSecondName("test second name");
         INSTANCE.setEmail("test@test.test");
         INSTANCE.setDiscount(0.0);
-        INSTANCE.setBalance(0.0);
+        INSTANCE.setBalance(BigDecimal.valueOf(0.0));
         INSTANCE.setPassword("$2a$12$mgn/TIcF3e/SIKb3o8uoIuKPxAOlQwRiK3QVHDs3UX8Os3XUN468W".toCharArray());
         INSTANCE.setEnabled(false);
         INSTANCE.setRole(new Role());

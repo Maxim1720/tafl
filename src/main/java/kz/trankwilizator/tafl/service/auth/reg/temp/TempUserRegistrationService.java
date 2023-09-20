@@ -7,6 +7,8 @@ import kz.trankwilizator.tafl.mapper.TemporaryUserMapper;
 import kz.trankwilizator.tafl.service.util.UniqueStringGenerator;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class TempUserRegistrationService implements TemporaryUserRegistrationService {
 
@@ -20,7 +22,7 @@ public class TempUserRegistrationService implements TemporaryUserRegistrationSer
     @Override
     public TemporaryUserDto create() {
         TemporaryUser temporaryUser = new TemporaryUser();
-        temporaryUser.setBalance(0.0);
+        temporaryUser.setBalance(BigDecimal.valueOf(0.0));
         temporaryUser.setEnabled(true);
         temporaryUser.setUsername(UniqueStringGenerator.generateUniqueString());
         temporaryUser = tempUserRepository.save(temporaryUser);
