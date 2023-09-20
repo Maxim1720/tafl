@@ -35,7 +35,7 @@ public abstract class ValidationTest<E> {
         Set<ConstraintViolation<E>> constraintViolations = entityPropertyValidator.violations(getEntity(),
                 propertyName);
         constraintViolations.forEach(c->log.warning(c::toString));
-        Assertions.assertEquals(result.getBoolResult(), !constraintViolations.isEmpty());
+        Assertions.assertEquals(result, constraintViolations.isEmpty()?ValidationResult.OK:ValidationResult.ERROR);
     }
 
     public void whenValidate_thenHasNotConstraintViolations(){
