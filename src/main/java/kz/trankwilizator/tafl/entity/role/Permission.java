@@ -25,7 +25,7 @@ public class Permission {
 
     @NotBlank
     @Size(min = 1, max = 50)
-    @Pattern(regexp = "^([A-Z]+_?[A-Z])+$")
+    @Pattern(regexp = "^([A-Z]+(_[A-Z]+)*)+$")
     @Column(length = 50, nullable = false)
     private String name;
 
