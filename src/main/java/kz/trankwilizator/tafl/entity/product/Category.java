@@ -1,6 +1,8 @@
 package kz.trankwilizator.tafl.entity.product;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Entity
@@ -10,6 +12,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder(toBuilder = true)
 public class Category {
 
     @Id
@@ -17,7 +20,9 @@ public class Category {
     @Column(nullable=false)
     private Long id;
 
-    @Column(name = "name", nullable=false)
+    @Size(max = 75, min = 1)
+    @NotBlank
+    @Column(name = "name", nullable=false, length = 75)
     private String name;
 
     @ManyToOne

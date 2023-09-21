@@ -1,14 +1,14 @@
-package kz.trankwilizator.tafl.entity.user.permanent;
+package kz.trankwilizator.tafl.entity.update;
 
 import kz.trankwilizator.tafl.dao.user.PermanentUserRepository;
 import kz.trankwilizator.tafl.entity.user.PermanentUser;
+import kz.trankwilizator.tafl.entity.config.user.PermanentUserEntityTestConfig;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,17 +24,7 @@ public class PermanentUserUpdateTest {
 
     @BeforeEach
     public void setUp(@Autowired PermanentUser permanentUserInstance) {
-        this.permanentUser = new PermanentUser(permanentUserInstance.getFirstname(),
-                permanentUserInstance.getLastname(),
-                permanentUserInstance.getSecondName(),
-                permanentUserInstance.getEmail(),
-                permanentUserInstance.getPassword(),
-                permanentUserInstance.getDiscount(),
-                permanentUserInstance.getUpdatedAt(),
-                permanentUserInstance.getRole());
-        permanentUser.setUsername(permanentUserInstance.getUsername());
-        permanentUser.setEnabled(permanentUserInstance.getEnabled());
-        permanentUser.setBalance(permanentUserInstance.getBalance());
+        permanentUser = permanentUserInstance.toBuilder().build();
         repository.deleteAll();
     }
 
@@ -47,14 +37,15 @@ public class PermanentUserUpdateTest {
         System.out.println(permanentUser);
         Assertions.assertNotNull(permanentUser.getUpdatedAt());
     }
-
-    //todo: failed test
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
-//    @Test
-    public void givenUsername_whenUpdate_thenThrowDataIntegrityViolationException(){
-        permanentUser = repository.save(permanentUser);
-        permanentUser.setUsername("dwadaw@test.ru");
-        Assertions.assertThrows(DataIntegrityViolationException.class,
-                ()->permanentUser = repository.save(permanentUser));
+    @Test
+    public void givenUsername_whenUpdate_thenCantUpdate(){
+        permanentUser = repository.saveAndFlush(permanentUser);
+        String newUsername = "test@dwadwadawd.ru";
+        permanentUser.setUsername(newUsername);
+        permanentUser = repository.saveAndFlush(permanentUser);
+        Assertions.assertFalse(
+                repository.findByUsernameIgnoreCase(newUsername).isPresent()
+        );
     }
 }

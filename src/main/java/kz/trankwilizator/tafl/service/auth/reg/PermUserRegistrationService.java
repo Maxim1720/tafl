@@ -10,6 +10,8 @@ import kz.trankwilizator.tafl.mapper.PermanentUserMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class PermUserRegistrationService implements PermanentUserRegistrationService{
     private final UserRepository<PermanentUser> userRepository;
@@ -31,10 +33,10 @@ public class PermUserRegistrationService implements PermanentUserRegistrationSer
         checkExisting(user);
         user.setPassword(passwordEncoder.encode(String.valueOf(user.getPassword())).toCharArray());
         PermanentUser permanent = userMapper.toEntity(user);
-        permanent.setBalance(0.0);
+        permanent.setBalance(BigDecimal.valueOf(0.0));
         permanent.setRole(roleRepository.findByNameIgnoreCase("user").orElseThrow(()->new EntityExistsException("Role doesn't exists")));
         permanent.setDiscount(0.0);
-        permanent.setBalance(0.0);
+//        permanent.setBalance(BigDecimal.valueOf(0.0));
         permanent.setEnabled(true);
         return userMapper.toDto(userRepository.save(permanent));
     }

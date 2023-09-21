@@ -1,10 +1,9 @@
 package kz.trankwilizator.tafl.entity.zone;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 
 @Entity
 @Table(name = "zones")
@@ -12,12 +11,15 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder(toBuilder = true)
 public class Zone {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "name", nullable = false, unique = true)
+    @NotBlank
+    @Size(min = 1, max = 75)
+    @Column(name = "name", nullable = false, unique = true, length = 75)
     private String name;
 }

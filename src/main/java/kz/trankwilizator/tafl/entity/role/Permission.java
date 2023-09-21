@@ -1,8 +1,11 @@
 package kz.trankwilizator.tafl.entity.role;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import java.util.Objects;
@@ -12,14 +15,21 @@ import java.util.Set;
 @Setter
 @Entity(name = "permission")
 @Table(name = "permission")
+@Builder(toBuilder = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class Permission {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
+    @Size(min = 1, max = 50)
+    @Pattern(regexp = "^([A-Z]+(_[A-Z]+)*)+$")
     @Column(length = 50, nullable = false)
     private String name;
 
+    @NotNull
     @ManyToMany(cascade = CascadeType.REMOVE)
     private Set<Role> roles;
 

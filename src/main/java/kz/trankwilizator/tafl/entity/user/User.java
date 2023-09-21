@@ -4,49 +4,58 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import kz.trankwilizator.tafl.entity.JwtToken;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 
-@Getter
-@Setter
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @DynamicUpdate
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder(toBuilder = true)
 public abstract class User {
+
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
 
+
+    @Setter
     @NotBlank
-    @NotNull
-    @Size(max = 50, min = 1)
-    @Column(length = 50, nullable = false, unique = true, updatable = false)
-    private String username;
+    @Column(nullable = false, unique = true, updatable = false)
+    protected String username;
 
-
+    @Getter
+    @Setter
     @NotNull
     @PositiveOrZero
     @Column(columnDefinition = "decimal(10,2)", nullable = false)
-    private Double balance;
+    private BigDecimal balance;
 
+    @Getter
+    @Setter
     @NotNull
     @Column(nullable = false)
     private Boolean enabled;
 
+    @Getter
     @CreationTimestamp
     @Column(updatable = false)
     private Date createdAt;
 
 
+    @Getter
+    @Setter
     @OneToMany(targetEntity = JwtToken.class,
             cascade = CascadeType.ALL,
             mappedBy = "user",

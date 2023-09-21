@@ -5,8 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
@@ -14,6 +13,9 @@ import java.util.Set;
 @Setter
 @Entity(name = "role")
 @Table(name = "role")
+@Builder(toBuilder = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,8 +23,8 @@ public class Role {
     private Long id;
 
     @NotBlank
-    @Size(min = 2, max= 75)
-    @Pattern(regexp = "^[A-Z_?]+[A-Z]+$")
+    @Size(min = 1, max= 75)
+    @Pattern(regexp = "^([A-Z]+(_[A-Z]+)*)+$")
     @Column(length = 75, nullable = false)
     private String name;
 
