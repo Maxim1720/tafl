@@ -25,8 +25,8 @@ public class PermanentUserUpdateTest extends UpdateTest<PermanentUser, Long> {
     @BeforeEach
     @Override
     public void setUp(@Autowired PermanentUser permanentUser) {
-        super.setUp(permanentUser);
         getRepository().deleteAll();
+        super.setUp(permanentUser);
     }
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
