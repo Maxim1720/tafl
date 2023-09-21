@@ -26,6 +26,7 @@ public class PermanentUserEntityPersistTest {
     @BeforeEach
     public void setUp(@Autowired PermanentUser permanentUserInstance) {
         repository.deleteAll();
+        repository.flush();
         this.permanentUser = permanentUserInstance.toBuilder().build();
     }
 
