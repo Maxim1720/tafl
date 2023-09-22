@@ -166,7 +166,7 @@
 					"script": {
 						"id": "e8d4b8ca-afca-4ca0-a70c-f48675be9a42",
 						"exec": [
-							"pm.test(\"Users getted\", function () {",
+							"pm.test(\"products can't be recieved\", function () {",
 							"    pm.response.to.have.status(403);",
 							"});"
 						],
@@ -264,7 +264,7 @@
 	],
 	"variable": [
 		{
-			"id": "1805587b-48cb-4f3f-963e-b320490ba91f",
+			"id": "9850fad1-2564-4fb6-97ad-0edc250b15ba",
 			"key": "id",
 			"value": ""
 		}

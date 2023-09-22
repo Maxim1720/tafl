@@ -557,23 +557,23 @@
 	],
 	"variable": [
 		{
-			"id": "dab35a22-63f1-486d-8567-ff37cecfda36",
+			"id": "62b87d63-6aa1-4dbc-9a67-796af2fc0887",
 			"key": "zone",
 			"value": ""
 		},
 		{
-			"id": "1554cafb-bcc1-44d9-a7d2-01d7b3a17080",
+			"id": "f02f1238-a3f9-495d-b561-4d0ba2841b73",
 			"key": "status",
 			"value": ""
 		},
 		{
-			"id": "15755359-ef20-415c-8fca-203f2135dbb3",
+			"id": "6285eb0b-f46e-49f8-9244-faec37b74ff3",
 			"key": "device",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "7a4ffff9-9684-462e-aeed-e3951d088b12",
+			"id": "a8597fd0-78bf-4895-9c9f-196457e6e924",
 			"key": "run-type",
 			"value": ""
 		}

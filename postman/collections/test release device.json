@@ -475,22 +475,22 @@
 	],
 	"variable": [
 		{
-			"id": "b3d9a47d-7986-4279-bc3d-7ce3e50c1b3d",
+			"id": "d89c85f3-4ee9-4238-af38-7daf70db9add",
 			"key": "status",
 			"value": ""
 		},
 		{
-			"id": "aed34366-1f57-45e7-a373-e916a38bc9c5",
+			"id": "b805f038-5762-4172-a42f-a66ed35f44fe",
 			"key": "zone",
 			"value": ""
 		},
 		{
-			"id": "00020598-7553-4a7d-896b-810b6ebca418",
+			"id": "3af277a3-b5fb-4fbf-b5ef-e0a606d99e94",
 			"key": "device",
 			"value": ""
 		},
 		{
-			"id": "80949fa9-4483-417f-86ba-9627e6156f6b",
+			"id": "3ddc3d0b-bf4d-442f-834b-5a7805fbc98a",
 			"key": "run-type",
 			"value": ""
 		}

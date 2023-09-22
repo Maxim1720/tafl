@@ -64,7 +64,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "{{per-token}}",
+							"value": "{{per-token}}5",
 							"type": "string"
 						}
 					]
